@@ -1,102 +1,55 @@
 package connectionPool;
+
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
-    public class ConnectionPool {
-        private static connectionPool.ConnectionPool instance;
-        private final String DRIVER_NAME;
-        private ArrayList<Connection> freeConnections = new ArrayList<>();
-        private String URL;
-        private String user;
-        private String password;
-        private int maxConn;
+public class ConnectionPool {
+    private static ConnectionPool instance;
+    private String url = "jdbc:postgresql://localhost:5432/taxiDB";
+    private String user = "postgres";
+    private String password = "alex";
+    private int maxСonn = 10;
 
-        private ConnectionPool(String DRIVER_NAME, String URL, String user, String password, int maxConn) {
-            this.DRIVER_NAME = DRIVER_NAME;
-            this.URL = URL;
-            this.user = user;
-            this.password = password;
-            this.maxConn = maxConn;
-            loadDrivers();
+    private BlockingQueue<Connection> freeConnections = new ArrayBlockingQueue<>(maxСonn);
+
+    private ConnectionPool(String url, String user, String password) {
+        this.url = url;
+        this.user = user;
+        this.password = password;
+        this.fillConnectionPool();
+    }
+
+    public static synchronized ConnectionPool getInstance(String url, String user, String password) {
+        if (instance == null) {
+            instance = new ConnectionPool(url, user, password);
         }
+        return instance;
+    }
 
-        private void loadDrivers() {
+    public void fillConnectionPool() {
+        for (int i = 0; i < maxСonn; i++) {
+            Connection connection = null;
             try {
-                Driver driver = (Driver) Class.forName(DRIVER_NAME).newInstance();
-                DriverManager.registerDriver(driver);
-            } catch (Exception e) {
-                // "Can't register JDBC driver"
-            }
-        }
-
-        public static synchronized connectionPool.ConnectionPool getInstance
-                (String DRIVER_NAME, String URL, String user, String password, int maxConn) {
-            if (instance == null) {
-                instance = new connectionPool.ConnectionPool(DRIVER_NAME, URL,
-                        user, password, maxConn);
-            }
-            return instance;
-        }
-
-        public synchronized Connection getConnection() {
-            Connection con = null;
-            if (!freeConnections.isEmpty()) {
-                con = freeConnections.get(freeConnections.size() - 1);
-                freeConnections.remove(con);
-                try {
-                    if (con.isClosed()) {
-                        con = getConnection();
-                    }
-                } catch (SQLException e) {
-                    con = getConnection();
-                } catch (Exception e) {
-                    con = getConnection();
-                }
-            } else {
-                con = newConnection();
-            }
-            return con;
-        }
-
-        private Connection newConnection(){
-            Connection con = null;
-            try {
-                if (user == null) {
-                    con = DriverManager.getConnection(URL);
-                } else {
-                    con = DriverManager.getConnection(URL, user, password);
-                }
-                // "Created a new connection in pool „
+                connection = DriverManager.getConnection(url, user, password);
+                freeConnections.put(connection);
             } catch (SQLException e) {
-                // "Can't create a new connection for " + URL
-                return null;
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            return con;
-        }
-
-        public synchronized void freeConnection(Connection con) {
-            // Put the connection at the end of the List
-            if ((con != null) && (freeConnections.size() <= maxConn)) {
-                freeConnections.add(con);
-            }
-        }
-
-        public synchronized void release() {
-            Iterator allConnections = freeConnections.iterator();
-            while (allConnections.hasNext()) {
-                Connection con = (Connection) allConnections.next();
-                try {
-                    con.close();
-                    // "Closed connection for pool „
-                } catch (SQLException e) {
-                    // "Can't close connection for pool „
-                }
-            }
-            freeConnections.clear();
         }
     }
 
+    public synchronized Connection getConnection() {
+            Connection con = null;
+                try {
+                    con = freeConnections.take();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+            }
+        return con;
+    }
+    }
