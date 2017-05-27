@@ -8,6 +8,9 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:9.0.0.M18" />
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:4.0.0-b02" />
+          <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
+          <element id="library" level="project" name="Maven: org.postgresql:postgresql:9.4.1207" />
         </element>
       </element>
       <element id="directory" name="META-INF">
