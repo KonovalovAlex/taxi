@@ -2,7 +2,7 @@ package project.constants;
 
 public class Constants {
     //actions
-    public static final String REGISTRATION_PAGE = "registrationPage";
+    public static final String REGISTRATION = "registration";
     public static final String DO_REGISTRATION = "doRegistration";
     public static final String CLIENT_PAGE = "client";
     public static final String ADMIN_PAGE = "admin";
@@ -24,7 +24,7 @@ public class Constants {
 
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
-    public static final String PHONE ="mobile";
+    public static final String PHONE ="phone";
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
     public static final String EMAIL = "email";

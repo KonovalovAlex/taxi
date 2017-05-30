@@ -13,34 +13,34 @@ import java.sql.SQLException;
 
 import static project.constants.Constants.*;
 
-public class EnterTheOffice implements Action {
+public class EnterTheOffice {
 
-    ActionResult client = new ActionResult();
-    ActionResult welcome = new ActionResult();
-    ActionResult admin = new ActionResult();
-    ActionResult dispatcher = new ActionResult();
-    Client client = new Client();
-
-    @Override
-    public ActionResult execute(HttpServletRequest req) {
-    }
-
-    public String findClient(HttpServletRequest request) {
-        if (request.getParameter(LOGIN) == null || request.getParameter(PASSWORD) == null)
-            return null;
-        else {
-            client.setEmail(request.getParameter(LOGIN));
-            client.setPassword(request.getParameter(PASSWORD));
-            ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
-            managerDao.beginTransaction();
-            try {
-                ClientDao clientDao = managerDao.getClientPostgresDao();
-                clientDao.
-            } catch (SQLException e) {
-
-            }
-        }
-    }
+//    ActionResult showClient = new ActionResult();
+//    ActionResult welcome = new ActionResult();
+//    ActionResult admin = new ActionResult();
+//    ActionResult dispatcher = new ActionResult();
+//    Client client = new Client();
+//
+//    @Override
+//    public ActionResult execute(HttpServletRequest req) {
+//    }
+//
+//    public String findClient(HttpServletRequest request) {
+//        if (request.getParameter(LOGIN) == null || request.getParameter(PASSWORD) == null)
+//            return null;
+//        else {
+//            client.setEmail(request.getParameter(LOGIN));
+//            client.setPassword(request.getParameter(PASSWORD));
+//            ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
+//            managerDao.beginTransaction();
+//            try {
+//                ClientDao clientDao = managerDao.getClientPostgresDao();
+//
+//            } catch (SQLException e) {
+//
+//            }
+//        }
+//    }
 }
 
 

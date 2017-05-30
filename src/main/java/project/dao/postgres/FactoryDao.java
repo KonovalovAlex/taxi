@@ -16,7 +16,6 @@ public class FactoryDao {
     private String user;
     private String password;
     private int maxConnection;
-    public Map<String, AbstractPostgresDao> daoMap = new HashMap<>();
 
     public FactoryDao() {
         Properties properties = new Properties();
@@ -29,13 +28,10 @@ public class FactoryDao {
             this.password = properties.getProperty("password");
             this.maxConnection = Integer.parseInt(properties.getProperty("maxConnection"));
             this.pool = ConnectionPool.getInstance(url, user, password, maxConnection);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-        daoMap.put("clientPostgresDao",new ClientPostgresDao()); // ??
     }
-
 
     public ManagerDao getDaoManager() throws ExceptionDao {
         Connection connection;
@@ -44,7 +40,7 @@ public class FactoryDao {
         } catch (ExceptionDao e) {
             throw new ExceptionDao(e);
         }
-        return new ManagerDao(connection, daoMap);
+        return new ManagerDao(connection);
     }
 
     public static FactoryDao getInstance() {

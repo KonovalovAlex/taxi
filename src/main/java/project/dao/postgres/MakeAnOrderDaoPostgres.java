@@ -15,6 +15,7 @@ public class MakeAnOrderDaoPostgres extends AbstractPostgresDao<Address> impleme
     private ManagerDao managerDao;
 
     public MakeAnOrderDaoPostgres(Connection connection, ManagerDao managerDao) {
+        super(connection);
         this.connection = connection;
         this.managerDao = managerDao;
     }

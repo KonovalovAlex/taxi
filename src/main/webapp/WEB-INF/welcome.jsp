@@ -7,6 +7,6 @@
     <title>Welcome</title>
 </head>
 <body>
-<p><a href="/Controller/registrationPage">Регистрация</a></p><p><a href="/Controller/goToTheOfficePage">Войти</a></p>
+<p><a href="/Controller/registration">Регистрация</a></p><p><a href="/Controller/goToTheOffice">Войти</a></p>
 </body>
 </html>

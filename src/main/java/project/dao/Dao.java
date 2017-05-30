@@ -7,11 +7,12 @@ import java.sql.Connection;
 public interface Dao<T extends AbstractEntity> {
     void setConn(Connection connection);
 
-    void findById(int ID);
+    T get(String sql);
 
-    void insert();
+    int insertClient(T entity);
 
-    void updateEntity();
+    boolean updateEntity();
 
-    void deleteEntity();
+    boolean deleteEntity();
+
 }

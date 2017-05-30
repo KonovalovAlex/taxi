@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class CurrentFilter implements Filter {
+public class CurrentFilter {
 
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -17,6 +17,7 @@ public class CurrentFilter implements Filter {
 
     private void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
         String pathInfo = req.getRequestURI().substring(req.getContextPath().length());
+
     }
 
     public void destroy() {

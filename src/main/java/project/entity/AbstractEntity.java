@@ -1,5 +1,8 @@
 package project.entity;
 
 public abstract class AbstractEntity {
-    private int id;
+    public int id;
+    public void setId(int id) {
+        this.id = id;
+    }
 }

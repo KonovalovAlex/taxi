@@ -19,7 +19,6 @@ public class MakeAnOrder implements Action {
         request.getParameter(CLIENT);
         HttpSession session = request.getSession();
         session.setAttribute(ADDRESS,address);
-        session.setAttribute();
         return address;
     }
     @Override

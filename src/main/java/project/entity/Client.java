@@ -2,7 +2,6 @@ package project.entity;
 
 
 public class Client extends AbstractEntity {
-    private int id;
     private String login;
     private String password;
     private String firstName;
@@ -28,9 +27,6 @@ public class Client extends AbstractEntity {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getLogin() {
         return login;

@@ -6,14 +6,14 @@ import project.actions.ActionResult;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static project.constants.Constants.REGISTRATION_PAGE;
+import static project.constants.Constants.REGISTRATION;
 
-public class RegistrationPage implements Action {
-    private ActionResult registrationPage = new ActionResult(REGISTRATION_PAGE);
+public class Registration implements Action {
+    private ActionResult registration = new ActionResult(REGISTRATION);
 
     @Override
     public ActionResult execute(HttpServletRequest request) throws ActionException {
 
-        return registrationPage;
+        return registration;
     }
 }

@@ -14,11 +14,10 @@ import java.util.Map;
 
 public class ManagerDao {
     private final Connection connection;
-    private static Map<String, AbstractPostgresDao> daoMap = new HashMap<>();
 
-    public ManagerDao(Connection connection, Map<String, AbstractPostgresDao> daoMap) {
+    public ManagerDao(Connection connection) {
         this.connection = connection;
-        this.daoMap = daoMap;
+
     }
 
     public void beginTransaction() throws ExceptionDao {
@@ -48,13 +47,6 @@ public class ManagerDao {
         return connection;
     }
 
-    public void closeConnection() throws ExceptionDao {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new ExceptionDao(e);
-        }
-    }
 
     public ClientPostgresDao getClientPostgresDao() {
         return new ClientPostgresDao(connection,this);

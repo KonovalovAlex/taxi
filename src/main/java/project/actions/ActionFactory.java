@@ -1,10 +1,9 @@
 package project.actions;
 
-import project.actions.login.EnterTheOffice;
 import project.actions.show.GoToTheOfficePage;
 import project.constants.Constants;
 import project.actions.registration.DoRegistration;
-import project.actions.show.RegistrationPage;
+import project.actions.show.Registration;
 import project.actions.show.Welcome;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +15,10 @@ public class ActionFactory extends Constants {
 
     static {
         actionMap.put(WELCOME, new Welcome());
-        actionMap.put(REGISTRATION_PAGE, new RegistrationPage());
+        actionMap.put(REGISTRATION, new Registration());
         actionMap.put(DO_REGISTRATION,new DoRegistration());
         actionMap.put(GO_TO_THE_OFFICE,new GoToTheOfficePage());
-        actionMap.put(ENTER_THE_OFFICE, new EnterTheOffice());
+//        actionMap.put(ENTER_THE_OFFICE, new EnterTheOffice());
     }
     public static Action getAction(HttpServletRequest req) {
 
