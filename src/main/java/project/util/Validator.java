@@ -53,8 +53,10 @@ public class Validator {
             if (stringEntry.getValue().equals("false")) {
                 invalidFields.put(stringEntry.getKey().substring(0, stringEntry.getKey().indexOf(".")), stringEntry.getKey());
             }
+            if (invalidFields.isEmpty()) return true;
+            else return false;
         }
-
+//* Returns <tt>true</tt> if this map contains no key-value mappings.
         if (invalidFields.isEmpty()) return true;
         else return false;
     }
