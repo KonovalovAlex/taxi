@@ -13,15 +13,15 @@ public class Constants {
     public static final String ACCEPT_ORDER = "acceptOrder";
     public static final String REJECT_ORDER = "rejectOrder";
     public static final String ADDRESS = "address";
+    public static final String ERROR = "error";
+    public static final String ERROR_PAGE = "error";
 
     public static final String CLIENT = "client";
     public static final String USER = "user";
     public static final String DISPATCHER = "dispatcher";
     public static final String ADMIN = "admin";
 
-    public static final String GO_TO_THE_OFFICE = "goToTheOffice";
-    public static final String ENTER_THE_OFFICE = "enterTheOffice";
-
+    public static final String ACTION_LOGIN = "actionLogin";
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
     public static final String PHONE ="phone";

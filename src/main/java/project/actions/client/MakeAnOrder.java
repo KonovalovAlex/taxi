@@ -7,9 +7,9 @@ import project.dao.postgres.FactoryDao;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import static project.constants.Constants.ADDRESS;
 import static project.constants.Constants.CLIENT;
+import static project.constants.Constants.USER;
 
 public class MakeAnOrder implements Action {
     private String address;
@@ -18,7 +18,7 @@ public class MakeAnOrder implements Action {
         this.address = request.getParameter(ADDRESS);
         request.getParameter(CLIENT);
         HttpSession session = request.getSession();
-        session.setAttribute(ADDRESS,address);
+        session.getAttribute(USER);
         return address;
     }
     @Override

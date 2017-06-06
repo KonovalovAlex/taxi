@@ -1,7 +1,7 @@
 package project.util;
 
 import project.dao.managerDao.ManagerDao;
-import project.entity.Client;
+import project.entity.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +20,7 @@ public class Validator {
     private final String USER_PASSWORD_LOWERCASE_REQUIRED = "^(?=.*[a-z]).*$";
     private final String USER_PASSWORD_NOT_ALLOW_CHARACTERS = "^[a-zA-Z0-9]{0,}$";
     private final String USER_PASSWORD_NOT_LESS_6_SIMBOLS = "^(.){6,}$";
-    //    private final String USER_PASSWORD_NOT_MORE_20_SIMBOLS = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$";
+ //   private final String USER_PASSWORD_NOT_MORE_20_SIMBOLS = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$";
     private final String USER_PASSWORD_NOT_MORE_20_SIMBOLS = "^(.){0,20}$";
     private final String USER_NAMES_NOT_ALLOW_CHARACTERS = "^[a-zA-Zа-яА-я]{1,}$";
     private final String USER_NAMES_MORE_20 = "^(.){0,20}$";
@@ -53,8 +53,6 @@ public class Validator {
             if (stringEntry.getValue().equals("false")) {
                 invalidFields.put(stringEntry.getKey().substring(0, stringEntry.getKey().indexOf(".")), stringEntry.getKey());
             }
-            if (invalidFields.isEmpty()) return true;
-            else return false;
         }
 //* Returns <tt>true</tt> if this map contains no key-value mappings.
         if (invalidFields.isEmpty()) return true;
@@ -71,7 +69,7 @@ public class Validator {
             results.put("login.is.required.field", "false");
             return false;
         } else {
-            if (daoManager.getClientPostgresDao().alreadyExist(name)) {
+            if (daoManager.getUserPostgresDao().alreadyExist(name)) {
                 results.put("login.already.occupied", "false");
                 return false;
             } else {
@@ -132,7 +130,7 @@ public class Validator {
         }
     }
 
-    public boolean checkOldPassword(String password, Client user) {
+    public boolean checkOldPassword(String password, User user) {
         if (!password.equals(user.getPassword())) {
             results.put("oldpassword.false", "false");
         }
@@ -146,12 +144,12 @@ public class Validator {
         return password.equals(confirm);
     }
 
-    public boolean checkUserFirstName(String firstname) {
-        if (!firstname.equals("")) {
-            matcher = Pattern.compile(USER_NAMES_NOT_ALLOW_CHARACTERS).matcher(firstname);
+    public boolean checkUserFirstName(String firstName) {
+        if (!firstName.equals("")) {
+            matcher = Pattern.compile(USER_NAMES_NOT_ALLOW_CHARACTERS).matcher(firstName);
             if (!matcher.matches()) results.put("firstname.illegal.characters", String.valueOf(matcher.matches()));
             else {
-                matcher = Pattern.compile(USER_NAMES_MORE_20).matcher(firstname);
+                matcher = Pattern.compile(USER_NAMES_MORE_20).matcher(firstName);
                 if (!matcher.matches()) results.put("firstname.more.then.20", String.valueOf(matcher.matches()));
             }
             return matcher.matches();
@@ -159,12 +157,12 @@ public class Validator {
         return true;
     }
 
-    public boolean checkUserLastName(String lastname) {
-        if (!lastname.equals("")) {
-            matcher = Pattern.compile(USER_NAMES_NOT_ALLOW_CHARACTERS).matcher(lastname);
+    public boolean checkUserLastName(String lastName) {
+        if (!lastName.equals("")) {
+            matcher = Pattern.compile(USER_NAMES_NOT_ALLOW_CHARACTERS).matcher(lastName);
             if (!matcher.matches()) results.put("lastname.illegal.characters", String.valueOf(matcher.matches()));
             else {
-                matcher = Pattern.compile(USER_NAMES_MORE_20).matcher(lastname);
+                matcher = Pattern.compile(USER_NAMES_MORE_20).matcher(lastName);
                 if (!matcher.matches()) results.put("lastname.more.then.20", String.valueOf(matcher.matches()));
             }
             return matcher.matches();

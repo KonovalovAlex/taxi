@@ -6,12 +6,13 @@ import project.actions.ActionResult;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static project.constants.Constants.DISPATCHER_PAGE;
+import static project.constants.Constants.LOGIN;
 
-public class DispatcherPage implements Action {
-    private ActionResult dispatcherPage = new ActionResult(DISPATCHER_PAGE);
+
+public class LoginPage implements Action {
+    private ActionResult login = new ActionResult(LOGIN);
 
     public ActionResult execute(HttpServletRequest request) throws ActionException {
 
-        return dispatcherPage;
+        return login;
 }}

@@ -3,6 +3,8 @@ package project.connectionPool;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -14,7 +16,7 @@ public class ConnectionPool {
     private String user;
     private String password;
     private int maxСonnection;
-    private BlockingQueue<Connection> freeConnections = null;
+    private List<Connection> freeConnections = null;
     //TODO need to change collection
 
     private ConnectionPool(String url, String user, String password, int maxСonnection) {
@@ -22,8 +24,9 @@ public class ConnectionPool {
         this.user = user;
         this.password = password;
         this.maxСonnection = maxСonnection;
-        freeConnections = new ArrayBlockingQueue<>(maxСonnection);
+        freeConnections = new ArrayList<>();
         this.fillConnectionPool();
+
     }
 
     public static ConnectionPool getInstance(String url, String user, String password, int maxConnection) {
@@ -39,28 +42,19 @@ public class ConnectionPool {
             Connection con = null;
             for (int i = 0; i < maxСonnection; i++ ) {
                 con = DriverManager.getConnection(url, user, password);
-                freeConnections.put(con);
+                freeConnections.add(con);
             }
-        } catch (InterruptedException | SQLException | ClassNotFoundException e) {
+        } catch ( SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     public Connection getConnection() {
-        Connection con = null;
-        try {
-            con = freeConnections.take();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return con;
+        return this.freeConnections.get(this.freeConnections.size()-1);
     }
 
     public void returnConnection(Connection connection) {
-        try {
-            freeConnections.put(connection);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            freeConnections.add(connection);
+
     }
 }

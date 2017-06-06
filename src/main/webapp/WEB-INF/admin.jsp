@@ -3,10 +3,11 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>ТАКСИ</title>
+    <title>Admin</title>
 </head>
 <body>
-<form action="Controller" method="get">
+<form action="Controller" method="get"><br>
+    sadasdasdasd</br>
 
 </form>
 </body>

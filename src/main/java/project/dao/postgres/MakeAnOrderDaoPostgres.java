@@ -21,8 +21,8 @@ public class MakeAnOrderDaoPostgres extends AbstractPostgresDao<Address> impleme
     }
     public void getAddress(HttpServletRequest request) {
         List<String> allAddresses = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(GET_ADDRESSES)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ADDRESSES);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 allAddresses.add(resultSet.getString("AT_THE_POINT_OF"));
             }

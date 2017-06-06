@@ -13,6 +13,14 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+     <!--https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api-->
+     <!--https://mvnrepository.com/artifact/org.slf4j/slf4j-api-->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.25</version>
+    </dependency>
+
     <dependency>
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-core</artifactId>
@@ -24,7 +32,7 @@
       <artifactId>javax.servlet-api</artifactId>
       <version>4.0.0-b02</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/jstl/jstl -->
+     <!--https://mvnrepository.com/artifact/jstl/jstl-->
     <dependency>
       <groupId>jstl</groupId>
       <artifactId>jstl</artifactId>
@@ -37,7 +45,12 @@
       <artifactId>postgresql</artifactId>
       <version>9.4.1207</version>
     </dependency>
-
+     <!--https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api-->
+    <!--<dependency>-->
+      <!--<groupId>javax.servlet.jsp</groupId>-->
+      <!--<artifactId>jsp-api</artifactId>-->
+      <!--<version>2.0</version>-->
+    <!--</dependency>-->
   </dependencies>
   <build>
     <finalName>taxi</finalName>

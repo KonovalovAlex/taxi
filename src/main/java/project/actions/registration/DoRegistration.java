@@ -2,53 +2,52 @@ package project.actions.registration;
 
 import project.actions.Action;
 import project.actions.ActionResult;
-import project.dao.ClientDao;
+import project.dao.UserDao;
 import project.dao.postgres.ExceptionDao;
 import project.dao.postgres.FactoryDao;
 import project.dao.managerDao.ManagerDao;
-import project.entity.Client;
+import project.entity.User;
+
 import project.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
-import java.util.LinkedList;
 import java.util.Map;
+
 
 import static project.constants.Constants.*;
 
 public class DoRegistration implements Action {
+
     ActionResult doRegistration = new ActionResult(DO_REGISTRATION);
-    ActionResult regisrtrationFailed = new ActionResult("error");
+    ActionResult registrationFailed = new ActionResult(ERROR);
     ManagerDao daoManager = FactoryDao.getInstance().getDaoManager();
     Validator validator = new Validator(daoManager);
-    LinkedList<String> linkedList = new LinkedList();
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
 
-
-        Client client = createClient(req);
-        if (client != null) {
+        User user = createClient(req);
+        if (user != null) {
             daoManager.beginTransaction();
             try {
-                ClientDao daoClient = daoManager.getClientPostgresDao();
-                daoClient.insertClient(client);
+                UserDao daoClient = daoManager.getUserPostgresDao();
+                daoClient.insertClient(user);
                 daoManager.commit();
             } catch (ExceptionDao e) {
                 daoManager.rollback();
             } finally {
-                daoManager.returnConnection();
+                FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
             }
             return doRegistration;
-        }else {
-//            LOGGER.info("Creation of a client failed, {}", client);
-        return regisrtrationFailed;
-        }
+        } else
+//            LOGGER.info("Creation of a client failed, {}", user);
+        return registrationFailed;
     }
 
-    private Client createClient(HttpServletRequest req) {
+    private User createClient(HttpServletRequest req) {
 
-        Client client = new Client();
+        User user = new User();
         boolean login = validator.checkUserName(req.getParameter(LOGIN));
         boolean password = validator.checkUserPassword(req.getParameter(PASSWORD));
         boolean firstname = validator.checkUserFirstName(req.getParameter(FIRST_NAME));
@@ -57,20 +56,19 @@ public class DoRegistration implements Action {
         boolean email = validator.checkEmail(req.getParameter(EMAIL));
 
         if (validator.isValide()) {
-            client.setLogin(req.getParameter(LOGIN));
-            client.setPassword(req.getParameter(PASSWORD));
-            client.setFirstName(req.getParameter(FIRST_NAME));
-            client.setLastName(req.getParameter(LAST_NAME));
-            client.setEmail(req.getParameter(EMAIL));
-            client.setMobile(req.getParameter(PHONE));
+            user.setLogin(req.getParameter(LOGIN));
+            user.setPassword(req.getParameter(PASSWORD));
+            user.setFirstName(req.getParameter(FIRST_NAME));
+            user.setLastName(req.getParameter(LAST_NAME));
+            user.setEmail(req.getParameter(EMAIL));
+            user.setMobile(req.getParameter(PHONE));
         } else {
             Map<String, String> invalidFields = validator.getInvalidFields();
             for (Map.Entry<String, String> field : invalidFields.entrySet()) {
-                req.setAttribute(field.getKey(), field.getValue());
+                req.setAttribute("Mapa", invalidFields);
                 return null;
             }
-
         }
-        return client;
+        return user;
     }
 }

@@ -2,6 +2,7 @@ package project.controller;
 
 import project.actions.*;
 import project.actions.ActionResult;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,17 +25,19 @@ public class Controller extends HttpServlet {
         resp.setContentType("text/html");
         Action action = ActionFactory.getAction(req);
         ActionResult result = null;
-        try {
-            result = action.execute(req);
-        } catch (ActionException e) {
-            throw new ActionException(e);
-        }
+        if (action != null) {
+            try {
+                result = action.execute(req);
+            } catch (ActionException e) {
+                throw new ActionException(e);
+            }
 
-        if (result.isRedirect()) {
-            resp.sendRedirect(req.getContextPath() + "/Controller/" + result.getView());
-            return;
+            if (result.isRedirect()) {
+                resp.sendRedirect(req.getContextPath() + "/Controller/" + result.getView());
+                return;
+            }
+            req.getRequestDispatcher("/WEB-INF/" + result.getView() + ".jsp").forward(req, resp);
         }
-         req.getRequestDispatcher("/WEB-INF/" + result.getView() + ".jsp").forward(req, resp);
     }
 
     @Override

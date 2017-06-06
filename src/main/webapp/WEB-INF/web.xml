@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://java.sun.com/xml/ns/javaee"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         id="WebApp_ID"
          version="2.5">
-<welcome-file-list>
-  <welcome-file>index.jsp</welcome-file>
-</welcome-file-list>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    <filter>
+        <filter-name>currentFilter</filter-name>
+        <filter-class>project.filter.CurrentFilter</filter-class>
+    </filter>
 
-  <!--<filter>-->
-    <!--<filter-name>currentFilter</filter-name>-->
-    <!--<filter-class>project.filter.CurrentFilter</filter-class>-->
-  <!--</filter>-->
+    <filter-mapping>
+        <filter-name>currentFilter</filter-name>
+        <url-pattern>/Controller/*</url-pattern>
+    </filter-mapping>
 
-  <!--<filter-mapping>-->
-    <!--<filter-name>currentFilter</filter-name>-->
-    <!--<servlet-name>Controller</servlet-name>-->
-  <!--</filter-mapping>-->
+    <servlet>
+        <display-name>Controller</display-name>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>project.controller.Controller</servlet-class>
+    </servlet>
 
-  <servlet>
-    <display-name>Controller</display-name>
-    <servlet-name>Controller</servlet-name>
-    <servlet-class>project.controller.Controller</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>Controller</servlet-name>
-    <url-pattern>/Controller/*</url-pattern>
-  </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/Controller/*</url-pattern>
+    </servlet-mapping>
 </web-app>

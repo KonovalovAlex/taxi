@@ -1,23 +1,24 @@
 package project.entity;
 
 
-public class Client extends AbstractEntity {
+public class User extends AbstractEntity {
     private String login;
     private String password;
     private String firstName;
     private String lastName;
     private String email;
-    private String role;
+    private UserRole role;
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 
     public String getEmail() {
+
         return email;
     }
 

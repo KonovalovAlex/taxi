@@ -1,27 +1,42 @@
 package project.filter;
 
+
 import javax.servlet.*;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class CurrentFilter {
+import static project.constants.Constants.CLIENT;
+import static project.constants.Constants.ROLE;
+
+public class CurrentFilter implements Filter {
+
 
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
 
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        doFilter((HttpServletRequest) req, (HttpServletResponse) resp, chain);
-    }
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) res;
+        HttpSession session = request.getSession(false);
+        String pathAdmin = request.getPathInfo() + "/admin";
+        String pathDispatcher = request.getPathInfo() + "/dispatcher";
 
-    private void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        String pathInfo = req.getRequestURI().substring(req.getContextPath().length());
+        boolean loggedIn = session.getAttribute(ROLE).equals(CLIENT);
 
+        if (loggedIn || pathAdmin.equals(request.getPathInfo() + "/admin") || (pathDispatcher.equals(request.getPathInfo() + "/dispatcher"))) {
+            response.sendRedirect("Controller/welcome");
+        }
+        chain.doFilter(request, response);
     }
 
     public void destroy() {
-
     }
 }
 

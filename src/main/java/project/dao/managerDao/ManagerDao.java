@@ -1,16 +1,11 @@
 package project.dao.managerDao;
 
-import project.connectionPool.ConnectionPool;
-import project.dao.Dao;
-import project.dao.postgres.AbstractPostgresDao;
-import project.dao.postgres.ClientPostgresDao;
+import project.dao.postgres.UserPostgresDao;
 import project.dao.postgres.ExceptionDao;
 import project.dao.postgres.MakeAnOrderDaoPostgres;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ManagerDao {
     private final Connection connection;
@@ -48,8 +43,8 @@ public class ManagerDao {
     }
 
 
-    public ClientPostgresDao getClientPostgresDao() {
-        return new ClientPostgresDao(connection,this);
+    public UserPostgresDao getUserPostgresDao() {
+        return new UserPostgresDao(connection,this);
     }
     public MakeAnOrderDaoPostgres getMakeAnOrderDaoPostgres(){
         return new MakeAnOrderDaoPostgres(connection,this);
