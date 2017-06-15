@@ -1,23 +1,17 @@
 package project.filter;
 
-
 import javax.servlet.*;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static project.constants.Constants.CLIENT;
-import static project.constants.Constants.ROLE;
+import static project.constants.Constants.*;
 
 public class CurrentFilter implements Filter {
 
-
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
@@ -25,15 +19,26 @@ public class CurrentFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession(false);
-        String pathAdmin = request.getPathInfo() + "/admin";
-        String pathDispatcher = request.getPathInfo() + "/dispatcher";
+        String path = request.getPathInfo();
+        boolean clientRole = session.getAttribute(ROLE) != null && session.getAttribute(ROLE).equals(CLIENT);
+        boolean dispatcherRole = session.getAttribute(ROLE) != null && session.getAttribute(ROLE).equals(DISPATCHER);
+        boolean adminRole = session.getAttribute(ROLE) != null && session.getAttribute(ROLE).equals(ADMIN);
 
-        boolean loggedIn = session.getAttribute(ROLE).equals(CLIENT);
+        if (path.equals(request.getContextPath() + "/client") || path.equals(request.getContextPath() + "/admin")
+                || path.equals(request.getContextPath() + "/dispatcher")) {
+            response.sendRedirect("/Controller/welcome");
 
-        if (loggedIn || pathAdmin.equals(request.getPathInfo() + "/admin") || (pathDispatcher.equals(request.getPathInfo() + "/dispatcher"))) {
-            response.sendRedirect("Controller/welcome");
+        } else if (dispatcherRole && (path.equals(request.getContextPath() + "/admin")
+                || (path.equals(request.getContextPath() + "/client")))) {
+            response.sendRedirect("/Controller/welcome");
+            chain.doFilter(request, response);
+        } else if (clientRole && (path.equals(request.getContextPath() + "/admin")
+                || (path.equals(request.getContextPath() + "/dispatcher")))) {
+            response.sendRedirect("/Controller/welcome");
+            chain.doFilter(request, response);
+        } else {
+            chain.doFilter(request, response);
         }
-        chain.doFilter(request, response);
     }
 
     public void destroy() {

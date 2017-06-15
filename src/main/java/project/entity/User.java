@@ -8,6 +8,12 @@ public class User extends AbstractEntity {
     private String lastName;
     private String email;
     private UserRole role;
+    private String phone;
+
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public UserRole getRole() {
         return role;
@@ -22,7 +28,6 @@ public class User extends AbstractEntity {
         return email;
     }
 
-    private String mobile;
 
     public int getId() {
         return id;
@@ -61,13 +66,10 @@ public class User extends AbstractEntity {
         this.lastName = lastName;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
 
     public void setEmail(String email) {
         this.email = email;

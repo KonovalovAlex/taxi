@@ -2,7 +2,7 @@ package project.dao.managerDao;
 
 import project.dao.postgres.UserPostgresDao;
 import project.dao.postgres.ExceptionDao;
-import project.dao.postgres.MakeAnOrderDaoPostgres;
+import project.dao.postgres.OrderPostgresDao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -38,15 +38,17 @@ public class ManagerDao {
             throw new ExceptionDao(e);
         }
     }
-    public Connection returnConnection(){
+
+    public Connection returnConnection() {
         return connection;
     }
 
 
     public UserPostgresDao getUserPostgresDao() {
-        return new UserPostgresDao(connection,this);
+        return new UserPostgresDao(connection, this);
     }
-    public MakeAnOrderDaoPostgres getMakeAnOrderDaoPostgres(){
-        return new MakeAnOrderDaoPostgres(connection,this);
+
+    public OrderPostgresDao getOrderDaoPostgres() {
+        return new OrderPostgresDao(connection, this);
     }
 }

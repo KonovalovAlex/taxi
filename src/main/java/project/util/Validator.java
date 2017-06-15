@@ -20,7 +20,7 @@ public class Validator {
     private final String USER_PASSWORD_LOWERCASE_REQUIRED = "^(?=.*[a-z]).*$";
     private final String USER_PASSWORD_NOT_ALLOW_CHARACTERS = "^[a-zA-Z0-9]{0,}$";
     private final String USER_PASSWORD_NOT_LESS_6_SIMBOLS = "^(.){6,}$";
- //   private final String USER_PASSWORD_NOT_MORE_20_SIMBOLS = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$";
+    //   private final String USER_PASSWORD_NOT_MORE_20_SIMBOLS = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$";
     private final String USER_PASSWORD_NOT_MORE_20_SIMBOLS = "^(.){0,20}$";
     private final String USER_NAMES_NOT_ALLOW_CHARACTERS = "^[a-zA-Zа-яА-я]{1,}$";
     private final String USER_NAMES_MORE_20 = "^(.){0,20}$";
@@ -32,6 +32,7 @@ public class Validator {
     private final String TIME = "^([0-1]\\d|2[0-3])(:[0-5]\\d){2}$";
     private final String TELEPHONE_NUMBER = "^(8|\\+7)\\d{10}$";
     private final String EMAIL = "^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$";
+    private static final String TIME24HOURS_PATTERN = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
 
     private Map<String, String> results = new HashMap<>();
     private Map<String, String> invalidFields = new HashMap<>();
@@ -54,13 +55,22 @@ public class Validator {
                 invalidFields.put(stringEntry.getKey().substring(0, stringEntry.getKey().indexOf(".")), stringEntry.getKey());
             }
         }
-//* Returns <tt>true</tt> if this map contains no key-value mappings.
+//* Returns true if this map contains no key-value mappings.
         if (invalidFields.isEmpty()) return true;
         else return false;
     }
 
     public Map<String, String> getInvalidFields() {
         return invalidFields;
+    }
+
+    public boolean checkTime(String time) {
+        matcher = Pattern.compile(TIME24HOURS_PATTERN).matcher(time);
+        if (!matcher.matches()) {
+            results.put("time enter not correct", String.valueOf(matcher.matches()));
+        }
+        return matcher.matches();
+
     }
 
     public boolean checkUserName(String name) {
@@ -179,6 +189,7 @@ public class Validator {
         }
         return true;
     }
+
     public boolean checkEmail(String email) {
         if (email == null || email.equals("")) {
             results.put("email.is.required.field", "false");

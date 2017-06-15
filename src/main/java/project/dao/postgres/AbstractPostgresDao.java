@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 
 public abstract class AbstractPostgresDao<T extends AbstractEntity> {
     private static final String INSERT = "INSERT INTO %s VALUES %s";
-    private static final String SELECT = "SELECT FROM %s %s";
+    private static final String SELECT = "SELECT * FROM %s %s";
     private static final String UPDATE = "UPDATE %s SET %s WHERE %s";
     private static final String DELETE = "UPDATE %s SET DELETED = ? WHERE ID = ?";
 
@@ -26,11 +26,14 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
     public void setConn(Connection connection) {
     }
 
+    public T get(String sql) {
+        return null;
+    }
+
     public ResultSet get(String tableName, LinkedHashMap<String, Object> conditions) {
         String queryString = String.format(SELECT, tableName, this.generateConditions(conditions));
-
         try (PreparedStatement preparedStatement = fillFromMapPreparedStatement(connection.prepareStatement(queryString), conditions)) {
-           return preparedStatement.executeQuery();
+            return preparedStatement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -41,11 +44,11 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
         String queryString = String.format(INSERT, tableName, this.generateValuesCount(params));
         int id = 0;
         try (PreparedStatement preparedStatement =
-                     fillFromArgumentsPreparedStatement(connection.prepareStatement(queryString,Statement.RETURN_GENERATED_KEYS), params)) {
+                     fillFromArgumentsPreparedStatement(connection.prepareStatement(queryString, Statement.RETURN_GENERATED_KEYS), params)) {
             preparedStatement.execute();
             ResultSet setId = preparedStatement.getGeneratedKeys();
             if (setId.next()) {
-                id = setId.getInt(7);
+                id = setId.getInt("id");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,7 +62,7 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
 //insert data instead of "?"
         for (Object value : conditions) {
             if (value == null) {
-                preparedStatement.setNull(index++,0);
+                preparedStatement.setNull(index++, 0);
             } else if (value instanceof String) {
                 preparedStatement.setString(index++, (String) value);
             } else if (value instanceof Integer) {
@@ -69,26 +72,28 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
         return preparedStatement;
     }
 
-    public Boolean updateEntity(String tableName, LinkedHashMap<String, Object> params, LinkedHashMap<String, Object> conditions) {
+    public boolean updateEntity(String tableName, LinkedHashMap<String, Object> params, LinkedHashMap<String, Object> conditions) {
         String queryString = String.format(UPDATE, tableName, this.generateUpdateParamsPattern(params), this.generateConditions(conditions));
         LinkedHashMap<String, Object> combinedMap = new LinkedHashMap<>();
         combinedMap.putAll(params);
         combinedMap.putAll(conditions);
-        try (PreparedStatement preparedStatement = fillFromArgumentsPreparedStatement(connection.prepareStatement(queryString), combinedMap)) {
+        try (PreparedStatement preparedStatement =
+                     fillFromArgumentsPreparedStatement(connection.prepareStatement(queryString), combinedMap)) {
             preparedStatement.execute();
-
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return null;
+        return true;
     }
 
-    public Boolean deleteEntity(String tableName, LinkedHashMap<String, Object> conditions) {
+    public boolean deleteEntity(String tableName, LinkedHashMap<String, Object> conditions) {
         String queryString = String.format(DELETE, tableName, this.generateConditions(conditions));
         try (PreparedStatement preparedStatement = fillFromArgumentsPreparedStatement(connection.prepareStatement(queryString), conditions)) {
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
         return true;
     }
@@ -113,14 +118,15 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
     private String generateConditions(LinkedHashMap<String, Object> conditions) {
         StringBuilder sb = new StringBuilder("");
         Object[] conditionsArray = conditions.keySet().toArray();
-        for (int i = 0; i < conditionsArray.length; i++) {
-            sb.append(conditionsArray[i]);
-            if (i < conditionsArray.length) {
-                sb.append(" = ?, ");
-            } else {
-                sb.append(" = ? ");
+        if (conditions.size() > 0) sb.append("where");
+            for (int i = 0; i < conditionsArray.length; i++) {
+                sb.append(conditionsArray[i]);
+                if (i < conditionsArray.length) {
+                    sb.append(" = ?, ");
+                } else {
+                    sb.append(" = ? ");
+                }
             }
-        }
         return sb.toString();
     }
 
@@ -131,9 +137,5 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
             sb.append(" = ?, ");
         }
         return sb.toString();
-    }
-
-    public User get(String sql) {
-        return null;
     }
 }

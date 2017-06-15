@@ -24,12 +24,26 @@ public class Constants {
     public static final String ACTION_LOGIN = "actionLogin";
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
-    public static final String PHONE ="phone";
+    public static final String PHONE = "phone";
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
     public static final String EMAIL = "email";
     public static final String ROLE = "role";
+    public static final String ID = "id";
 
     public static final String DRIVER = "org.postgresql.Driver";
+
+    public static final String ORDER_STATUS_ACCEPT = "10";
+    public static final String ORDER_STATUS_REJECT = "11";
+    public static final String ORDER_STATUS_WAITING = "12";
+    public static final String ORDERS = "orders";
+
+
+    public static final String STREET = "street";
+    public static final String NUMBER_OF_APARTMENT = "number_of_apartment";
+    public static final String NUMBER_OF_HOUSE = "number_of_house";
+    public static final String TIME = "time";
+    public static final String FK_USERS = "fk_users";
+    public static final String FK_STATUS = "fk_status";
 
 }

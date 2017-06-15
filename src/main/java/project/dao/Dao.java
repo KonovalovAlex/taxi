@@ -3,16 +3,18 @@ package project.dao;
 import project.entity.AbstractEntity;
 
 import java.sql.Connection;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 public interface Dao<T extends AbstractEntity> {
     void setConn(Connection connection);
 
     T get(String sql);
 
-    int insertClient(T entity);
+    Integer insert(String tableName, Object... params);
 
-    boolean updateEntity();
+    boolean updateEntity(String tableName, LinkedHashMap<String, Object> params, LinkedHashMap<String, Object> conditions);
 
-    boolean deleteEntity();
+    boolean deleteEntity(String tableName, LinkedHashMap<String, Object> conditions);
 
 }

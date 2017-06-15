@@ -1,5 +1,6 @@
 package project.actions.registration;
 
+import org.apache.log4j.Logger;
 import project.actions.Action;
 import project.actions.ActionResult;
 import project.dao.UserDao;
@@ -18,7 +19,7 @@ import java.util.Map;
 import static project.constants.Constants.*;
 
 public class DoRegistration implements Action {
-
+    private static final Logger LOGGER = Logger.getLogger(DoRegistration.class.getName());
     ActionResult doRegistration = new ActionResult(DO_REGISTRATION);
     ActionResult registrationFailed = new ActionResult(ERROR);
     ManagerDao daoManager = FactoryDao.getInstance().getDaoManager();
@@ -32,21 +33,24 @@ public class DoRegistration implements Action {
             daoManager.beginTransaction();
             try {
                 UserDao daoClient = daoManager.getUserPostgresDao();
-                daoClient.insertClient(user);
+                daoClient.insert(user);
                 daoManager.commit();
             } catch (ExceptionDao e) {
                 daoManager.rollback();
+                LOGGER.error("Creation of a client failed", e);
+                return registrationFailed;
             } finally {
                 FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
             }
+            LOGGER.info("Customer registered" + user);
             return doRegistration;
-        } else
-//            LOGGER.info("Creation of a client failed, {}", user);
-        return registrationFailed;
+        } else {
+            LOGGER.warn("Creation of a client failed");
+            return registrationFailed;
+        }
     }
 
     private User createClient(HttpServletRequest req) {
-
         User user = new User();
         boolean login = validator.checkUserName(req.getParameter(LOGIN));
         boolean password = validator.checkUserPassword(req.getParameter(PASSWORD));
@@ -61,11 +65,11 @@ public class DoRegistration implements Action {
             user.setFirstName(req.getParameter(FIRST_NAME));
             user.setLastName(req.getParameter(LAST_NAME));
             user.setEmail(req.getParameter(EMAIL));
-            user.setMobile(req.getParameter(PHONE));
+            user.setPhone(req.getParameter(PHONE));
         } else {
             Map<String, String> invalidFields = validator.getInvalidFields();
             for (Map.Entry<String, String> field : invalidFields.entrySet()) {
-                req.setAttribute("Mapa", invalidFields);
+                req.setAttribute("invalidFieldsMap", invalidFields);
                 return null;
             }
         }

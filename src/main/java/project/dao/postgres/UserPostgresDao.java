@@ -1,6 +1,5 @@
 package project.dao.postgres;
 
-import com.sun.istack.internal.logging.Logger;
 import project.dao.UserDao;
 import project.dao.managerDao.ManagerDao;
 import project.entity.User;
@@ -20,11 +19,6 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
         this.managerDao = managerDao;
     }
 
-    public UserPostgresDao() {
-        super();
-    }
-
-
     public User getUserByLogin(String login) throws SQLException {
         User user = new User();
         UserRole userRole = new UserRole();
@@ -32,14 +26,14 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
         try (PreparedStatement preparedStatement = connection.prepareStatement(slq)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            userRole.setId(resultSet.getInt(9));
-            userRole.setName(resultSet.getString("user_role"));
+//            userRole.setId(resultSet.getInt(9));
+            userRole.setRoleName(resultSet.getString("user_role"));
             user.setFirstName(resultSet.getString("first_name"));
             user.setLastName(resultSet.getString("last_name"));
             user.setLogin(resultSet.getString("login"));
             user.setPassword(resultSet.getString("password"));
             user.setEmail(resultSet.getString("email"));
-            user.setMobile(resultSet.getString("phone"));
+            user.setPhone(resultSet.getString("phone"));
             user.setId(resultSet.getInt(7));
             user.setRole(userRole);
 
@@ -50,44 +44,27 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
 
 
     @Override
-    public int insertClient(User user) {
+    public int insert(User user) {
         return this.insert("users",
                 user.getLogin(),
                 user.getPassword(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                user.getMobile());
+                user.getPhone());
     }
-
-    @Override
-    public boolean updateEntity() {
-        return false;
-    }
-
-    @Override
-    public boolean deleteEntity() {
-        return false;
-    }
-
-    //    public boolean findByEmail() {
-//        Client client = new Client();
-//        String email = client.getEmail();
-//        String slq = "SELECT * FROM USERS WHERE EMAIL =" + "'" + email + "'";
-//        return false;
-//    }
-//
 
     public boolean findByPassword(String password) {
         String slq = "select * from users where password =" + "'" + password + "'";
         try (PreparedStatement preparedStatement = connection.prepareStatement(slq)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) return true;
+                if (resultSet.next());
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
+        return true;
     }
 
     public boolean alreadyExist(String login) {
@@ -105,7 +82,7 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
     }
 
     //if user = null - return(false) else check password if password is equal return true else false
-    public boolean checkCredetials(User user, String password) {
+    public boolean checkCredentials(User user, String password) {
         return user != null && user.getPassword().equals(password);
     }
 }
