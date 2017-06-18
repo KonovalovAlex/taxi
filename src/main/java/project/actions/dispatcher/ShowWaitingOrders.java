@@ -12,33 +12,35 @@ import project.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.sql.SQLException;
 import java.util.List;
 
-import static project.constants.Constants.ORDERS;
-import static project.constants.Constants.TIME;
+import static project.constants.Constants.*;
 
 public class ShowWaitingOrders implements Action {
     private static final Logger LOGGER = Logger.getLogger(ShowWaitingOrders.class.getName());
-    private ActionResult dispatcher = new ActionResult();
-    private Validator validator = new Validator();
+    private ActionResult dispatcher = new ActionResult(DISPATCHER, true);
+    private ActionResult error = new ActionResult(ERROR, true);
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
-        boolean time = validator.checkTime(req.getParameter(TIME));
-        if (time) {
-            managerDao.beginTransaction();
-            try {
-                OrderPostgresDao orderPostgresDao = managerDao.getOrderDaoPostgres();
-                List<Order> orders = orderPostgresDao.returnTheWaitingOrders();
-                managerDao.commit();
-                req.setAttribute(ORDERS, orders);
-            } catch (ExceptionDao e) {
-                LOGGER.error("can't get orders", e);
+        OrderPostgresDao orderPostgresDao = managerDao.getOrderDaoPostgres();
+        List<Order> orders = null;
+        try {
+            orders = orderPostgresDao.returnTheWaitingOrders();
+            if (orders == null) {
+                return error;
             }
-        } else {
-            req.setAttribute("timeNotCorrect", "time is not correct try again");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LOGGER.error("can't get orders", e);
+            return error;
+        } finally {
+            FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
         }
+        req.setAttribute(ORDERS, orders);
+        req.setAttribute("aaa","aaa");
         return dispatcher;
     }
 }

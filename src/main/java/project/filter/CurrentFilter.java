@@ -23,19 +23,26 @@ public class CurrentFilter implements Filter {
         boolean clientRole = session.getAttribute(ROLE) != null && session.getAttribute(ROLE).equals(CLIENT);
         boolean dispatcherRole = session.getAttribute(ROLE) != null && session.getAttribute(ROLE).equals(DISPATCHER);
         boolean adminRole = session.getAttribute(ROLE) != null && session.getAttribute(ROLE).equals(ADMIN);
+        boolean role = session.getAttribute(ROLE) != null;
 
-        if (path.equals(request.getContextPath() + "/client") || path.equals(request.getContextPath() + "/admin")
-                || path.equals(request.getContextPath() + "/dispatcher")) {
-            response.sendRedirect("/Controller/welcome");
-
-        } else if (dispatcherRole && (path.equals(request.getContextPath() + "/admin")
-                || (path.equals(request.getContextPath() + "/client")))) {
-            response.sendRedirect("/Controller/welcome");
-            chain.doFilter(request, response);
-        } else if (clientRole && (path.equals(request.getContextPath() + "/admin")
+        if (clientRole & (path.equals(request.getContextPath() + "/admin")
                 || (path.equals(request.getContextPath() + "/dispatcher")))) {
             response.sendRedirect("/Controller/welcome");
+
+        } else if (dispatcherRole & ((path.equals(request.getContextPath() + "/admin")
+                || (path.equals(request.getContextPath() + "/client"))))) {
             chain.doFilter(request, response);
+            response.sendRedirect("/Controller/welcome");
+
+        } else if (adminRole) {
+            chain.doFilter(request, response);
+
+        } else if ((!role) & (path.equals(request.getContextPath() + "/client")
+                || path.equals(request.getContextPath() + "/admin")
+                || path.equals(request.getContextPath() + "/dispatcher"))) {
+            chain.doFilter(request, response);
+            response.sendRedirect("/Controller/welcome");
+
         } else {
             chain.doFilter(request, response);
         }

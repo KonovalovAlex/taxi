@@ -12,6 +12,7 @@ import java.util.List;
 import static project.constants.Constants.*;
 
 public class OrderPostgresDao extends AbstractPostgresDao<Order> implements OrderDao {
+    private static final String GET_ORDERS = "select * from orders where ";
 
     private Connection connection;
     private ManagerDao managerDao;
@@ -24,7 +25,7 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
 
     public int insertOrder(Order order, Integer userId) {
         return this.insert("orders", order.getStreet() + order.getNumberOfHouse()
-                + order.getNumberOfApartment() + userId + order.getDate());
+                + order.getNumberOfApartment() + userId + order.getTime());
 
     }
 
@@ -37,26 +38,21 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
         return this.updateEntity(ORDERS, params, conditions);
     }
 
-    public List<Order> returnTheWaitingOrders() {
-        LinkedHashMap<String, Object> conditions = new LinkedHashMap<>();
-        conditions.put(FK_STATUS, ORDER_STATUS_WAITING);
-        ResultSet r = this.get(ORDERS, conditions);
+    public List<Order> returnTheWaitingOrders() throws SQLException {
         List<Order> orders = new ArrayList<>();
-        try {
-            while (r.next()) {
-                Order order = new Order();
-                order.setId(r.getInt(ID));
-                order.setStreet(r.getString(STREET));
-                order.setStreet(r.getString(NUMBER_OF_HOUSE));
-                order.setStreet(r.getString(NUMBER_OF_APARTMENT));
-                order.setTime(r.getString(TIME));
-                order.setFkUser(r.getInt(FK_USERS));
-                orders.add(order);
-            }
-            return orders;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        PreparedStatement preparedStatement = connection.prepareStatement(GET_ORDERS + FK_STATUS + "=" + ORDER_STATUS_WAITING);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            Order order = new Order();
+            order.setId(resultSet.getInt(ID));
+            order.setStreet(resultSet.getString(STREET));
+            order.setNumberOfHouse(resultSet.getString(NUMBER_OF_HOUSE));
+            order.setNumberOfApartment(resultSet.getString(NUMBER_OF_APARTMENT));
+            order.setTime(resultSet.getString(TIME));
+            order.setFkUser(resultSet.getInt(FK_USERS));
+            orders.add(order);
         }
-        return null;
+        return orders;
     }
 }
+

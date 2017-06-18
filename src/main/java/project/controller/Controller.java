@@ -40,7 +40,6 @@ public class Controller extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/" + result.getView() + ".jsp").forward(req, resp);
         }
     }
-
     @Override
     public void destroy() {
         super.destroy();

@@ -3,7 +3,7 @@ package project.entity;
 
 public class UserRole {
     private int id;
-    private String roleName;
+    private String nameOfRole;
 
     public int getId() {
         return id;
@@ -13,11 +13,11 @@ public class UserRole {
         this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getName() {
+        return nameOfRole;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setName(String nameOfRole) {
+        this.nameOfRole = nameOfRole;
     }
 }

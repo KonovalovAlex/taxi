@@ -8,22 +8,22 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     <filter>
-        <filter-roleName>currentFilter</filter-roleName>
+        <filter-name>currentFilter</filter-name>
         <filter-class>project.filter.CurrentFilter</filter-class>
     </filter>
 
     <filter-mapping>
-        <filter-roleName>currentFilter</filter-roleName>
-        <servlet-roleName>Controller</servlet-roleName>
+        <filter-name>currentFilter</filter-name>
+        <servlet-name>Controller</servlet-name>
     </filter-mapping>
     <servlet>
-        <display-roleName>Controller</display-roleName>
-        <servlet-roleName>Controller</servlet-roleName>
+        <display-name>Controller</display-name>
+        <servlet-name>Controller</servlet-name>
         <servlet-class>project.controller.Controller</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-roleName>Controller</servlet-roleName>
+        <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller/*</url-pattern>
     </servlet-mapping>
 </web-app>

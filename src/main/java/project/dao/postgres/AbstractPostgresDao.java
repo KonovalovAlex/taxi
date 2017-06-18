@@ -26,10 +26,6 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
     public void setConn(Connection connection) {
     }
 
-    public T get(String sql) {
-        return null;
-    }
-
     public ResultSet get(String tableName, LinkedHashMap<String, Object> conditions) {
         String queryString = String.format(SELECT, tableName, this.generateConditions(conditions));
         try (PreparedStatement preparedStatement = fillFromMapPreparedStatement(connection.prepareStatement(queryString), conditions)) {
@@ -118,14 +114,9 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
     private String generateConditions(LinkedHashMap<String, Object> conditions) {
         StringBuilder sb = new StringBuilder("");
         Object[] conditionsArray = conditions.keySet().toArray();
-        if (conditions.size() > 0) sb.append("where");
+        if (conditions.size() > 0) sb.append("where ");
             for (int i = 0; i < conditionsArray.length; i++) {
-                sb.append(conditionsArray[i]);
-                if (i < conditionsArray.length) {
-                    sb.append(" = ?, ");
-                } else {
-                    sb.append(" = ? ");
-                }
+
             }
         return sb.toString();
     }

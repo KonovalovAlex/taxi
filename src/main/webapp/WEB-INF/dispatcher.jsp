@@ -5,7 +5,17 @@
     <title>Dispatcher</title>
 </head>
 <body>
-<input type="submit" roleName="showWaitingOrders" value="показать ожидающие заказы"/><br/>
-<c:forEach var="orders" items="${orders}"></c:forEach>
+<form action="/Controller/showWaitingOrders">
+<table>
+<input type="submit" name="showWaitingOrders" value="показать ожидающие заказы"/><br/>
+<c:forEach var="entity" items="${orders}">
+    ${entity}
+    <tr>
+        <td>${entity}</td>
+        <td>${entity}</td>
+    </tr>
+</c:forEach>
+</table>
+</form>
 </body>
 </html>

@@ -3,7 +3,6 @@ package project.actions;
 public class ActionResult {
     private String view;
     private boolean redirection;
-    private int error = 0;
 
     public ActionResult() {
 
@@ -15,15 +14,6 @@ public class ActionResult {
         this.view = view;
         this.redirection = redirection;
     }
-
-    public int getError() {
-        return error;
-    }
-
-    public void setError(int error) {
-        this.error = error;
-    }
-
     public String getView() {
         return view;
     }

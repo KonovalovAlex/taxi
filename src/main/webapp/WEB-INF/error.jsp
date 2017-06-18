@@ -4,7 +4,7 @@
     <title>error</title>
 </head>
 <body>
-asdasdasasdasd
+возникла ошибка, попробуйте позже.
 <%--<div class="goods">--%>
 <%--<c:forEach var="entry" items="${addresses}">--%>
 <%--<jsp:good entry="${pageContext}"/>--%>

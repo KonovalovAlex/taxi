@@ -25,16 +25,6 @@ public class Order extends AbstractEntity {
         this.time = time;
     }
 
-    private Date date;
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public String getStreet() {
         return street;
     }

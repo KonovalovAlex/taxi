@@ -8,18 +8,18 @@
 <body>
 <form action="/Controller/doRegistration" method="post">
     login:<br/>
-    <input type="text" roleName="login" value=""/><br/>
+    <input type="text" name="login" value=""/><br/>
     password:<br/>
-    <input type="password" roleName="password" value=""/><br/>
+    <input type="password" name="password" value=""/><br/>
     firstName:<br/>
-    <input type="text" roleName="firstName" value=""/><br/>
+    <input type="text" name="firstName" value=""/><br/>
     lastName:<br/>
-    <input type="text" roleName="lastName" value=""/><br/>
+    <input type="text" name="lastName" value=""/><br/>
     Email:<br/>
-    <input type="email" roleName="email" value=""/><br/>
+    <input type="email" name="email" value=""/><br/>
     phone:<br/>
-    <input type="text" roleName="phone" value=""/><br/>
-    <input type="submit" roleName="doRegistration" value="зарегистрироваться"/><br/>
+    <input type="text" name="phone" value=""/><br/>
+    <input type="submit" name="doRegistration" value="зарегистрироваться"/><br/>
 </form>
 <p><a href="/Controller/welcome">Вернуться обратно!</a></p>
 </body>

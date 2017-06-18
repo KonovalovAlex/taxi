@@ -22,6 +22,7 @@ public class Constants {
     public static final String ADMIN = "admin";
 
     public static final String ACTION_LOGIN = "actionLogin";
+    public static final String SHOW_WAITING_ORDERS = "showWaitingOrders";
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
     public static final String PHONE = "phone";

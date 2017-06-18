@@ -26,8 +26,8 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
         try (PreparedStatement preparedStatement = connection.prepareStatement(slq)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-//            userRole.setId(resultSet.getInt(9));
-            userRole.setRoleName(resultSet.getString("user_role"));
+            userRole.setId(resultSet.getInt(9));
+            userRole.setName(resultSet.getString("user_role"));
             user.setFirstName(resultSet.getString("first_name"));
             user.setLastName(resultSet.getString("last_name"));
             user.setLogin(resultSet.getString("login"));

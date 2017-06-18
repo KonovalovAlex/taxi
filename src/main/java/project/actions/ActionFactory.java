@@ -4,6 +4,7 @@ import project.actions.client.CancelTheOrder;
 import project.actions.client.MakeAnOrder;
 import project.actions.dispatcher.AcceptOrder;
 import project.actions.dispatcher.RejectOrder;
+import project.actions.dispatcher.ShowWaitingOrders;
 import project.actions.login.ActionLogin;
 import project.actions.show.*;
 import project.constants.Constants;
@@ -19,17 +20,20 @@ public class ActionFactory extends Constants {
     static {
         actionMap.put(WELCOME, new Welcome());
         actionMap.put(REGISTRATION, new Registration());
-        actionMap.put(DO_REGISTRATION,new DoRegistration());
+        actionMap.put(DO_REGISTRATION, new DoRegistration());
         actionMap.put(ACTION_LOGIN, new ActionLogin());
         actionMap.put(LOGIN, new LoginPage());
-        actionMap.put(ERROR , new ErrorPage());
-        actionMap.put(ADMIN_PAGE,new AdminPage());
-        actionMap.put(DISPATCHER_PAGE,new DispatcherPage());
-        actionMap.put(ACCEPT_ORDER,new AcceptOrder());
-        actionMap.put(REJECT_ORDER,new RejectOrder());
-        actionMap.put(MAKE_AN_ORDER,new MakeAnOrder());
-        actionMap.put(CANCEL_THE_ORDER,new CancelTheOrder());
+        actionMap.put(ERROR, new ErrorPage());
+        actionMap.put(ADMIN_PAGE, new AdminPage());
+        actionMap.put(DISPATCHER_PAGE, new DispatcherPage());
+        actionMap.put(CLIENT_PAGE, new ClientPage());
+        actionMap.put(ACCEPT_ORDER, new AcceptOrder());
+        actionMap.put(REJECT_ORDER, new RejectOrder());
+        actionMap.put(MAKE_AN_ORDER, new MakeAnOrder());
+        actionMap.put(CANCEL_THE_ORDER, new CancelTheOrder());
+        actionMap.put(SHOW_WAITING_ORDERS, new ShowWaitingOrders());
     }
+
     public static Action getAction(HttpServletRequest req) {
 
         return actionMap.get(req.getPathInfo().substring(1));
