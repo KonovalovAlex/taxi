@@ -6,8 +6,6 @@ import project.dao.managerDao.ManagerDao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 public class FactoryDao {
@@ -43,9 +41,8 @@ public class FactoryDao {
         return new ManagerDao(connection);
     }
     public void putBackConnection(Connection connection){
-        pool.returnConnection(connection);
+        pool.closeConnection(connection);
     }
-
 
     public static FactoryDao getInstance() {
         return InstanceHolder.instance;

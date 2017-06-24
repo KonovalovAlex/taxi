@@ -1,8 +1,7 @@
 package project.entity;
 
 
-public class UserRole {
-    private int id;
+public class UserRole extends AbstractEntity {
     private String nameOfRole;
 
     public int getId() {

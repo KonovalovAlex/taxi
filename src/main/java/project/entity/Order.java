@@ -1,6 +1,5 @@
 package project.entity;
 
-import java.util.Date;
 
 public class Order extends AbstractEntity {
     private String street;
@@ -8,9 +7,17 @@ public class Order extends AbstractEntity {
     private String numberOfApartment;
     private String time;
     private int fkUser;
+    private int id; // for vievJSP else will not see
 
     public int getFkUser() {
         return fkUser;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public int getId(){
+        return id;
     }
 
     public void setFkUser(int fkUser) {

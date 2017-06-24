@@ -15,13 +15,16 @@ public class Constants {
     public static final String ADDRESS = "address";
     public static final String ERROR = "error";
     public static final String ERROR_PAGE = "error";
+    public static final String ACTION_LOGIN = "actionLogin";
+    public static final String USER_DELETED_PAGE = "userDeleted";
+    public static final String DELETE_USER = "deleteUser";
 
     public static final String CLIENT = "client";
     public static final String USER = "user";
     public static final String DISPATCHER = "dispatcher";
     public static final String ADMIN = "admin";
 
-    public static final String ACTION_LOGIN = "actionLogin";
+
     public static final String SHOW_WAITING_ORDERS = "showWaitingOrders";
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
@@ -38,8 +41,6 @@ public class Constants {
     public static final String ORDER_STATUS_REJECT = "11";
     public static final String ORDER_STATUS_WAITING = "12";
     public static final String ORDERS = "orders";
-
-
     public static final String STREET = "street";
     public static final String NUMBER_OF_APARTMENT = "number_of_apartment";
     public static final String NUMBER_OF_HOUSE = "number_of_house";

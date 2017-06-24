@@ -1,5 +1,7 @@
 package project.filter;
 
+import project.entity.User;
+
 import javax.servlet.*;
 import java.io.IOException;
 
@@ -18,12 +20,11 @@ public class CurrentFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
         String path = request.getPathInfo();
-        boolean clientRole = session.getAttribute(ROLE) != null && session.getAttribute(ROLE).equals(CLIENT);
-        boolean dispatcherRole = session.getAttribute(ROLE) != null && session.getAttribute(ROLE).equals(DISPATCHER);
-        boolean adminRole = session.getAttribute(ROLE) != null && session.getAttribute(ROLE).equals(ADMIN);
-        boolean role = session.getAttribute(ROLE) != null;
+        boolean clientRole = session.getAttribute(USER) != null && ((User) session.getAttribute(USER)).getRole().getName().equals(CLIENT);
+        boolean dispatcherRole = session.getAttribute(USER) != null && ((User) session.getAttribute(USER)).getRole().getName().equals(DISPATCHER);
+        boolean adminRole = session.getAttribute(USER) != null && ((User) session.getAttribute(USER)).getRole().getName().equals(ADMIN);
 
         if (clientRole & (path.equals(request.getContextPath() + "/admin")
                 || (path.equals(request.getContextPath() + "/dispatcher")))) {
@@ -31,16 +32,14 @@ public class CurrentFilter implements Filter {
 
         } else if (dispatcherRole & ((path.equals(request.getContextPath() + "/admin")
                 || (path.equals(request.getContextPath() + "/client"))))) {
-            chain.doFilter(request, response);
             response.sendRedirect("/Controller/welcome");
 
         } else if (adminRole) {
             chain.doFilter(request, response);
 
-        } else if ((!role) & (path.equals(request.getContextPath() + "/client")
+        } else if ((!clientRole & !adminRole & !dispatcherRole) & (path.equals(request.getContextPath() + "/client")
                 || path.equals(request.getContextPath() + "/admin")
                 || path.equals(request.getContextPath() + "/dispatcher"))) {
-            chain.doFilter(request, response);
             response.sendRedirect("/Controller/welcome");
 
         } else {

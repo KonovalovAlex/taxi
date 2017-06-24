@@ -5,17 +5,45 @@
     <title>Dispatcher</title>
 </head>
 <body>
-<form action="/Controller/showWaitingOrders">
 <table>
-<input type="submit" name="showWaitingOrders" value="показать ожидающие заказы"/><br/>
-<c:forEach var="entity" items="${orders}">
-    ${entity}
-    <tr>
-        <td>${entity}</td>
-        <td>${entity}</td>
-    </tr>
-</c:forEach>
+    <c:forEach var="entity" items="${orders}">
+    <form action="/Controller/acceptOrder" method="get">
+        <p><input type="hidden" name="acceptOrder" value="${entity.getId()}">
+            <input type="submit" value="принять">
+        </p></form>
+    <form action="/Controller/rejectOrder" method="get">
+        <p><input type="hidden" name="rejectOrder" value="${entity.getId()}">
+            <input type="submit" value="отклонить">
+        </p></form>
+    <div>
+        <div>
+            order id
+                ${entity.getId()}
+        </div>
+        <div>
+            user id
+                ${entity.getFkUser()}
+        </div>
+        <div>
+            Street
+                ${entity.getStreet()}
+        </div>
+        <div>
+            Number Of House
+                ${entity.getNumberOfHouse()}
+        </div>
+        <div>
+            Number Of Apartment
+                ${entity.getNumberOfApartment()}
+        </div>
+        <div>
+            Time
+                ${entity.getTime()}
+
+        </div>
+        </c:forEach>
 </table>
-</form>
+<p><a href="/Controller/welcome">Вернуться обратно!</a></p>
 </body>
 </html>
+

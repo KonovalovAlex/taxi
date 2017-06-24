@@ -5,9 +5,7 @@ import project.dao.managerDao.ManagerDao;
 import project.entity.Order;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 import static project.constants.Constants.*;
 
@@ -24,17 +22,43 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
     }
 
     public int insertOrder(Order order, Integer userId) {
-        return this.insert("orders", order.getStreet() + order.getNumberOfHouse()
-                + order.getNumberOfApartment() + userId + order.getTime());
+        int defaultStatus = 12;
+        return this.insert("orders",
+                order.getStreet(),
+                order.getNumberOfHouse(),
+                order.getNumberOfApartment(),
+                userId,
+                defaultStatus,
+                order.getTime());
 
     }
 
     @Override
-    public boolean cancelTheOrders(int id) {
+    public boolean cancelTheOrders(int id) throws SQLException {
+        String sql = "UPDATE orders SET fk_status = '" + ORDER_STATUS_REJECT + "' WHERE fk_users = '" + id + "'";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        int result = preparedStatement.executeUpdate();
+        if (result == 1) {
+            return true;
+        } else return false;
+
+    }
+
+    @Override
+    public boolean acceptOrder(int idOrder) {
         LinkedHashMap<String, Object> conditions = new LinkedHashMap<>();
         LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-        conditions.put(ID, id);
+        params.put(FK_STATUS, ORDER_STATUS_ACCEPT);
+        conditions.put(ID, idOrder);
+        return this.updateEntity(ORDERS, params, conditions);
+    }
+
+    @Override
+    public boolean rejectOrder(int idOrder) {
+        LinkedHashMap<String, Object> conditions = new LinkedHashMap<>();
+        LinkedHashMap<String, Object> params = new LinkedHashMap<>();
         params.put(FK_STATUS, ORDER_STATUS_REJECT);
+        conditions.put(ID, idOrder);
         return this.updateEntity(ORDERS, params, conditions);
     }
 

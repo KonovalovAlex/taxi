@@ -45,6 +45,7 @@ public class DoRegistration implements Action {
             LOGGER.info("Customer registered" + user);
             return doRegistration;
         } else {
+            FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
             LOGGER.warn("Creation of a client failed");
             return registrationFailed;
         }

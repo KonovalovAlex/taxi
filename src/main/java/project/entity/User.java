@@ -23,16 +23,14 @@ public class User extends AbstractEntity {
         this.role = role;
     }
 
-    public String getEmail() {
-
-        return email;
-    }
-
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getLogin() {
         return login;
@@ -73,5 +71,10 @@ public class User extends AbstractEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getEmail() {
+
+        return email;
     }
 }

@@ -39,16 +39,11 @@ public class ManagerDao {
         }
     }
 
-    public Connection returnConnection() {
-        return connection;
-    }
-
-
     public UserPostgresDao getUserPostgresDao() {
         return new UserPostgresDao(connection, this);
     }
 
-    public OrderPostgresDao getOrderDaoPostgres() {
+    public OrderPostgresDao getOrderPostgresDao() {
         return new OrderPostgresDao(connection, this);
     }
 }

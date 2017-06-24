@@ -2,11 +2,16 @@ package project.dao.postgres;
 
 import project.dao.UserDao;
 import project.dao.managerDao.ManagerDao;
+import project.entity.Order;
 import project.entity.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import project.entity.UserRole;
+
+import static project.constants.Constants.*;
 
 public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDao {
     Connection connection;
@@ -58,7 +63,7 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
         String slq = "select * from users where password =" + "'" + password + "'";
         try (PreparedStatement preparedStatement = connection.prepareStatement(slq)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next());
+                if (resultSet.next()) ;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,7 +73,6 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
     }
 
     public boolean alreadyExist(String login) {
-
         String sql = "select * from users where login =" + "'" + login + "'";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -84,5 +88,33 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
     //if user = null - return(false) else check password if password is equal return true else false
     public boolean checkCredentials(User user, String password) {
         return user != null && user.getPassword().equals(password);
+    }
+
+    public List<User> returnAllUsers() throws SQLException {
+        String sql ="select * from users full join rols on users.fk_rols = rols.id";
+        List<User> users = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                User user = new User();
+                UserRole userRole = new UserRole();
+                user.setLogin(resultSet.getString(LOGIN));
+                user.setEmail(resultSet.getString(EMAIL));
+                user.setPassword(resultSet.getString(PASSWORD));
+                user.setFirstName(resultSet.getString("first_name"));
+                user.setLastName(resultSet.getString("last_name"));
+                user.setPhone(resultSet.getString(PHONE));
+                user.setId(resultSet.getInt(ID));
+                userRole.setName(resultSet.getString("user_role"));
+                user.setRole(userRole);
+                users.add(user);
+            }
+        }
+        return users;
+    }
+    public boolean deleteUser(int userId) throws SQLException {
+        String sql ="delete from users where id ="+userId;
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        return preparedStatement.execute();
     }
 }

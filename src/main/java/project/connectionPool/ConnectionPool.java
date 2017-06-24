@@ -53,8 +53,13 @@ public class ConnectionPool {
         return this.freeConnections.get(this.freeConnections.size()-1);
     }
 
-    public void returnConnection(Connection connection) {
+    public Connection closeConnection(Connection connection){
+        try {
+            connection.close();
             freeConnections.add(connection);
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return connection;
     }
 }

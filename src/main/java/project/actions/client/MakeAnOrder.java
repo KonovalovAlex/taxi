@@ -7,6 +7,7 @@ import project.dao.managerDao.ManagerDao;
 import project.dao.postgres.ExceptionDao;
 import project.dao.postgres.FactoryDao;
 import project.entity.Order;
+import project.entity.User;
 import project.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,19 +20,19 @@ public class MakeAnOrder implements Action {
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
-        ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
-        boolean time = validator.checkTime(req.getParameter(TIME));
         Order order = new Order();
-        Integer phone = (Integer) req.getSession().getAttribute(PHONE);
-        Integer userId = (Integer) req.getSession().getAttribute(ID);
+
+        boolean time = validator.checkTime(req.getParameter(TIME));
+        Integer userId = ((User) req.getSession().getAttribute(USER)).getId();
         order.setStreet(req.getParameter(STREET));
         order.setNumberOfHouse(req.getParameter(NUMBER_OF_HOUSE));
         order.setNumberOfApartment(req.getParameter(NUMBER_OF_APARTMENT));
         order.setTime(req.getParameter(TIME));
         if (time) {
+            ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
             managerDao.beginTransaction();
             try {
-                OrderDao orderDao = managerDao.getOrderDaoPostgres();
+                OrderDao orderDao = managerDao.getOrderPostgresDao();
                 order.setId(orderDao.insertOrder(order, userId));
                 managerDao.commit();
             } catch (ExceptionDao e) {
