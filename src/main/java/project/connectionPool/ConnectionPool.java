@@ -50,16 +50,13 @@ public class ConnectionPool {
     }
 
     public Connection getConnection() {
-        return this.freeConnections.get(this.freeConnections.size()-1);
-    }
-
-    public Connection closeConnection(Connection connection){
-        try {
-            connection.close();
-            freeConnections.add(connection);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Connection connection = freeConnections.get(freeConnections.size()-1);
+        freeConnections.remove(freeConnections.size()-1);
         return connection;
     }
-}
+
+    public void returnConnection(Connection connection){
+            freeConnections.add(connection);
+
+        }
+    }

@@ -48,7 +48,7 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
             preparedStatement.executeQuery();
             ResultSet setId = preparedStatement.getGeneratedKeys();
             if (setId.next()) {
-                id = setId.getInt("id");
+                id = setId.getInt(ID);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,7 +56,7 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
         return id;
     }
 
-    public boolean updateEntity(String tableName, Map<String, Object> params, Map<String, Object> conditions) {
+    public boolean updateEntity(String tableName, Map<String, Object> params, Map<String, Object> conditions) throws SQLException {
         String queryString = String.format(UPDATE, tableName, this.generateUpdateParamsPattern(params), this.generateConditions(conditions));
         Map<String, Object> combinedMap = new HashMap<>();
         combinedMap.putAll(params);
@@ -74,28 +74,28 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
         String queryString = String.format(DELETE, tableName, this.generateConditions(conditions));
         try (PreparedStatement preparedStatement = fillFromArgumentsPreparedStatement(connection.prepareStatement(queryString), conditions)) {
             preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e1) {
+            e1.printStackTrace();
             return false;
         }
         return true;
     }
 
     private PreparedStatement fillFromMapPreparedStatement(PreparedStatement preparedStatement, Map<String, Object> conditions) throws SQLException {
-        ArrayList<Integer> ss = new ArrayList<>();
-        Object[] arrConditions = conditions.values().toArray();
-        for (Object o : arrConditions) {
-            if (o instanceof String & o.equals("10") || o.equals("11") || o.equals("12")) {
-                int x = Integer.parseInt(String.valueOf(o));
-                ss.add(x);
-                for (Object arrayCondition : arrConditions) {
-                    if (arrayCondition instanceof Integer) {
-                        ss.add(((Integer) arrayCondition).intValue());
-                        return this.fillFromArgumentsPreparedStatement(preparedStatement, ss.toArray());
-                    }
-                }
-            }
-        }
+//        ArrayList<Integer> ss = new ArrayList<>();
+//        Object[] arrConditions = conditions.values().toArray();
+//        for (Object o : arrConditions) {
+//            if (o instanceof String & o.equals("10") || o.equals("11") || o.equals("12")) {
+//                int x = Integer.parseInt(String.valueOf(o));
+//                ss.add(x);
+//                for (Object arrayCondition : arrConditions) {
+//                    if (arrayCondition instanceof Integer) {
+//                        ss.add(((Integer) arrayCondition).intValue());
+//                        return this.fillFromArgumentsPreparedStatement(preparedStatement, ss.toArray());
+//                    }
+//                }
+//            }
+//        }
         return this.fillFromArgumentsPreparedStatement(preparedStatement, conditions.values().toArray());
     }
 

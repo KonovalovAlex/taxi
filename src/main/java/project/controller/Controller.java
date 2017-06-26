@@ -19,9 +19,7 @@ public class Controller extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-
     }
-
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         Action action = ActionFactory.getAction(req);

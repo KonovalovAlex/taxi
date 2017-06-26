@@ -1,47 +1,42 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tld"%>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Admin</title>
-</head>
+    <t:gHead>
+        <title>Admin</title>
+    </t:gHead>
 <body>
 <table>
     <c:forEach var="entity" items="${users}">
     <form action="/Controller/deleteUser" method="get">
-        <p><input type="hidden" name="deleteUser" value="${entity.getId()}">
+        <p><input type="hidden" name="id" value="${entity.getId()}">
             <input type="submit" value="удалить">
         </p></form>
     <div>
         <div>
-            user id
-                ${entity.getId()}
+            user id ${entity.getId()}
         </div>
         <div>
-            Login
-                ${entity.getLogin()}
+            Login ${entity.getLogin()}
         </div>
         <div>
-            password
-                ${entity.getPassword()}
+            password ${entity.getPassword()}
         </div>
         <div>
-            Name
-                ${entity.getFirstName()}
+            Name ${entity.getFirstName()}
         </div>
         <div>
-            LastName
-                ${entity.getLastName()}
+            LastName ${entity.getLastName()}
         </div>
         <div>
-            Mobile
-                ${entity.getPhone()}
+            Mobile ${entity.getPhone()}
         </div>
         <div>
-            Email
-                ${entity.getEmail()}
-
+            Email ${entity.getEmail()}
+        </div>
+        <div>
+            Role ${entity.getRole()}
         </div>
         </c:forEach>
 </table>

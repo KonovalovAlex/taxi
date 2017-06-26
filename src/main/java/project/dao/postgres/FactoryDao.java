@@ -41,7 +41,7 @@ public class FactoryDao {
         return new ManagerDao(connection);
     }
     public void putBackConnection(Connection connection){
-        pool.closeConnection(connection);
+        pool.returnConnection(connection);
     }
 
     public static FactoryDao getInstance() {

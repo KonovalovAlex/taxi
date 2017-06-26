@@ -38,6 +38,9 @@ public class ManagerDao {
             throw new ExceptionDao(e);
         }
     }
+    public Connection returnConnection (){
+        return connection;
+    }
 
     public UserPostgresDao getUserPostgresDao() {
         return new UserPostgresDao(connection, this);

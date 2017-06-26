@@ -2,7 +2,6 @@ package project.dao.postgres;
 
 import project.dao.UserDao;
 import project.dao.managerDao.ManagerDao;
-import project.entity.Order;
 import project.entity.User;
 
 import java.sql.*;
@@ -31,15 +30,15 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
         try (PreparedStatement preparedStatement = connection.prepareStatement(slq)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            userRole.setId(resultSet.getInt(9));
+            userRole.setId(resultSet.getInt(8));
             userRole.setName(resultSet.getString("user_role"));
             user.setFirstName(resultSet.getString("first_name"));
             user.setLastName(resultSet.getString("last_name"));
-            user.setLogin(resultSet.getString("login"));
-            user.setPassword(resultSet.getString("password"));
-            user.setEmail(resultSet.getString("email"));
-            user.setPhone(resultSet.getString("phone"));
-            user.setId(resultSet.getInt(7));
+            user.setLogin(resultSet.getString(LOGIN));
+            user.setPassword(resultSet.getString(PASSWORD));
+            user.setEmail(resultSet.getString(EMAIL));
+            user.setPhone(resultSet.getString(PHONE));
+            user.setId(resultSet.getInt(ID));
             user.setRole(userRole);
 
 //            LOGGER.info("role is" + user);
@@ -50,20 +49,22 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
 
     @Override
     public int insert(User user) {
-        return this.insert("users",
+        return this.insert(USERS,
                 user.getLogin(),
                 user.getPassword(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                user.getPhone());
+                user.getPhone(),
+                FK_ROLE_CLIENT,
+                ACTIVE_STATUS);
     }
 
     public boolean findByPassword(String password) {
         String slq = "select * from users where password =" + "'" + password + "'";
         try (PreparedStatement preparedStatement = connection.prepareStatement(slq)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) ;
+                if (resultSet.next()) return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,15 +88,15 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
 
     //if user = null - return(false) else check password if password is equal return true else false
     public boolean checkCredentials(User user, String password) {
-        return user != null && user.getPassword().equals(password);
+        return user != null & user.getPassword().equals(password);
     }
 
     public List<User> returnAllUsers() throws SQLException {
-        String sql ="select * from users full join rols on users.fk_rols = rols.id";
+        String sql = "select * from users full join rols on users.fk_rols = rols.id";
         List<User> users = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 User user = new User();
                 UserRole userRole = new UserRole();
                 user.setLogin(resultSet.getString(LOGIN));
@@ -112,9 +113,13 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
         }
         return users;
     }
-    public boolean deleteUser(int userId) throws SQLException {
-        String sql ="delete from users where id ="+userId;
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        return preparedStatement.execute();
+
+    public boolean deleteUser(String userId) throws SQLException {
+
+//        return this.deleteEntity(USERS,ID,userId);
+//        String sql ="delete from users where id ="+userId;
+//        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//        return preparedStatement.execute();
+        return true;
     }
 }

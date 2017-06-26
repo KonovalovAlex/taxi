@@ -9,7 +9,16 @@ public class User extends AbstractEntity {
     private String email;
     private UserRole role;
     private String phone;
+    private int id; // for vievJSP else will not see
+    private String activityStatus;
 
+    public String getActivityStatus() {
+        return activityStatus;
+    }
+
+    public void setActivityStatus(String activityStatus) {
+        this.activityStatus = activityStatus;
+    }
 
     public void setPhone(String phone) {
         this.phone = phone;

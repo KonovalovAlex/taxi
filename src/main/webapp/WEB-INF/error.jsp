@@ -5,11 +5,5 @@
 </head>
 <body>
 возникла ошибка, попробуйте позже.
-<%--<div class="goods">--%>
-<%--<c:forEach var="entry" items="${addresses}">--%>
-<%--<jsp:good entry="${pageContext}"/>--%>
-<%--</c:forEach>--%>
-<%--</div>--%>
-
 </body>
 </html>

@@ -20,11 +20,9 @@ public class CancelTheOrders implements Action {
     public ActionResult execute(HttpServletRequest req) {
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
         Integer userId = ((User) req.getSession().getAttribute(USER)).getId();
-        managerDao.beginTransaction();
         try {
             OrderPostgresDao orderPostgresDao = managerDao.getOrderPostgresDao();
             orderPostgresDao.cancelTheOrders(userId);
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

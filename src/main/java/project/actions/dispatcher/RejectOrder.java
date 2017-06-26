@@ -8,17 +8,30 @@ import project.dao.postgres.FactoryDao;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static project.constants.Constants.ACCEPT_ORDER;
-import static project.constants.Constants.REJECT_ORDER;
+import java.sql.SQLException;
+
+import static project.constants.Constants.*;
 
 public class RejectOrder implements Action {
+    ActionResult orderRejected = new ActionResult(ORDER_REJECTED, true);
+    ActionResult error = new ActionResult(ERROR_PAGE, true);
+
     @Override
     public ActionResult execute(HttpServletRequest req) {
         int idOrder = Integer.parseInt(req.getParameter(REJECT_ORDER));
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
-        OrderDao orderDao = managerDao.getOrderPostgresDao();
-        orderDao.rejectOrder(idOrder);
-        FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
-        return null;
+        managerDao.beginTransaction();
+        try {
+            OrderDao orderDao = managerDao.getOrderPostgresDao();
+            if (!orderDao.rejectOrder(idOrder))
+            managerDao.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            managerDao.rollback();
+            return error;
+        } finally {
+            FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
+        }
+        return orderRejected;
     }
 }

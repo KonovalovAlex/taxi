@@ -21,7 +21,7 @@ import static project.constants.Constants.*;
 public class DoRegistration implements Action {
     private static final Logger LOGGER = Logger.getLogger(DoRegistration.class.getName());
     ActionResult doRegistration = new ActionResult(DO_REGISTRATION);
-    ActionResult registrationFailed = new ActionResult(ERROR);
+    ActionResult registrationFailed = new ActionResult(ERROR, true);
     ManagerDao daoManager = FactoryDao.getInstance().getDaoManager();
     Validator validator = new Validator(daoManager);
 
@@ -32,8 +32,8 @@ public class DoRegistration implements Action {
         if (user != null) {
             daoManager.beginTransaction();
             try {
-                UserDao daoClient = daoManager.getUserPostgresDao();
-                daoClient.insert(user);
+                UserDao userDao = daoManager.getUserPostgresDao();
+                userDao.insert(user);
                 daoManager.commit();
             } catch (ExceptionDao e) {
                 daoManager.rollback();
@@ -45,8 +45,8 @@ public class DoRegistration implements Action {
             LOGGER.info("Customer registered" + user);
             return doRegistration;
         } else {
-            FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
             LOGGER.warn("Creation of a client failed");
+            FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
             return registrationFailed;
         }
     }

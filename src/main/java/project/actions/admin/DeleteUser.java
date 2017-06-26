@@ -11,26 +11,26 @@ import java.sql.SQLException;
 
 import static project.constants.Constants.ERROR;
 import static project.constants.Constants.ID;
-import static project.constants.Constants.USER_DELETED_PAGE;
+import static project.constants.Constants.USER_IS_DELETED_PAGE;
 
 
 public class DeleteUser implements Action {
-    ActionResult userDeleted = new ActionResult(USER_DELETED_PAGE,true);
-    ActionResult error = new ActionResult(ERROR,true);
+    ActionResult userIsDeleted = new ActionResult(USER_IS_DELETED_PAGE, true);
+    ActionResult error = new ActionResult(ERROR, true);
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
-        int userId = Integer.parseInt(req.getParameter(ID));
+        String userId = req.getParameter(ID);
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
         UserPostgresDao userPostgresDao = managerDao.getUserPostgresDao();
         try {
-            if (userPostgresDao.deleteUser(userId))return userDeleted;
+            if (userPostgresDao.deleteUser(userId)) return userIsDeleted;
         } catch (SQLException e) {
             e.printStackTrace();
             return error;
         } finally {
-            FactoryDao.getInstance().putBackConnection();
+            FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
         }
-        return null;
+        return error;
     }
 }

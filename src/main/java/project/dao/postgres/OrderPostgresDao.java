@@ -10,7 +10,6 @@ import java.util.*;
 import static project.constants.Constants.*;
 
 public class OrderPostgresDao extends AbstractPostgresDao<Order> implements OrderDao {
-    private static final String GET_ORDERS = "select * from orders where ";
 
     private Connection connection;
     private ManagerDao managerDao;
@@ -22,15 +21,14 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
     }
 
     public int insertOrder(Order order, Integer userId) {
-        int defaultStatus = 12;
-        return this.insert("orders",
+
+        return this.insert(ORDERS,
                 order.getStreet(),
                 order.getNumberOfHouse(),
                 order.getNumberOfApartment(),
                 userId,
-                defaultStatus,
+                ORDER_STATUS_WAITING_INT,
                 order.getTime());
-
     }
 
     @Override
@@ -41,30 +39,29 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
         if (result == 1) {
             return true;
         } else return false;
-
     }
 
     @Override
-    public boolean acceptOrder(int idOrder) {
+    public boolean acceptOrder (int idOrder) throws SQLException {
         LinkedHashMap<String, Object> conditions = new LinkedHashMap<>();
         LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-        params.put(FK_STATUS, ORDER_STATUS_ACCEPT);
+        params.put(FK_STATUS, ORDER_STATUS_ACCEPT_INT);
         conditions.put(ID, idOrder);
         return this.updateEntity(ORDERS, params, conditions);
     }
 
     @Override
-    public boolean rejectOrder(int idOrder) {
+    public boolean rejectOrder(int idOrder) throws SQLException {
         LinkedHashMap<String, Object> conditions = new LinkedHashMap<>();
         LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-        params.put(FK_STATUS, ORDER_STATUS_REJECT);
+        params.put(FK_STATUS, ORDER_STATUS_REJECT_INT);
         conditions.put(ID, idOrder);
         return this.updateEntity(ORDERS, params, conditions);
     }
 
     public List<Order> returnTheWaitingOrders() throws SQLException {
         List<Order> orders = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement(GET_ORDERS + FK_STATUS + "=" + ORDER_STATUS_WAITING);
+        PreparedStatement preparedStatement = connection.prepareStatement("select * from orders where " + FK_STATUS + "=" + ORDER_STATUS_WAITING);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             Order order = new Order();

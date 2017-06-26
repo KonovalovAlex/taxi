@@ -16,11 +16,13 @@ public class Constants {
     public static final String ERROR = "error";
     public static final String ERROR_PAGE = "error";
     public static final String ACTION_LOGIN = "actionLogin";
-    public static final String USER_DELETED_PAGE = "userDeleted";
+    public static final String USER_IS_DELETED_PAGE = "userIsDeleted";
     public static final String DELETE_USER = "deleteUser";
+    public static final String ORDER_REJECTED = "orderRejected";
 
     public static final String CLIENT = "client";
     public static final String USER = "user";
+    public static final String USERS = "users";
     public static final String DISPATCHER = "dispatcher";
     public static final String ADMIN = "admin";
 
@@ -37,9 +39,14 @@ public class Constants {
 
     public static final String DRIVER = "org.postgresql.Driver";
 
+    public static final String ACTIVE_STATUS = "active";
+    public static final String DELETED_STATUS = "deleted";
     public static final String ORDER_STATUS_ACCEPT = "10";
+    public static final Integer ORDER_STATUS_ACCEPT_INT = 10;
     public static final String ORDER_STATUS_REJECT = "11";
+    public static final Integer ORDER_STATUS_REJECT_INT = 11;
     public static final String ORDER_STATUS_WAITING = "12";
+    public static final Integer ORDER_STATUS_WAITING_INT = 12;
     public static final String ORDERS = "orders";
     public static final String STREET = "street";
     public static final String NUMBER_OF_APARTMENT = "number_of_apartment";
@@ -47,5 +54,6 @@ public class Constants {
     public static final String TIME = "time";
     public static final String FK_USERS = "fk_users";
     public static final String FK_STATUS = "fk_status";
+    public static final int FK_ROLE_CLIENT = 1;
 
 }

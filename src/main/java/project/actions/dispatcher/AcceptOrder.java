@@ -9,6 +9,8 @@ import project.dao.postgres.FactoryDao;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.sql.SQLException;
+
 import static project.constants.Constants.ACCEPT_ORDER;
 import static project.constants.Constants.DISPATCHER;
 import static project.constants.Constants.ERROR;
@@ -22,8 +24,16 @@ public class AcceptOrder implements Action {
         int idOrder = Integer.parseInt(req.getParameter(ACCEPT_ORDER));
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
         OrderDao orderDao = managerDao.getOrderPostgresDao();
-        orderDao.acceptOrder(idOrder);
-        FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
+        managerDao.beginTransaction();
+        try {
+            if (!orderDao.acceptOrder(idOrder));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            managerDao.rollback();
+            return error;
+        } finally {
+            FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
+        }
 
         return dispatcher;
     }
