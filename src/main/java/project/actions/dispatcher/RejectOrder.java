@@ -14,16 +14,16 @@ import static project.constants.Constants.*;
 
 public class RejectOrder implements Action {
     ActionResult orderRejected = new ActionResult(ORDER_REJECTED, true);
-    ActionResult error = new ActionResult(ERROR_PAGE, true);
+    ActionResult error = new ActionResult(ERROR, true);
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
         int idOrder = Integer.parseInt(req.getParameter(REJECT_ORDER));
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
+        OrderDao orderDao = managerDao.getOrderPostgresDao();
         managerDao.beginTransaction();
         try {
-            OrderDao orderDao = managerDao.getOrderPostgresDao();
-            if (!orderDao.rejectOrder(idOrder))
+            orderDao.rejectOrder(idOrder);
             managerDao.commit();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -13,7 +13,8 @@ import project.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 
 
 import static project.constants.Constants.*;
@@ -69,11 +70,10 @@ public class DoRegistration implements Action {
             user.setPhone(req.getParameter(PHONE));
         } else {
             Map<String, String> invalidFields = validator.getInvalidFields();
-            for (Map.Entry<String, String> field : invalidFields.entrySet()) {
-                req.setAttribute("invalidFieldsMap", invalidFields);
-                return null;
-            }
+            req.setAttribute("invalidFieldsMap", invalidFields);
+            return null;
         }
         return user;
     }
 }
+

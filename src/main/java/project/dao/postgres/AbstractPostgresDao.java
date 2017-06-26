@@ -23,22 +23,7 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
     }
 
     public AbstractPostgresDao() {
-
     }
-
-    public void setConn(Connection connection) {
-    }
-
-    public ResultSet get(String tableName, Map<String, Object> conditions) {
-        String queryString = String.format(SELECT, tableName, this.generateConditions(conditions));
-        try (PreparedStatement preparedStatement = fillFromMapPreparedStatement(connection.prepareStatement(queryString), conditions)) {
-            return preparedStatement.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
     public Integer insert(String tableName, Object... params) {
         String queryString = String.format(INSERT, tableName, this.generateValuesCount(params));
@@ -62,12 +47,9 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
         combinedMap.putAll(params);
         combinedMap.putAll(conditions);
         try (PreparedStatement preparedStatement = fillFromMapPreparedStatement(connection.prepareStatement(queryString), combinedMap)) {
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            if(preparedStatement.executeUpdate()==1) return true;
+            else return false;
         }
-        return true;
     }
 
     public boolean deleteEntity(String tableName, Map<String, Object> conditions) {

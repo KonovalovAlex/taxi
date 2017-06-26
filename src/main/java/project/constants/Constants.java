@@ -14,7 +14,6 @@ public class Constants {
     public static final String REJECT_ORDER = "rejectOrder";
     public static final String ADDRESS = "address";
     public static final String ERROR = "error";
-    public static final String ERROR_PAGE = "error";
     public static final String ACTION_LOGIN = "actionLogin";
     public static final String USER_IS_DELETED_PAGE = "userIsDeleted";
     public static final String DELETE_USER = "deleteUser";
@@ -39,15 +38,21 @@ public class Constants {
 
     public static final String DRIVER = "org.postgresql.Driver";
 
-    public static final String ACTIVE_STATUS = "active";
-    public static final String DELETED_STATUS = "deleted";
+    public static final String STATUS_USER_ACTIVE = "active";
+    public static final String STATUS_USER_IS_DELETED = "deleted";
+    public static final String ACTIVE_STATUS_COLUMN = "activity_status";
+    public static final String STATUS_CLIENT_IS_DELETED_PAGE = "statusClientIsDeleted";
+
     public static final String ORDER_STATUS_ACCEPT = "10";
-    public static final Integer ORDER_STATUS_ACCEPT_INT = 10;
+    public static final int ORDER_STATUS_ACCEPT_INT = 10;
     public static final String ORDER_STATUS_REJECT = "11";
-    public static final Integer ORDER_STATUS_REJECT_INT = 11;
+    public static final int ORDER_STATUS_REJECT_INT = 11;
     public static final String ORDER_STATUS_WAITING = "12";
-    public static final Integer ORDER_STATUS_WAITING_INT = 12;
+    public static final int ORDER_STATUS_WAITING_INT = 12;
     public static final String ORDERS = "orders";
+    public static final String ORDER_ACCEPTED_PAGE = "orderAccepted";
+    public static final String ORDER_REJECTED_PAGE = "ordersRejected";
+
     public static final String STREET = "street";
     public static final String NUMBER_OF_APARTMENT = "number_of_apartment";
     public static final String NUMBER_OF_HOUSE = "number_of_house";

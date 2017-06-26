@@ -12,9 +12,6 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public interface Dao<T extends AbstractEntity> {
-    void setConn(Connection connection);
-
-    ResultSet get(String tableName, Map<String, Object> conditions);
 
     Integer insert(String tableName, Object... params) throws SQLException;
 

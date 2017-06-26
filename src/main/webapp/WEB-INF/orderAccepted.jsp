@@ -4,12 +4,11 @@
 <html>
 <head>
     <t:gHead>
-        <title>userIsDeleted</title>
+        <title>OrderAccepted</title>
     </t:gHead>
 </head>
 <body>
-юзеру был присвоен статус удалён!
-<p><a href="/Controller/admin">вернуться на страницу админа.</a></p>
-<p><a href="/Controller/welcome">перейти на главную.</a></p>
+<p>заказ принят</p>
+<p><a href="/Controller/dispatcher">Вернуться обратно!</a></p>
 </body>
 </html>

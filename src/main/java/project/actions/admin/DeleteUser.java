@@ -20,17 +20,20 @@ public class DeleteUser implements Action {
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
-        String userId = req.getParameter(ID);
+        Integer userId = Integer.valueOf(req.getParameter(ID));
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
         UserPostgresDao userPostgresDao = managerDao.getUserPostgresDao();
+        managerDao.beginTransaction();
         try {
-            if (userPostgresDao.deleteUser(userId)) return userIsDeleted;
+            userPostgresDao.deleteUser(userId);
+            managerDao.commit();
         } catch (SQLException e) {
             e.printStackTrace();
+            managerDao.rollback();
             return error;
         } finally {
             FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
         }
-        return error;
+        return userIsDeleted;
     }
 }

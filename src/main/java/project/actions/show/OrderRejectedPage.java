@@ -7,13 +7,15 @@ import project.actions.ActionResult;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static project.constants.Constants.USER_IS_DELETED_PAGE;
+import static project.constants.Constants.ORDER_REJECTED;
 
-public class UserIsDeleted implements Action {
-    private ActionResult userIsDeleted = new ActionResult(USER_IS_DELETED_PAGE);
 
+public class OrderRejectedPage implements Action {
+    private ActionResult orderRejected = new ActionResult(ORDER_REJECTED);
+
+    @Override
     public ActionResult execute(HttpServletRequest request) throws ActionException {
 
-        return userIsDeleted;
+        return orderRejected;
     }
 }

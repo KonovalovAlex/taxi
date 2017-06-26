@@ -36,7 +36,10 @@ public class ActionFactory extends Constants {
         actionMap.put(REJECT_ORDER, new RejectOrder());
 
         actionMap.put(DELETE_USER, new DeleteUser());
-        actionMap.put(USER_IS_DELETED_PAGE, new UserIsDeleted());
+        actionMap.put(STATUS_CLIENT_IS_DELETED_PAGE, new StatusClientIsDeletedPage());
+
+        actionMap.put(ORDER_ACCEPTED_PAGE, new OrderAcceptedPage());
+        actionMap.put(ORDER_REJECTED, new OrderRejectedPage());
     }
 
     public static Action getAction(HttpServletRequest req) {

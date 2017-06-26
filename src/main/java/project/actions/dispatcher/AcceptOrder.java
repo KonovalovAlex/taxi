@@ -26,7 +26,7 @@ public class AcceptOrder implements Action {
         OrderDao orderDao = managerDao.getOrderPostgresDao();
         managerDao.beginTransaction();
         try {
-            if (!orderDao.acceptOrder(idOrder));
+            if (orderDao.acceptOrder(idOrder))
             managerDao.commit();
         } catch (SQLException e) {
             e.printStackTrace();

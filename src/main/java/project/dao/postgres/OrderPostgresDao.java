@@ -3,6 +3,7 @@ package project.dao.postgres;
 import project.dao.OrderDao;
 import project.dao.managerDao.ManagerDao;
 import project.entity.Order;
+import project.entity.OrderStatus;
 
 import java.sql.*;
 import java.util.*;
@@ -61,16 +62,21 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
 
     public List<Order> returnTheWaitingOrders() throws SQLException {
         List<Order> orders = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement("select * from orders where " + FK_STATUS + "=" + ORDER_STATUS_WAITING);
+        PreparedStatement preparedStatement = connection.prepareStatement
+        ("select * from orders join order_status on orders.fk_status=order_status.id where order_status.id="+ORDER_STATUS_WAITING);
+
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             Order order = new Order();
+            OrderStatus orderStatus = new OrderStatus();
+            orderStatus.setStatus(resultSet.getString("name_of_status"));
             order.setId(resultSet.getInt(ID));
             order.setStreet(resultSet.getString(STREET));
             order.setNumberOfHouse(resultSet.getString(NUMBER_OF_HOUSE));
             order.setNumberOfApartment(resultSet.getString(NUMBER_OF_APARTMENT));
             order.setTime(resultSet.getString(TIME));
             order.setFkUser(resultSet.getInt(FK_USERS));
+            order.setStatusOfOrder(orderStatus);
             orders.add(order);
         }
         return orders;

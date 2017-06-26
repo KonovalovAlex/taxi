@@ -1,7 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tld"%>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <html>
     <t:gHead>
         <title>Admin</title>
@@ -37,6 +36,9 @@
         </div>
         <div>
             Role ${entity.getRole()}
+        </div>
+        <div>
+            Status ${entity.getActivityStatus()}
         </div>
         </c:forEach>
 </table>

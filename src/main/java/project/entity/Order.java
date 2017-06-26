@@ -8,6 +8,15 @@ public class Order extends AbstractEntity {
     private String time;
     private int fkUser;
     private int id; // for vievJSP else will not see
+    private OrderStatus statusOfOrder;
+
+    public OrderStatus getStatusOfOrder() {
+        return statusOfOrder;
+    }
+
+    public void setStatusOfOrder(OrderStatus statusOfOrder) {
+        this.statusOfOrder = statusOfOrder;
+    }
 
     public int getFkUser() {
         return fkUser;

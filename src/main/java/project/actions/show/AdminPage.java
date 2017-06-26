@@ -14,12 +14,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static project.constants.Constants.ADMIN_PAGE;
-import static project.constants.Constants.ERROR_PAGE;
+import static project.constants.Constants.ERROR;
 import static project.constants.Constants.USERS;
 
 public class AdminPage implements Action {
     private ActionResult adminPage = new ActionResult(ADMIN_PAGE);
-    private ActionResult error = new ActionResult(ERROR_PAGE,true);
+    private ActionResult error = new ActionResult(ERROR,true);
 
     public ActionResult execute(HttpServletRequest req) {
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();

@@ -11,5 +11,5 @@ public interface UserDao extends Dao<User> {
     boolean alreadyExist(String login);
     boolean checkCredentials(User user, String password);
     List<User> returnAllUsers() throws SQLException;
-    boolean deleteUser(String userId) throws SQLException;
+    boolean deleteUser(int userId) throws SQLException;
 }

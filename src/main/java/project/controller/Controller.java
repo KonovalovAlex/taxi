@@ -21,7 +21,6 @@ public class Controller extends HttpServlet {
     public void init() throws ServletException {
     }
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
         Action action = ActionFactory.getAction(req);
         ActionResult result = null;
         if (action != null) {

@@ -6,6 +6,7 @@ import project.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import project.entity.UserRole;
@@ -30,7 +31,8 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
         try (PreparedStatement preparedStatement = connection.prepareStatement(slq)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            userRole.setId(resultSet.getInt(8));
+            user.setActivityStatus(resultSet.getString(ACTIVE_STATUS_COLUMN));
+            userRole.setId(resultSet.getInt("fk_rols"));
             userRole.setName(resultSet.getString("user_role"));
             user.setFirstName(resultSet.getString("first_name"));
             user.setLastName(resultSet.getString("last_name"));
@@ -57,7 +59,7 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
                 user.getEmail(),
                 user.getPhone(),
                 FK_ROLE_CLIENT,
-                ACTIVE_STATUS);
+                STATUS_USER_ACTIVE);
     }
 
     public boolean findByPassword(String password) {
@@ -114,12 +116,11 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
         return users;
     }
 
-    public boolean deleteUser(String userId) throws SQLException {
-
-//        return this.deleteEntity(USERS,ID,userId);
-//        String sql ="delete from users where id ="+userId;
-//        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//        return preparedStatement.execute();
-        return true;
+    public boolean deleteUser(int userId) throws SQLException {
+        LinkedHashMap<String, Object> conditions = new LinkedHashMap<>();
+        LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+        params.put(ACTIVE_STATUS_COLUMN, STATUS_USER_IS_DELETED);
+        conditions.put(ID, userId);
+        return this.updateEntity(USERS, params, conditions);
     }
 }

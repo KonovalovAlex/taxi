@@ -21,7 +21,6 @@ public class MakeAnOrder implements Action {
     @Override
     public ActionResult execute(HttpServletRequest req) {
         Order order = new Order();
-
         boolean time = validator.checkTime(req.getParameter(TIME));
         Integer userId = ((User) req.getSession().getAttribute(USER)).getId();
         order.setStreet(req.getParameter(STREET));

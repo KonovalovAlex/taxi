@@ -1,8 +1,17 @@
 package project.entity;
 
+
 public class OrderStatus extends AbstractEntity {
     private String status;
     private int id;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public int getId() {
         return id;
@@ -12,11 +21,8 @@ public class OrderStatus extends AbstractEntity {
         this.id = id;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    @Override
+    public String toString() {
+        return getStatus();
     }
 }
