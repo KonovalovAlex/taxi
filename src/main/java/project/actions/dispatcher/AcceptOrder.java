@@ -27,6 +27,7 @@ public class AcceptOrder implements Action {
         managerDao.beginTransaction();
         try {
             if (!orderDao.acceptOrder(idOrder));
+            managerDao.commit();
         } catch (SQLException e) {
             e.printStackTrace();
             managerDao.rollback();
@@ -34,7 +35,6 @@ public class AcceptOrder implements Action {
         } finally {
             FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
         }
-
         return dispatcher;
     }
 }

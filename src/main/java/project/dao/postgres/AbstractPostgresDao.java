@@ -82,20 +82,6 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
     }
 
     private PreparedStatement fillFromMapPreparedStatement(PreparedStatement preparedStatement, Map<String, Object> conditions) throws SQLException {
-//        ArrayList<Integer> ss = new ArrayList<>();
-//        Object[] arrConditions = conditions.values().toArray();
-//        for (Object o : arrConditions) {
-//            if (o instanceof String & o.equals("10") || o.equals("11") || o.equals("12")) {
-//                int x = Integer.parseInt(String.valueOf(o));
-//                ss.add(x);
-//                for (Object arrayCondition : arrConditions) {
-//                    if (arrayCondition instanceof Integer) {
-//                        ss.add(((Integer) arrayCondition).intValue());
-//                        return this.fillFromArgumentsPreparedStatement(preparedStatement, ss.toArray());
-//                    }
-//                }
-//            }
-//        }
         return this.fillFromArgumentsPreparedStatement(preparedStatement, conditions.values().toArray());
     }
 
