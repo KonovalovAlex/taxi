@@ -1,5 +1,8 @@
 package project.connectionPool;
 
+import org.apache.log4j.Logger;
+import project.actions.registration.DoRegistration;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,6 +14,7 @@ import java.util.concurrent.BlockingQueue;
 import static project.constants.Constants.DRIVER;
 
 public class ConnectionPool {
+    private static final Logger LOGGER = Logger.getLogger(DoRegistration.class.getName());
     private static ConnectionPool instance;
     private String url;
     private String user;
@@ -26,7 +30,6 @@ public class ConnectionPool {
         this.maxСonnection = maxСonnection;
         freeConnections = new ArrayList<>();
         this.fillConnectionPool();
-
     }
 
     public static ConnectionPool getInstance(String url, String user, String password, int maxConnection) {
@@ -43,9 +46,11 @@ public class ConnectionPool {
             for (int i = 0; i < maxСonnection; i++ ) {
                 con = DriverManager.getConnection(url, user, password);
                 freeConnections.add(con);
+                LOGGER.debug("connection pool completely filled");
             }
         } catch ( SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+            LOGGER.error("connection pool",e);
         }
     }
 
@@ -57,6 +62,5 @@ public class ConnectionPool {
 
     public void returnConnection(Connection connection){
             freeConnections.add(connection);
-
         }
     }

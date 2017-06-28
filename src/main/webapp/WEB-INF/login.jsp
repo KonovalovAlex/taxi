@@ -1,7 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
-    <title>Login</title>
+    <t:gHead>
+        <title>error</title>
+    </t:gHead>
 </head>
 <body>
 <form action="/Controller/actionLogin" method="post">

@@ -18,6 +18,7 @@ public class Constants {
     public static final String USER_IS_DELETED_PAGE = "userIsDeleted";
     public static final String DELETE_USER = "deleteUser";
     public static final String ORDER_REJECTED = "orderRejected";
+    public static final String CHANGE_LOCALE = "changeLocale";
 
     public static final String CLIENT = "client";
     public static final String USER = "user";
@@ -60,5 +61,7 @@ public class Constants {
     public static final String FK_USERS = "fk_users";
     public static final String FK_STATUS = "fk_status";
     public static final int FK_ROLE_CLIENT = 1;
+
+    public static final String LOCALE = "locale";
 
 }

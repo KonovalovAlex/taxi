@@ -10,9 +10,7 @@ import static project.constants.Constants.CLIENT_PAGE;
 
 
 public class ClientPage implements Action {
-    private ActionResult clientPage = new ActionResult(CLIENT_PAGE);
 
     public ActionResult execute(HttpServletRequest request) throws ActionException {
-
-        return clientPage;
+        return new ActionResult(CLIENT_PAGE);
 }}

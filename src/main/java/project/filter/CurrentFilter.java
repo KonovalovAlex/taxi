@@ -1,5 +1,7 @@
 package project.filter;
 
+import org.apache.log4j.Logger;
+import project.dao.postgres.AbstractPostgresDao;
 import project.entity.User;
 
 import javax.servlet.*;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import static project.constants.Constants.*;
 
 public class CurrentFilter implements Filter {
+    private static final Logger LOGGER = Logger.getLogger(AbstractPostgresDao.class.getName());
 
     public void init(FilterConfig filterConfig) throws ServletException {
     }

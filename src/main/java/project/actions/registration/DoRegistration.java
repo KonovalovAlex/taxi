@@ -21,13 +21,13 @@ import static project.constants.Constants.*;
 
 public class DoRegistration implements Action {
     private static final Logger LOGGER = Logger.getLogger(DoRegistration.class.getName());
-    ActionResult doRegistration = new ActionResult(DO_REGISTRATION);
-    ActionResult registrationFailed = new ActionResult(ERROR, true);
     ManagerDao daoManager = FactoryDao.getInstance().getDaoManager();
     Validator validator = new Validator(daoManager);
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
+        ActionResult doRegistration = new ActionResult(DO_REGISTRATION);
+        ActionResult registrationFailed = new ActionResult(ERROR, true);
 
         User user = createClient(req);
         if (user != null) {

@@ -1,7 +1,9 @@
 package project.actions.admin;
 
+import org.apache.log4j.Logger;
 import project.actions.Action;
 import project.actions.ActionResult;
+import project.actions.registration.DoRegistration;
 import project.dao.managerDao.ManagerDao;
 import project.dao.postgres.FactoryDao;
 import project.dao.postgres.UserPostgresDao;
@@ -15,7 +17,8 @@ import static project.constants.Constants.USER_IS_DELETED_PAGE;
 
 
 public class DeleteUser implements Action {
-    ActionResult userIsDeleted = new ActionResult(USER_IS_DELETED_PAGE, true);
+    private static final Logger LOGGER = Logger.getLogger(DeleteUser.class.getName());
+    ActionResult userIsDeleted = new ActionResult(USER_IS_DELETED_PAGE);
     ActionResult error = new ActionResult(ERROR, true);
 
     @Override
@@ -30,6 +33,7 @@ public class DeleteUser implements Action {
         } catch (SQLException e) {
             e.printStackTrace();
             managerDao.rollback();
+            LOGGER.error("can't delete user",e);
             return error;
         } finally {
             FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());

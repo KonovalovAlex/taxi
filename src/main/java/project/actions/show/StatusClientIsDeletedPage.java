@@ -10,10 +10,7 @@ import static project.constants.Constants.STATUS_CLIENT_IS_DELETED_PAGE;
 
 public class StatusClientIsDeletedPage implements Action {
 
-    @Override
     public ActionResult execute(HttpServletRequest req) {
-        ActionResult statusClientIsDeleted = new ActionResult(STATUS_CLIENT_IS_DELETED_PAGE);
-
-        return statusClientIsDeleted;
+        return new ActionResult(STATUS_CLIENT_IS_DELETED_PAGE);
     }
 }

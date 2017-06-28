@@ -1,6 +1,8 @@
 package project.dao.postgres;
 
 import com.sun.org.apache.regexp.internal.RE;
+import org.apache.log4j.Logger;
+import project.dao.managerDao.ManagerDao;
 import project.entity.AbstractEntity;
 import project.entity.User;
 
@@ -10,11 +12,11 @@ import java.util.*;
 import static project.constants.Constants.*;
 
 public abstract class AbstractPostgresDao<T extends AbstractEntity> {
+    private static final Logger LOGGER = Logger.getLogger(AbstractPostgresDao.class.getName());
     private static final String INSERT = "INSERT INTO %s VALUES %s";
     private static final String SELECT = "SELECT * FROM %s %s";
     private static final String UPDATE = "UPDATE %s SET %s WHERE %s";
     private static final String DELETE = "UPDATE %s SET DELETED = ? WHERE ID = ?";
-
 
     private Connection connection = null;
 
@@ -36,6 +38,7 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
                 id = setId.getInt(ID);
             }
         } catch (SQLException e) {
+            LOGGER.error("insert method failed",e);
             e.printStackTrace();
         }
         return id;

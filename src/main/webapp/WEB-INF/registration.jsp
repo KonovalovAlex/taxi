@@ -1,6 +1,8 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<fmt:setLocale value="${locale}"/>
 <html>
 <head>
     <t:gHead>
@@ -21,14 +23,15 @@
     <input type="email" name="email" value=""/><br/>
     phone:<br/>
     <input type="text" name="phone" value=""/><br/>
-    <input type="submit" name="doRegistration" value="зарегистрироваться"/><br/>
+    <input type="submit" name="doRegistration" value="${registration}"/><br/>
 </form>
 <c:forEach var="invalidFields" items="${getInvalidFiels}">
     <div>
-        order id
-            ${invalidFields.getInvalidFiels()}
+        <%--order id--%>
+            <%--${invalidFields.getInvalidFiels()}--%>
     </div>
 </c:forEach>
+
 <p><a href="/Controller/welcome">Вернуться обратно!</a></p>
 </body>
 </html>

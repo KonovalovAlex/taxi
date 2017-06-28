@@ -1,7 +1,9 @@
 package project.actions.dispatcher;
 
+import org.apache.log4j.Logger;
 import project.actions.Action;
 import project.actions.ActionResult;
+import project.actions.registration.DoRegistration;
 import project.dao.OrderDao;
 import project.dao.managerDao.ManagerDao;
 import project.dao.postgres.FactoryDao;
@@ -13,11 +15,12 @@ import java.sql.SQLException;
 import static project.constants.Constants.*;
 
 public class RejectOrder implements Action {
-    ActionResult orderRejected = new ActionResult(ORDER_REJECTED, true);
-    ActionResult error = new ActionResult(ERROR, true);
+    private static final Logger LOGGER = Logger.getLogger(DoRegistration.class.getName());
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
+        ActionResult orderRejected = new ActionResult(ORDER_REJECTED, true);
+        ActionResult error = new ActionResult(ERROR, true);
         int idOrder = Integer.parseInt(req.getParameter(REJECT_ORDER));
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
         OrderDao orderDao = managerDao.getOrderPostgresDao();
@@ -28,6 +31,7 @@ public class RejectOrder implements Action {
         } catch (SQLException e) {
             e.printStackTrace();
             managerDao.rollback();
+            LOGGER.error("can't reject order",e);
             return error;
         } finally {
             FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());

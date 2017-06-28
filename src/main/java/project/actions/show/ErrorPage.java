@@ -11,9 +11,7 @@ import static project.constants.Constants.ERROR;
 
 
 public class ErrorPage implements Action {
-    private ActionResult errorPage = new ActionResult(ERROR);
 
     public ActionResult execute(HttpServletRequest request) throws ActionException {
-
-        return errorPage;
+        return new ActionResult(ERROR);
 }}

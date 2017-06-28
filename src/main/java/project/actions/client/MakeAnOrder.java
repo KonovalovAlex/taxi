@@ -1,7 +1,9 @@
 package project.actions.client;
 
+import org.apache.log4j.Logger;
 import project.actions.Action;
 import project.actions.ActionResult;
+import project.actions.registration.DoRegistration;
 import project.dao.OrderDao;
 import project.dao.managerDao.ManagerDao;
 import project.dao.postgres.ExceptionDao;
@@ -16,10 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import static project.constants.Constants.*;
 
 public class MakeAnOrder implements Action {
-    private Validator validator = new Validator();
+    private static final Logger LOGGER = Logger.getLogger(MakeAnOrder.class.getName());
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
+        Validator validator = new Validator();
         Order order = new Order();
         boolean time = validator.checkTime(req.getParameter(TIME));
         Integer userId = ((User) req.getSession().getAttribute(USER)).getId();
@@ -36,6 +39,7 @@ public class MakeAnOrder implements Action {
                 managerDao.commit();
             } catch (ExceptionDao e) {
                 managerDao.rollback();
+                LOGGER.error("can't create order",e);
             } finally {
                 FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
             }

@@ -1,5 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
@@ -46,7 +47,7 @@
         </div>
         </c:forEach>
 </table>
-<p><a href="/Controller/welcome">Вернуться обратно!</a></p>
+<p><a href="/Controller/welcome">Вернуться на главную!</a></p>
 </body>
 </html>
 

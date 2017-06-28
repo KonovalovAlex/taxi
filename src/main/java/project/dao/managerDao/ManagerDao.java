@@ -1,5 +1,7 @@
 package project.dao.managerDao;
 
+import org.apache.log4j.Logger;
+import project.actions.registration.DoRegistration;
 import project.dao.postgres.UserPostgresDao;
 import project.dao.postgres.ExceptionDao;
 import project.dao.postgres.OrderPostgresDao;
@@ -8,6 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ManagerDao {
+    private static final Logger LOGGER = Logger.getLogger(ManagerDao.class.getName());
     private final Connection connection;
 
     public ManagerDao(Connection connection) {
@@ -19,6 +22,7 @@ public class ManagerDao {
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
+            LOGGER.error("connection auto commit",e);
             throw new ExceptionDao(e);
         }
     }
@@ -27,6 +31,7 @@ public class ManagerDao {
         try {
             connection.commit();
         } catch (SQLException e) {
+            LOGGER.error("connection commit",e);
             throw new ExceptionDao(e);
         }
     }
@@ -35,6 +40,7 @@ public class ManagerDao {
         try {
             connection.rollback();
         } catch (SQLException e) {
+            LOGGER.error("connection rollback",e);
             throw new ExceptionDao(e);
         }
     }
