@@ -143,13 +143,6 @@ public class Validator {
         return password.equals(user.getPassword());
     }
 
-    public boolean checkConfirmUserPassword(String password, String confirm) {
-        if (!password.equals(confirm)) {
-            results.put("confirmpassword.false", "false");
-        }
-        return password.equals(confirm);
-    }
-
     public boolean checkUserFirstName(String firstName) {
         if (!firstName.equals("")) {
             matcher = Pattern.compile(USER_NAMES_NOT_ALLOW_CHARACTERS).matcher(firstName);
