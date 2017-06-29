@@ -12,7 +12,7 @@
 </head>
 <body>
 <table>
-    <div> возникла ошибка.</div>
+    <div>возникла ошибка.Проверте корректность данных</div>
     <c:forEach var="invalidFieldsMap" items="${invalidFieldsMap}">
         <div>
             <%--invalid Field--%>

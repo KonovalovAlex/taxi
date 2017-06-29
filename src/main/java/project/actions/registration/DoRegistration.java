@@ -80,5 +80,8 @@ public class DoRegistration extends TagSupport implements Action {
         }
         return user;
     }
+    public int doStartTag(){
+        pageContext.getOut();
+    }
 }
 

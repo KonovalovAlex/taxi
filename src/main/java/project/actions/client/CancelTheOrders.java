@@ -21,6 +21,7 @@ public class CancelTheOrders implements Action {
     private static final Logger LOGGER = Logger.getLogger(CancelTheOrders.class.getName());
     @Override
     public ActionResult execute(HttpServletRequest req) {
+        ActionResult clientPage = new ActionResult(CLIENT_PAGE);
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
         Integer userId = ((User) req.getSession().getAttribute(USER)).getId();
         try {
@@ -32,6 +33,6 @@ public class CancelTheOrders implements Action {
         } finally {
             FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
         }
-        return null;
+        return clientPage;
     }
 }

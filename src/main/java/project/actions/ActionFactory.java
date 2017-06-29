@@ -41,6 +41,8 @@ public class ActionFactory extends Constants {
         actionMap.put(ORDER_REJECTED, new OrderRejectedPage());
 
         actionMap.put(CHANGE_LOCALE,new ChangeLocale());
+
+        actionMap.put(ORDER_CREATED_PAGE,new OrderCreated());
     }
 
     public static Action getAction(HttpServletRequest req) {

@@ -53,6 +53,7 @@ public class Constants {
     public static final String ORDERS = "orders";
     public static final String ORDER_ACCEPTED_PAGE = "orderAccepted";
     public static final String ORDER_REJECTED_PAGE = "orderRejected";
+    public static final String ORDER_CREATED_PAGE = "orderCreated";
 
     public static final String STREET = "street";
     public static final String NUMBER_OF_APARTMENT = "number_of_apartment";

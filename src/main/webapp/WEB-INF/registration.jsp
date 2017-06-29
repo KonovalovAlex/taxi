@@ -34,6 +34,9 @@
                 <%--${invalidFields.getInvalidFiels()}--%>
         </div>
     </c:forEach>
+    <t:invalidFields>
+        
+    </t:invalidFields>
     <p><a href="/Controller/welcome"><fmt:message key="message.back.to.welcome"/></a></p>
     </body>
     </html>
