@@ -11,6 +11,7 @@
         </t:gHead>
     </head>
     <body>
+    order created
     <p><a href="/Controller/client"><fmt:message
             key="message.back.to.client.page"/></a></p>
     </body>

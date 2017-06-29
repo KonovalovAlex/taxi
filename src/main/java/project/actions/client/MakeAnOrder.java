@@ -23,6 +23,7 @@ public class MakeAnOrder implements Action {
     @Override
     public ActionResult execute(HttpServletRequest req) {
         ActionResult error = new ActionResult(ERROR);
+        ActionResult orderCreated = new ActionResult(ORDER_CREATED_PAGE,true);
         Validator validator = new Validator();
         Order order = new Order();
         boolean time = validator.checkTime(req.getParameter(TIME));
@@ -48,7 +49,7 @@ public class MakeAnOrder implements Action {
             req.setAttribute("timeIsNotCorrect", "time is not correct");
             return error;
         }
-        return null;
+        return orderCreated;
     }
 }
 

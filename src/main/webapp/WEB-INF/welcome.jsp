@@ -9,6 +9,10 @@
         <title>Welcome</title>
     </head>
     <body>
+    My project - TAXI3 . There is three role admin,dispatcher and client. Client can register on site and
+    create orders where he can specify address and time.
+    Dispatcher have a page where he can watch "waiting orders" and accept or reject orders.Admin can delete users.
+
     <p><a href="/Controller/registration"><fmt:message
             key="message.registration"/> </a></p>
     <p><a href="/Controller/login"><fmt:message
@@ -25,7 +29,6 @@
                 <fmt:message key="navigation.eng"/>
             </option>
         </select>
-
     </form>
     </body>
     </html>
