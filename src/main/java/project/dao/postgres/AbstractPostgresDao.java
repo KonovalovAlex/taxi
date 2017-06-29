@@ -17,7 +17,6 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
     private static final String SELECT = "SELECT * FROM %s %s";
     private static final String UPDATE = "UPDATE %s SET %s WHERE %s";
     private static final String DELETE = "UPDATE %s SET DELETED = ? WHERE ID = ?";
-
     private Connection connection = null;
 
     AbstractPostgresDao(Connection connection) {
@@ -102,7 +101,6 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
     private String generateConditions(Map<String, Object> conditions) {
         StringBuilder sb = new StringBuilder("");
         Object[] conditionsArray = conditions.keySet().toArray();
-//        if (conditions.size() > 0) sb.append("where ");
         for (int i = 0; i < conditionsArray.length; i++) {
             sb.append(conditionsArray[i]);
             if (i < conditionsArray.length - 1) {

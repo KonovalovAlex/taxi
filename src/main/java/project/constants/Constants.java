@@ -52,7 +52,7 @@ public class Constants {
     public static final int ORDER_STATUS_WAITING_INT = 12;
     public static final String ORDERS = "orders";
     public static final String ORDER_ACCEPTED_PAGE = "orderAccepted";
-    public static final String ORDER_REJECTED_PAGE = "ordersRejected";
+    public static final String ORDER_REJECTED_PAGE = "orderRejected";
 
     public static final String STREET = "street";
     public static final String NUMBER_OF_APARTMENT = "number_of_apartment";

@@ -61,16 +61,19 @@ public class Validator {
     }
 
     public boolean checkTime(String time) {
-        matcher = Pattern.compile(TIME24HOURS_PATTERN).matcher(time);
-        if (!matcher.matches()) {
-            results.put("time enter not correct", String.valueOf(matcher.matches()));
+        if (time == null || time.equals("")) {
+            results.put("email.is.required.field", "false");
+            return false;
+        } else {
+            matcher = Pattern.compile(TIME24HOURS_PATTERN).matcher(time);
+            if (!matcher.matches())
+                results.put("time enter not correct", String.valueOf(matcher.matches()));
+            return matcher.matches();
         }
-        return matcher.matches();
-
     }
 
-    public boolean checkUserName(String name) {
 
+    public boolean checkUserName(String name) {
         if (name == null || name.equals("")) {
             results.put("login.is.required.field", "false");
             return false;
@@ -101,7 +104,6 @@ public class Validator {
     }
 
     public boolean checkUserPassword(String password) {
-
         if (password == null || password.equals("")) {
             results.put("password.is.required.field", "false");
             return false;
@@ -144,20 +146,24 @@ public class Validator {
     }
 
     public boolean checkUserFirstName(String firstName) {
-        if (!firstName.equals("")) {
-            matcher = Pattern.compile(USER_NAMES_NOT_ALLOW_CHARACTERS).matcher(firstName);
-            if (!matcher.matches()) results.put("firstname.illegal.characters", String.valueOf(matcher.matches()));
-            else {
-                matcher = Pattern.compile(USER_NAMES_MORE_20).matcher(firstName);
-                if (!matcher.matches()) results.put("firstname.more.then.20", String.valueOf(matcher.matches()));
-            }
-            return matcher.matches();
+        if (firstName == null || firstName.equals("")) {
+            results.put("email.is.required.field", "false");
+            return false;
         }
-        return true;
+        matcher = Pattern.compile(USER_NAMES_NOT_ALLOW_CHARACTERS).matcher(firstName);
+        if (!matcher.matches()) results.put("firstname.illegal.characters", String.valueOf(matcher.matches()));
+        else {
+            matcher = Pattern.compile(USER_NAMES_MORE_20).matcher(firstName);
+            if (!matcher.matches()) results.put("firstname.more.then.20", String.valueOf(matcher.matches()));
+        }
+        return matcher.matches();
     }
 
     public boolean checkUserLastName(String lastName) {
-        if (!lastName.equals("")) {
+        if (lastName == null || lastName.equals("")) {
+            results.put("email.is.required.field", "false");
+            return false;
+        } else {
             matcher = Pattern.compile(USER_NAMES_NOT_ALLOW_CHARACTERS).matcher(lastName);
             if (!matcher.matches()) results.put("lastname.illegal.characters", String.valueOf(matcher.matches()));
             else {
@@ -166,17 +172,18 @@ public class Validator {
             }
             return matcher.matches();
         }
-        return true;
     }
 
 
     public boolean checkUserPhone(String phone) {
-        if (!phone.equals("")) {
+        if (phone == null || phone.equals("")) {
+            results.put("email.is.required.field", "false");
+            return false;
+        } else {
             matcher = Pattern.compile(TELEPHONE_NUMBER).matcher(phone);
             if (!matcher.matches()) results.put("telephone.is.incorrect", String.valueOf(matcher.matches()));
             return matcher.matches();
         }
-        return true;
     }
 
     public boolean checkEmail(String email) {

@@ -2,6 +2,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:bundle basename="i18n.messages">
 <html>
 <head>
     <t:gHead>
@@ -9,7 +11,9 @@
     </t:gHead>
 </head>
 <body>
-<p>заказ отменён</p>
-<p><a href="/Controller/dispatcher">Вернуться обратно!</a></p>
+<p><fmt:message key="message.order.rejected"/></p>
+<p><a href="/Controller/dispatcher"><fmt:message
+        key="message.back.to.dispatcher.page"/></a></p>
 </body>
 </html>
+</fmt:bundle>

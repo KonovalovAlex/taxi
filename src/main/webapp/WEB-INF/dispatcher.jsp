@@ -43,11 +43,10 @@
         <div>
             Time
                 ${entity.getTime()}
-
         </div>
         </c:forEach>
 </table>
-<p><a href="/Controller/welcome">Вернуться на главную!</a></p>
+<p><a href="/Controller/welcome"><fmt:message key="message.back.to.welcome"/></a></p>
 </body>
 </html>
 

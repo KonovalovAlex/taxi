@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import project.actions.*;
 import project.actions.ActionResult;
 import project.actions.registration.DoRegistration;
+import project.dao.postgres.FactoryDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

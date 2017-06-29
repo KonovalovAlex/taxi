@@ -1,5 +1,6 @@
 package project.dao.postgres;
 
+import org.apache.log4j.Logger;
 import project.connectionPool.ConnectionPool;
 import project.dao.managerDao.ManagerDao;
 
@@ -9,6 +10,7 @@ import java.sql.Connection;
 import java.util.Properties;
 
 public class FactoryDao {
+    private static final Logger LOGGER = Logger.getLogger(FactoryDao.class.getName());
     private ConnectionPool pool;
     private String url;
     private String user;
@@ -27,6 +29,7 @@ public class FactoryDao {
             this.maxConnection = Integer.parseInt(properties.getProperty("maxConnection"));
             this.pool = ConnectionPool.getInstance(url, user, password, maxConnection);
         } catch (IOException e) {
+            LOGGER.error("connection property error",e);
             e.printStackTrace();
         }
     }

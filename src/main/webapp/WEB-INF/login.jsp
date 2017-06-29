@@ -16,7 +16,7 @@
     <input type="password" name="password" value=""/><br/>
     <input type="submit" value="войти"/><br/>
 </form>
-<p><a href="/Controller/welcome">Вернуться обратно!</a></p>
+<p><a href="/Controller/welcome"><fmt:message key="message.back.to.welcome"/></a></p>
 </body>
 </html>
 

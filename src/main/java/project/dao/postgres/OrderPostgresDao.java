@@ -63,7 +63,7 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
     public List<Order> returnTheWaitingOrders() throws SQLException {
         List<Order> orders = new ArrayList<>();
         PreparedStatement preparedStatement = connection.prepareStatement
-        ("select * from orders join order_status on orders.fk_status=order_status.id where order_status.id="+ORDER_STATUS_WAITING);
+        ("select * from orders join order_status on orders.fk_status=order_status.id where order_status.id="+ORDER_STATUS_WAITING_INT);
 
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {

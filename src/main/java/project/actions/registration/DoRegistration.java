@@ -12,6 +12,7 @@ import project.entity.User;
 import project.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.tagext.TagSupport;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -19,10 +20,15 @@ import java.util.*;
 
 import static project.constants.Constants.*;
 
-public class DoRegistration implements Action {
+public class DoRegistration extends TagSupport implements Action {
     private static final Logger LOGGER = Logger.getLogger(DoRegistration.class.getName());
     ManagerDao daoManager = FactoryDao.getInstance().getDaoManager();
     Validator validator = new Validator(daoManager);
+    Map<String, String> invalidFields = validator.getInvalidFields();
+
+    public Map<String, String> getInvalidFields() {
+        return invalidFields;
+    }
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
@@ -69,7 +75,6 @@ public class DoRegistration implements Action {
             user.setEmail(req.getParameter(EMAIL));
             user.setPhone(req.getParameter(PHONE));
         } else {
-            Map<String, String> invalidFields = validator.getInvalidFields();
             req.setAttribute("invalidFieldsMap", invalidFields);
             return null;
         }

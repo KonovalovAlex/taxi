@@ -2,6 +2,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:bundle basename="i18n.messages">
 <html>
     <t:gHead>
         <title>Admin</title>
@@ -11,7 +13,7 @@
     <c:forEach var="entity" items="${users}">
     <form action="/Controller/deleteUser" method="get">
         <p><input type="hidden" name="id" value="${entity.getId()}">
-            <input type="submit" value="удалить">
+            <input type="submit" value="asdasd">
         </p></form>
     <div>
         <div>
@@ -45,3 +47,4 @@
 </table>
 </body>
 </html>
+</fmt:bundle>

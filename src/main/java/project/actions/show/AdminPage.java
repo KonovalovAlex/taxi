@@ -20,8 +20,8 @@ import static project.constants.Constants.ERROR;
 import static project.constants.Constants.USERS;
 
 public class AdminPage implements Action {
-
     private static final Logger LOGGER = Logger.getLogger(AdminPage.class.getName());
+
     public ActionResult execute(HttpServletRequest req) {
         ActionResult adminPage = new ActionResult(ADMIN_PAGE);
         ActionResult error = new ActionResult(ERROR,true);

@@ -13,9 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.sql.SQLException;
 
-import static project.constants.Constants.ACCEPT_ORDER;
-import static project.constants.Constants.DISPATCHER;
-import static project.constants.Constants.ERROR;
+import static project.constants.Constants.*;
 
 public class AcceptOrder implements Action {
     private static final Logger LOGGER = Logger.getLogger(AcceptOrder.class.getName());
@@ -23,7 +21,7 @@ public class AcceptOrder implements Action {
     @Override
     public ActionResult execute(HttpServletRequest req) {
         ActionResult error = new ActionResult(ERROR, true);
-        ActionResult dispatcher = new ActionResult(DISPATCHER);
+        ActionResult orderAccept = new ActionResult(ORDER_ACCEPTED_PAGE,true);
         int idOrder = Integer.parseInt(req.getParameter(ACCEPT_ORDER));
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
         OrderDao orderDao = managerDao.getOrderPostgresDao();
@@ -39,6 +37,6 @@ public class AcceptOrder implements Action {
         } finally {
             FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
         }
-        return dispatcher;
+        return orderAccept;
     }
 }

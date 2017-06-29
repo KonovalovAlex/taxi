@@ -58,8 +58,8 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
                 user.getLastName(),
                 user.getEmail(),
                 user.getPhone(),
-                FK_ROLE_CLIENT,
-                STATUS_USER_ACTIVE);
+                STATUS_USER_ACTIVE,
+                FK_ROLE_CLIENT);
     }
 
     public boolean findByPassword(String password) {
@@ -108,6 +108,7 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
                 user.setLastName(resultSet.getString("last_name"));
                 user.setPhone(resultSet.getString(PHONE));
                 user.setId(resultSet.getInt(ID));
+                user.setActivityStatus(resultSet.getString("activity_status"));
                 userRole.setName(resultSet.getString("user_role"));
                 user.setRole(userRole);
                 users.add(user);

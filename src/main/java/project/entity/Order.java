@@ -7,7 +7,6 @@ public class Order extends AbstractEntity {
     private String numberOfApartment;
     private String time;
     private int fkUser;
-    private int id; // for vievJSP else will not see
     private OrderStatus statusOfOrder;
 
     public OrderStatus getStatusOfOrder() {

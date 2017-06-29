@@ -10,9 +10,7 @@ import static project.constants.Constants.LOGIN;
 
 
 public class LoginPage implements Action {
-    private ActionResult login = new ActionResult(LOGIN);
 
     public ActionResult execute(HttpServletRequest request) throws ActionException {
-
-        return login;
+        return new ActionResult(LOGIN);
 }}

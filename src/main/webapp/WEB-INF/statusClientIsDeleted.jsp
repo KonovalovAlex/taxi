@@ -9,7 +9,9 @@
     </t:gHead>
 <body>
 вы были удалены.
-<p><a href="/Controller/welcome">Вернуться на главную!</a></p>
-<p><a href="/Controller/registration">Зарегистрироваться.</a></p>
+<p><a href="/Controller/welcome"><fmt:message
+        key="message.back.to.welcome"/></a></p>
+<p><a href="/Controller/registration"><fmt:message
+        key="message.registration"/></a></p>
 </body>
 </html>

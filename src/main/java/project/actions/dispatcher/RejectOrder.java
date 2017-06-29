@@ -19,7 +19,7 @@ public class RejectOrder implements Action {
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
-        ActionResult orderRejected = new ActionResult(ORDER_REJECTED, true);
+        ActionResult orderRejected = new ActionResult(ORDER_REJECTED_PAGE, true);
         ActionResult error = new ActionResult(ERROR, true);
         int idOrder = Integer.parseInt(req.getParameter(REJECT_ORDER));
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();

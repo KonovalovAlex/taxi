@@ -10,7 +10,9 @@
 </head>
 <body>
 юзеру был присвоен статус удалён!
-<p><a href="/Controller/admin">вернуться на страницу админа.</a></p>
-<p><a href="/Controller/welcome">перейти на главную.</a></p>
+<p><a href="/Controller/admin"><fmt:message
+        key="message.back.to.admin.page"/></a></p>
+<p><a href="/Controller/welcome"><fmt:message
+        key="message.back.to.welcome"/></a></p>
 </body>
 </html>

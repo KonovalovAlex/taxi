@@ -3,7 +3,7 @@ package project.entity;
 
 public class OrderStatus extends AbstractEntity {
     private String status;
-    private int id;
+
 
     public String getStatus() {
         return status;

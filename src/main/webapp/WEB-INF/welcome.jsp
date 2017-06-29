@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${locale}"/>
@@ -10,8 +10,9 @@
     </head>
     <body>
     <p><a href="/Controller/registration"><fmt:message
-            key="registration"/> </a></p>
-    <p><a href="/Controller/login">Войти</a></p>
+            key="message.registration"/> </a></p>
+    <p><a href="/Controller/login"><fmt:message
+            key="message.login"/></a></p>
     <form action="/Controller/changeLocale" method="post">
 
         <select onchange="submit()" name="locale">
