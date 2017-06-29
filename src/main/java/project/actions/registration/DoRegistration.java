@@ -76,6 +76,7 @@ public class DoRegistration extends TagSupport implements Action {
             user.setPhone(req.getParameter(PHONE));
         } else {
             req.setAttribute("invalidFieldsMap", invalidFields);
+
             return null;
         }
         return user;

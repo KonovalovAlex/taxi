@@ -39,6 +39,7 @@ public class Constants {
 
     public static final String DRIVER = "org.postgresql.Driver";
 
+    public static final String NAME_OF_STATUS = "name_of_status";
     public static final String STATUS_USER_ACTIVE = "active";
     public static final String STATUS_USER_IS_DELETED = "deleted";
     public static final String ACTIVE_STATUS_COLUMN = "activity_status";

@@ -4,16 +4,16 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n.messages">
-    <html>
-    <head>
-        <t:gHead>
-            <title>OrderCreated</title>
-        </t:gHead>
-    </head>
-    <body>
-    order created
-    <p><a href="/Controller/client"><fmt:message
-            key="message.back.to.client.page"/></a></p>
-    </body>
-    </html>
+    <fmt:message key="message.order.created" var="orderCreated"/>
 </fmt:bundle>
+<html>
+<head>
+    <t:gHead>
+        <title>OrderCreated</title>
+    </t:gHead>
+</head>
+<body>
+${orderCreated}
+<p><a href="/Controller/welcome">${backToClient}</a></p>
+</body>
+</html>

@@ -4,6 +4,8 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n.messages">
+    <fmt:message key="message.error.check.data" var="checkData"/>
+</fmt:bundle>
 <html>
 <head>
     <t:gHead>
@@ -12,14 +14,15 @@
 </head>
 <body>
 <table>
-    <div>возникла ошибка.Проверте корректность данных</div>
-    <c:forEach var="invalidFieldsMap" items="${invalidFieldsMap}">
+    <div>${checkData}</div>
+    <c:forEach var="invalidFields" items="${valuesList}">
         <div>
-            <%--invalid Field--%>
-            <%--${invalidFieldsMap.values()}--%>
+            order id
+                ${invalidFields.values()}
         </div>
     </c:forEach>
 </table>
+<p><a href="/Controller/welcome">${backToWelcome}</a></p>
 </body>
 </html>
-</fmt:bundle>
+

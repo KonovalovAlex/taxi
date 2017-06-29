@@ -34,7 +34,7 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
 
     @Override
     public boolean cancelTheOrders(int id) throws SQLException {
-        String sql = "UPDATE orders SET fk_status = '" + ORDER_STATUS_REJECT + "' WHERE fk_users = '" + id + "'";
+        String sql = "UPDATE orders SET fk_status = '" + ORDER_STATUS_REJECT_INT + "' WHERE fk_users = '" + id + "'";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         int result = preparedStatement.executeUpdate();
         if (result == 1) {
@@ -69,7 +69,7 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
         while (resultSet.next()) {
             Order order = new Order();
             OrderStatus orderStatus = new OrderStatus();
-            orderStatus.setStatus(resultSet.getString("name_of_status"));
+            orderStatus.setStatus(resultSet.getString(NAME_OF_STATUS));
             order.setId(resultSet.getInt(ID));
             order.setStreet(resultSet.getString(STREET));
             order.setNumberOfHouse(resultSet.getString(NUMBER_OF_HOUSE));
