@@ -2,6 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%--<%@taglib uri="/WEB-INF/tld/invalidFields.tld" prefix="g"%>--%>
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n.messages">
     <fmt:message key="message.login" var="login"/>
@@ -12,6 +13,7 @@
     <fmt:message key="message.registration" var="registration"/>
     <fmt:message key="message.back.to.welcome" var="backToWelcome"/>
     <fmt:message key="message.email" var="email"/>
+    <fmt:message key="message.order.id" var="orderId"/>
 </fmt:bundle>
 <html>
 <head>
@@ -36,12 +38,12 @@
     <input type="text" name="phone" value=""/><br/>
     <input type="submit" id="registration" name="doRegistration" value="${registration}"/><br/>
 </form>
-<%--<c:forEach var="invalidFields" items="${valuesList}">--%>
-    <%--<div>--%>
-        <%--order id--%>
-            <%--${invalidFields.get()}--%>
-    <%--</div>--%>
-<%--</c:forEach>--%>
+<c:forEach var="invalidFields" items="${invalidFieldsMap}">
+    <div>
+        ${orderId}
+            ${invalidFields.getInvalidFields()}
+    </div>
+</c:forEach>
 <a href="/Controller/welcome">${backToWelcome}</a>
 </body>
 </html>

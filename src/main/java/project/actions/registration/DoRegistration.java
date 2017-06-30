@@ -75,11 +75,17 @@ public class DoRegistration extends TagSupport implements Action {
             user.setEmail(req.getParameter(EMAIL));
             user.setPhone(req.getParameter(PHONE));
         } else {
-            req.setAttribute("invalidFieldsMap", invalidFields);
-
+//            req.setAttribute("invalidFieldsMap", invalidFields);
+//            CustumMap custumMap = new CustumMap();
+//            custumMap.setMap(req);
             return null;
         }
         return user;
     }
-}
+//    private class CustumMap {
+//        public void setMap(HttpServletRequest req) {
+//                req.setAttribute("invalidFieldsMap", getInvalidFields());
+//        }
+    }
+
 
