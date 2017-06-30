@@ -6,6 +6,7 @@
 <fmt:bundle basename="i18n.messages">
     <fmt:message key="message.login" var="login"/>
     <fmt:message key="message.password" var="password"/>
+    <fmt:message key="message.back.to.welcome" var="backToWelcome"/>
 </fmt:bundle>
 <html>
 <head>
@@ -22,7 +23,7 @@
     <input type="submit" value="${login}"/><br/>
 </form>
 <br>
-<p><a href="/Controller/welcome">${backToWelcome}</a></p></br>
+<p><a href="/Controller/welcome">${backToWelcome}</a></p>
 </body>
 </html>
 

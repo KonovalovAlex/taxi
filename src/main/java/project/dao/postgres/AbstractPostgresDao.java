@@ -25,7 +25,7 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
 
     public AbstractPostgresDao() {
     }
-
+//dynamic insert
     public Integer insert(String tableName, Object... params) {
         String queryString = String.format(INSERT, tableName, this.generateValuesCount(params));
         int id = 0;
@@ -42,7 +42,7 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
         }
         return id;
     }
-
+//dynamic update
     public boolean updateEntity(String tableName, Map<String, Object> params, Map<String, Object> conditions) throws SQLException {
         String queryString = String.format(UPDATE, tableName, this.generateUpdateParamsPattern(params), this.generateConditions(conditions));
         Map<String, Object> combinedMap = new HashMap<>();
@@ -53,7 +53,7 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
             else return false;
         }
     }
-
+//dynamic delete
     public boolean deleteEntity(String tableName, Map<String, Object> conditions) {
         String queryString = String.format(DELETE, tableName, this.generateConditions(conditions));
         try (PreparedStatement preparedStatement = fillFromArgumentsPreparedStatement(connection.prepareStatement(queryString), conditions)) {

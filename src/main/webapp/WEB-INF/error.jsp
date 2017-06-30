@@ -5,6 +5,7 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n.messages">
     <fmt:message key="message.error.check.data" var="checkData"/>
+    <fmt:message key="message.back.to.welcome" var="backToWelcome"/>
 </fmt:bundle>
 <html>
 <head>

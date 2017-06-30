@@ -39,7 +39,7 @@
 <%--<c:forEach var="invalidFields" items="${valuesList}">--%>
     <%--<div>--%>
         <%--order id--%>
-            <%--${invalidFields.get(1)}--%>
+            <%--${invalidFields.get()}--%>
     <%--</div>--%>
 <%--</c:forEach>--%>
 <a href="/Controller/welcome">${backToWelcome}</a>

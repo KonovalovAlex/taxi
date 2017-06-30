@@ -5,6 +5,8 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n.messages">
     <fmt:message key="message.order.accepted" var="orderAccepted"/>
+    <fmt:message key="message.back.to.dispatcher.page" var="backToDispatcher"/>
+
 </fmt:bundle>
 <html>
 <head>
