@@ -12,6 +12,8 @@ import project.entity.User;
 import project.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import java.lang.reflect.Array;
@@ -82,7 +84,14 @@ public class DoRegistration extends TagSupport implements Action {
         }
         return user;
     }
-//    private class CustumMap {
+
+//    @Override
+//    public int doStartTag() throws JspException {
+//        JspWriter out = pageContext.getOut();
+//
+//        return SKIP_BODY;
+//    }
+    //    private class CustumMap {
 //        public void setMap(HttpServletRequest req) {
 //                req.setAttribute("invalidFieldsMap", getInvalidFields());
 //        }
