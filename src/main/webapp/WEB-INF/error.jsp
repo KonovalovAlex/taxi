@@ -16,13 +16,6 @@
 <body>
 <table>
     <div>${checkData}</div>
-    <c:forEach var="invalidFields" items="${valuesList}">
-        <div>
-            order id
-                ${invalidFields.values()}
-        </div>
-    </c:forEach>
-</table>
 <p><a href="/Controller/welcome">${backToWelcome}</a></p>
 </body>
 </html>

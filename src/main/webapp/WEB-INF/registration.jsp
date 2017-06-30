@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%--<%@taglib uri="/WEB-INF/tld/invalidFields.tld" prefix="g"%>--%>
+
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n.messages">
     <fmt:message key="message.login" var="login"/>
@@ -38,12 +38,9 @@
     <input type="text" name="phone" value=""/><br/>
     <input type="submit" id="registration" name="doRegistration" value="${registration}"/><br/>
 </form>
-<c:forEach var="invalidFields" items="${invalidFieldsMap}">
-    <div>
-        ${orderId}
-            ${invalidFields.getInvalidFields()}
-    </div>
-</c:forEach>
+<t:invalidFields invalidFields="${invalidFields}">
+
+</t:invalidFields>
 <a href="/Controller/welcome">${backToWelcome}</a>
 </body>
 </html>

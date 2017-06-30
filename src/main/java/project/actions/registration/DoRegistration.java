@@ -12,11 +12,8 @@ import project.entity.User;
 import project.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -27,16 +24,11 @@ public class DoRegistration extends TagSupport implements Action {
     ManagerDao daoManager = FactoryDao.getInstance().getDaoManager();
     Validator validator = new Validator(daoManager);
     Map<String, String> invalidFields = validator.getInvalidFields();
-
-    public Map<String, String> getInvalidFields() {
-        return invalidFields;
-    }
+    ActionResult registration = new ActionResult(REGISTRATION);
+    ActionResult registrationFailed = new ActionResult(ERROR);
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
-        ActionResult doRegistration = new ActionResult(DO_REGISTRATION);
-        ActionResult registrationFailed = new ActionResult(ERROR, true);
-
         User user = createClient(req);
         if (user != null) {
             daoManager.beginTransaction();
@@ -52,11 +44,11 @@ public class DoRegistration extends TagSupport implements Action {
                 FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
             }
             LOGGER.info("Customer registered" + user);
-            return doRegistration;
+            return registration;
         } else {
             LOGGER.warn("Creation of a client failed");
             FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
-            return registrationFailed;
+            return registration;
         }
     }
 
@@ -77,24 +69,32 @@ public class DoRegistration extends TagSupport implements Action {
             user.setEmail(req.getParameter(EMAIL));
             user.setPhone(req.getParameter(PHONE));
         } else {
-//            req.setAttribute("invalidFieldsMap", invalidFields);
-//            CustumMap custumMap = new CustumMap();
-//            custumMap.setMap(req);
+            CustomMap<String, String> customMap = new CustomMap<>(invalidFields);
+            req.setAttribute("invalidFields", customMap.getValues());
             return null;
         }
         return user;
     }
 
-//    @Override
-//    public int doStartTag() throws JspException {
-//        JspWriter out = pageContext.getOut();
-//
-//        return SKIP_BODY;
-//    }
-    //    private class CustumMap {
-//        public void setMap(HttpServletRequest req) {
-//                req.setAttribute("invalidFieldsMap", getInvalidFields());
-//        }
+    private class CustomMap<K, V> {
+        Map<K, V> someMap = new HashMap<>();
+
+        public CustomMap(Map<K, V> map) {
+            this.someMap = map;
+        }
+
+        public ArrayList<K> getKeys() {
+            return new ArrayList<>(someMap.keySet());
+        }
+
+        public ArrayList<V> getValues() {
+            return new ArrayList<>(someMap.values());
+        }
+
+        public void setSomeMap(Map<K, V> someMap) {
+            this.someMap = someMap;
+        }
     }
+}
 
 
