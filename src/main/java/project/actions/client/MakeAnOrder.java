@@ -22,7 +22,7 @@ public class MakeAnOrder implements Action {
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
-        ActionResult error = new ActionResult(ERROR);
+        ActionResult error = new ActionResult(ERROR,true);
         ActionResult orderCreated = new ActionResult(ORDER_CREATED_PAGE,true);
         Validator validator = new Validator();
         Order order = new Order();
