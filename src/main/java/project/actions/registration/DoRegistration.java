@@ -19,7 +19,7 @@ import java.util.*;
 
 import static project.constants.Constants.*;
 
-public class DoRegistration extends TagSupport implements Action {
+public class DoRegistration implements Action {
     private static final Logger LOGGER = Logger.getLogger(DoRegistration.class.getName());
     ManagerDao daoManager = FactoryDao.getInstance().getDaoManager();
     Validator validator = new Validator(daoManager);
