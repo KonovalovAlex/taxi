@@ -13,6 +13,8 @@
     <fmt:message key="message.number.of.house" var="numberOfHouse"/>
     <fmt:message key="message.number.of.apartment" var="numberOfApartment"/>
     <fmt:message key="message.time.format" var="time"/>
+    <fmt:message key="message.phone" var="phone"/>
+    <fmt:message key="message.back.to.dispatcher.page" var="backToDispatcher"/>
 </fmt:bundle>
 <html>
 <head>
@@ -21,9 +23,11 @@
 </t:gHead>
 </head>
 <body>
-<table>
+<table border="1" cellpadding="7" cellspacing="0">
+    <tr>
+        <td colspan="2" bgcolor="#D3EDF6" align="center">
     <c:forEach var="entity" items="${orders}">
-    <form action="/Controller/acceptOrder" method="get">
+       <form action="/Controller/acceptOrder" method="get">
         <p><input type="hidden" name="acceptOrder" value="${entity.getId()}">
             <input type="submit" value="${accept}">
         </p></form>
@@ -31,10 +35,13 @@
         <p><input type="hidden" name="rejectOrder" value="${entity.getId()}">
             <input type="submit" value="${reject}">
         </p></form>
-    <div>
         <div>
             ${orderId}
                 ${entity.getId()}
+        </div>
+        <div>
+                ${phone}
+                ${entity.getPhone()}
         </div>
         <div>
             ${userId}
@@ -56,9 +63,10 @@
             ${time}
                 ${entity.getTime()}
         </div>
-        </c:forEach>
+        </c:forEach></td></tr>
 </table>
 <p><a href="/Controller/welcome">${backToWelcome}</a></p>
+<p><a href="/Controller/dispatcher">${backToDispatcher}</a></p>
 </body>
 </html>
 

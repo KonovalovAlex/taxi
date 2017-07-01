@@ -4,7 +4,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n.messages">
-    <fmt:message key="message.order.created" var="orderCreated"/>
+    <fmt:message key="message.order.created.operator.will.send.you.sms" var="orderCreated"/>
     <fmt:message key="message.back.to.client.page" var="backToClient"/>
 </fmt:bundle>
 <html>

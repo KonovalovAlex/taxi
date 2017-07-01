@@ -107,7 +107,7 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setLastName(resultSet.getString("last_name"));
                 user.setPhone(resultSet.getString(PHONE));
-                user.setId(resultSet.getInt(ID));
+                user.setId(resultSet.getInt(9));
                 user.setActivityStatus(resultSet.getString("activity_status"));
                 userRole.setName(resultSet.getString("user_role"));
                 user.setRole(userRole);

@@ -8,6 +8,15 @@ public class Order extends AbstractEntity {
     private String time;
     private int fkUser;
     private OrderStatus statusOfOrder;
+    private User phone;
+
+    public String getPhone() {
+        return phone.getPhone();
+    }
+
+    public void setPhone(User phone) {
+        this.phone = phone;
+    }
 
     public OrderStatus getStatusOfOrder() {
         return statusOfOrder;
