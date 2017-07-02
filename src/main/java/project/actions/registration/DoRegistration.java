@@ -21,14 +21,16 @@ import static project.constants.Constants.*;
 
 public class DoRegistration implements Action {
     private static final Logger LOGGER = Logger.getLogger(DoRegistration.class.getName());
-    ManagerDao daoManager = FactoryDao.getInstance().getDaoManager();
-    Validator validator = new Validator(daoManager);
-    Map<String, String> invalidFields = validator.getInvalidFields();
     ActionResult registration = new ActionResult(REGISTRATION);
     ActionResult registrationFailed = new ActionResult(ERROR);
+    Validator validator;
+
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
+        ManagerDao daoManager = FactoryDao.getInstance().getDaoManager();
+        this.validator =  new Validator(daoManager);
+
         User user = createClient(req);
         if (user != null) {
             daoManager.beginTransaction();
@@ -69,6 +71,7 @@ public class DoRegistration implements Action {
             user.setEmail(req.getParameter(EMAIL));
             user.setPhone(req.getParameter(PHONE));
         } else {
+            Map<String, String> invalidFields = validator.getInvalidFields();
             CustomMap<String, String> customMap = new CustomMap<>(invalidFields);
             req.setAttribute("invalidFields", customMap.getValues());
             return null;
