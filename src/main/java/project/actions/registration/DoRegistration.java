@@ -87,17 +87,10 @@ public class DoRegistration implements Action {
             this.someMap = map;
         }
 
-        public ArrayList<K> getKeys() {
-            return new ArrayList<>(someMap.keySet());
-        }
-
         public ArrayList<V> getValues() {
             return new ArrayList<>(someMap.values());
         }
 
-        public void setSomeMap(Map<K, V> someMap) {
-            this.someMap = someMap;
-        }
     }
 }
 
