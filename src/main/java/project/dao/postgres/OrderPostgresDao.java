@@ -74,7 +74,7 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
             User user = new User();
             user.setPhone(resultSet.getString(PHONE));
             orderStatus.setStatus(resultSet.getString(NAME_OF_STATUS));
-            order.setId(resultSet.getInt(ID));
+            order.setId(resultSet.getInt(16));
             order.setStreet(resultSet.getString(STREET));
             order.setNumberOfHouse(resultSet.getString(NUMBER_OF_HOUSE));
             order.setNumberOfApartment(resultSet.getString(NUMBER_OF_APARTMENT));
