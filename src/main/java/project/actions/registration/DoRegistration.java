@@ -12,7 +12,6 @@ import project.entity.User;
 import project.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.tagext.TagSupport;
 
 import java.util.*;
 
@@ -57,7 +56,7 @@ public class DoRegistration implements Action {
 
     private User createClient(HttpServletRequest req) {
         User user = new User();
-        validator.checkUserName(req.getParameter(LOGIN));
+        validator.checkLogin(req.getParameter(LOGIN));
         validator.checkUserPassword(req.getParameter(PASSWORD));
         validator.checkUserFirstName(req.getParameter(FIRST_NAME));
         validator.checkUserLastName(req.getParameter(LAST_NAME));

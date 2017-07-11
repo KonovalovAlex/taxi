@@ -62,7 +62,7 @@ public class Validator {
 
     public boolean checkTime(String time) {
         if (time == null || time.equals("")) {
-            results.put("email.is.required.field", "false");
+            results.put("time.is.required.field", "false");
             return false;
         } else {
             matcher = Pattern.compile(TIME24HOURS_PATTERN).matcher(time);
@@ -73,7 +73,7 @@ public class Validator {
     }
 
 
-    public boolean checkUserName(String name) {
+    public boolean checkLogin(String name) {
         if (name == null || name.equals("")) {
             results.put("login.is.required.field", "false");
             return false;
@@ -141,7 +141,7 @@ public class Validator {
 
     public boolean checkUserFirstName(String firstName) {
         if (firstName == null || firstName.equals("")) {
-            results.put("email.is.required.field", "false");
+            results.put("firstName.is.required.field", "false");
             return false;
         }
         matcher = Pattern.compile(USER_NAMES_NOT_ALLOW_CHARACTERS).matcher(firstName);
@@ -155,7 +155,7 @@ public class Validator {
 
     public boolean checkUserLastName(String lastName) {
         if (lastName == null || lastName.equals("")) {
-            results.put("email.is.required.field", "false");
+            results.put("lastName.is.required.field", "false");
             return false;
         } else {
             matcher = Pattern.compile(USER_NAMES_NOT_ALLOW_CHARACTERS).matcher(lastName);
@@ -171,7 +171,7 @@ public class Validator {
 
     public boolean checkUserPhone(String phone) {
         if (phone == null || phone.equals("")) {
-            results.put("email.is.required.field", "false");
+            results.put("phone.is.required.field", "false");
             return false;
         } else {
             matcher = Pattern.compile(TELEPHONE_NUMBER).matcher(phone);
