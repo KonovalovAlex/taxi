@@ -15,7 +15,6 @@ public class Constants {
     public static final String ACTION_LOGIN = "actionLogin";
     public static final String USER_IS_DELETED_PAGE = "userIsDeleted";
     public static final String DELETE_USER = "deleteUser";
-    public static final String ORDER_REJECTED = "orderRejected";
     public static final String CHANGE_LOCALE = "changeLocale";
     public static final String TIME_IS_NOT_CORRECT = "timeIsNotCorrect";
 
@@ -24,7 +23,7 @@ public class Constants {
     public static final String USERS = "users";
     public static final String DISPATCHER = "dispatcher";
     public static final String ADMIN = "admin";
-
+    public static final String INVALID_FIELDS = "invalidFields";
 
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";

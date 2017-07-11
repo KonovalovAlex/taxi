@@ -73,7 +73,7 @@ public class DoRegistration implements Action {
         } else {
             Map<String, String> invalidFields = validator.getInvalidFields();
             CustomMap<String, String> customMap = new CustomMap<>(invalidFields);
-            req.setAttribute("invalidFields", customMap.getValues());
+            req.setAttribute(INVALID_FIELDS, customMap.getValues());
             return null;
         }
         return user;
