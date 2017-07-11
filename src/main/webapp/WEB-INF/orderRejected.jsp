@@ -7,11 +7,7 @@
     <fmt:message key="message.order.rejected" var="orderRejected"/>
 </fmt:bundle>
 <html>
-<head>
-    <t:gHead>
-        <title>OrderRejected</title>
-    </t:gHead>
-</head>
+
 <body>
 ${orderRejected}
 <p><a href="/Controller/welcome">${backToDispatcher}</a></p>

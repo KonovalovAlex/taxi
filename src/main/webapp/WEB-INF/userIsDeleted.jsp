@@ -8,11 +8,6 @@
     <fmt:message key="message.back.to.welcome" var="backToWelcome"/>
 </fmt:bundle>
 <html>
-<head>
-    <t:gHead>
-        <title>userStatusWasChange</title>
-    </t:gHead>
-</head>
 <body>
 ${userStatusIsDeleted}
 <p><a href="/Controller/admin">${backToAdmin}</a></p>

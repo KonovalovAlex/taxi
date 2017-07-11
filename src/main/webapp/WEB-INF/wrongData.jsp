@@ -6,9 +6,6 @@
     <fmt:message key="message.wrong.data" var="wrongData"/>
 </fmt:bundle>
 <html>
-<head>
-    <title>Title</title>
-</head>
 <body>
 ${wrongData}
 <p><a href="/Controller/login">${wrongData}</a></p>

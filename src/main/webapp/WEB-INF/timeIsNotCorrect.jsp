@@ -7,7 +7,6 @@
     <fmt:message key="message.time.is.not.correct" var="timeIsNotCorrect"/>
 </fmt:bundle>
 <html>
-<head>
 <body>
 ${timeIsNotCorrect}
 <p><a href="/Controller/client">${backToClient}</a></p>
