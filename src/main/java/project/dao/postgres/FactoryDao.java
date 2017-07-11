@@ -39,6 +39,7 @@ public class FactoryDao {
         try {
             connection = pool.getConnection();
         } catch (ExceptionDao e) {
+            LOGGER.error("error in FactoryDao method getDaoManager",e);
             throw new ExceptionDao(e);
         }
         return new ManagerDao(connection);

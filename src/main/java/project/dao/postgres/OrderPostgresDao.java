@@ -1,5 +1,6 @@
 package project.dao.postgres;
 
+import org.apache.log4j.Logger;
 import project.dao.OrderDao;
 import project.dao.managerDao.ManagerDao;
 import project.entity.Order;
@@ -12,7 +13,7 @@ import java.util.*;
 import static project.constants.Constants.*;
 
 public class OrderPostgresDao extends AbstractPostgresDao<Order> implements OrderDao {
-
+    private static final Logger LOGGER = Logger.getLogger(OrderPostgresDao.class.getName());
     private Connection connection;
     private ManagerDao managerDao;
 
@@ -40,11 +41,14 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
         int result = preparedStatement.executeUpdate();
         if (result == 1) {
             return true;
-        } else return false;
+        } else {
+            LOGGER.error("cancelTheOrders return nothing");
+            return false;
+        }
     }
 
     @Override
-    public boolean acceptOrder (int idOrder) throws SQLException {
+    public boolean acceptOrder(int idOrder) throws SQLException {
         getParams().put(FK_STATUS, ORDER_STATUS_ACCEPT_INT);
         getConditions().put(ID, idOrder);
         return this.updateEntity(ORDERS, this.params, this.conditions);
@@ -60,8 +64,8 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
     public List<Order> returnTheWaitingOrders() throws SQLException {
         List<Order> orders = new ArrayList<>();
         PreparedStatement preparedStatement = connection.prepareStatement
-        ("select * from users join orders on users.id = orders.fk_users join" +
-                " order_status on orders.fk_status = order_status.id where order_status.id="+ORDER_STATUS_WAITING_INT);
+                ("select * from users join orders on users.id = orders.fk_users join" +
+                        " order_status on orders.fk_status = order_status.id where order_status.id=" + ORDER_STATUS_WAITING_INT);
 
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {

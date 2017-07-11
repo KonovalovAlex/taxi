@@ -14,7 +14,6 @@ import static project.constants.Constants.*;
 public abstract class AbstractPostgresDao<T extends AbstractEntity> {
     private static final Logger LOGGER = Logger.getLogger(AbstractPostgresDao.class.getName());
     private static final String INSERT = "INSERT INTO %s VALUES %s";
-    private static final String SELECT = "SELECT * FROM %s %s";
     private static final String UPDATE = "UPDATE %s SET %s WHERE %s";
     private static final String DELETE = "UPDATE %s SET DELETED = ? WHERE ID = ?";
     private Connection connection = null;
@@ -35,7 +34,8 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
 
     public AbstractPostgresDao() {
     }
-//dynamic insert
+
+    //dynamic insert
     public Integer insert(String tableName, Object... params) {
         String queryString = String.format(INSERT, tableName, this.generateValuesCount(params));
         int id = 0;
@@ -47,29 +47,35 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
                 id = setId.getInt(ID);
             }
         } catch (SQLException e) {
-            LOGGER.error("insert method failed",e);
+            LOGGER.error("insert method failed", e);
             e.printStackTrace();
         }
         return id;
     }
-//dynamic update
+
+    //dynamic update
     public boolean updateEntity(String tableName, Map<String, Object> params, Map<String, Object> conditions) throws SQLException {
         String queryString = String.format(UPDATE, tableName, this.generateUpdateParamsPattern(params), this.generateConditions(conditions));
         Map<String, Object> combinedMap = new HashMap<>();
         combinedMap.putAll(params);
         combinedMap.putAll(conditions);
         try (PreparedStatement preparedStatement = fillFromMapPreparedStatement(connection.prepareStatement(queryString), combinedMap)) {
-            if(preparedStatement.executeUpdate()==1) return true;
-            else return false;
+            if (preparedStatement.executeUpdate() == 1) return true;
+            else {
+                LOGGER.error("updateEntity return nothing");
+                return false;
+            }
         }
     }
-//dynamic delete
+
+    //dynamic delete
     public boolean deleteEntity(String tableName, Map<String, Object> conditions) {
         String queryString = String.format(DELETE, tableName, this.generateConditions(conditions));
         try (PreparedStatement preparedStatement = fillFromArgumentsPreparedStatement(connection.prepareStatement(queryString), conditions)) {
             preparedStatement.execute();
-        } catch (SQLException e1) {
-            e1.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LOGGER.error("method failed", e);
             return false;
         }
         return true;

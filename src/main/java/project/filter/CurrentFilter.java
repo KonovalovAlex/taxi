@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import static project.constants.Constants.*;
 
 public class CurrentFilter implements Filter {
-    private static final Logger LOGGER = Logger.getLogger(AbstractPostgresDao.class.getName());
 
     public void init(FilterConfig filterConfig) throws ServletException {
     }
