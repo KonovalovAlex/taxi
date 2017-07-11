@@ -26,30 +26,33 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
         this.managerDao = managerDao;
     }
 
-    public User getUserByLogin(String login) throws SQLException {
+    public User findUserByLogin(String login) throws SQLException {
         User user = new User();
         UserRole userRole = new UserRole();
-        String slq = "select * from users inner join rols on users.fk_rols=rols.id where users.login ='" + login + "'";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(slq)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            user.setActivityStatus(resultSet.getString(ACTIVE_STATUS_COLUMN));
-            userRole.setId(resultSet.getInt("fk_rols"));
-            userRole.setName(resultSet.getString("user_role"));
-            user.setFirstName(resultSet.getString("first_name"));
-            user.setLastName(resultSet.getString("last_name"));
-            user.setLogin(resultSet.getString(LOGIN));
-            user.setPassword(resultSet.getString(PASSWORD));
-            user.setEmail(resultSet.getString(EMAIL));
-            user.setPhone(resultSet.getString(PHONE));
-            user.setId(resultSet.getInt(ID));
-            user.setRole(userRole);
-
-            LOGGER.info("user is" + user);
+        String sql = "select * from users inner join rols on users.fk_rols=rols.id where users.login ='" + login + "'";
+        try (PreparedStatement prstm = connection.prepareStatement(sql)) {
+            try (ResultSet resultSet = prstm.executeQuery()) {
+                if (resultSet.next()) {
+                    user.setActivityStatus(resultSet.getString(ACTIVE_STATUS_COLUMN));
+                    userRole.setId(resultSet.getInt("fk_rols"));
+                    userRole.setName(resultSet.getString("user_role"));
+                    user.setFirstName(resultSet.getString("first_name"));
+                    user.setLastName(resultSet.getString("last_name"));
+                    user.setLogin(resultSet.getString(LOGIN));
+                    user.setPassword(resultSet.getString(PASSWORD));
+                    user.setEmail(resultSet.getString(EMAIL));
+                    user.setPhone(resultSet.getString(PHONE));
+                    user.setId(resultSet.getInt(ID));
+                    user.setRole(userRole);
+                    LOGGER.info("user is" + user);
+                    return user;
+                } else return null;
+            }
+        } catch (ExceptionDao e) {
+            LOGGER.error("Error of Client finding by login", e);
+            throw new ExceptionDao(e);
         }
-        return user;
     }
-
 
     @Override
     public int insert(User user) {
@@ -72,7 +75,7 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
                 return resultSet.next();
             }
         } catch (Exception e) {
-        LOGGER.error("Error of Client finding by exist{}", e);
+            LOGGER.error("Error of Client finding by exist{}", e);
             throw new ExceptionDao(e);
         }
     }
