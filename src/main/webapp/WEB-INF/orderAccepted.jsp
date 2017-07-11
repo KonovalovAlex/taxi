@@ -11,6 +11,6 @@
 <html>
 <body>
 ${orderAccepted}
-<p><a href="/Controller/welcome">${backToDispatcher}</a></p>
+<p><a href="/Controller/dispatcher">${backToDispatcher}</a></p>
 </body>
 </html>
