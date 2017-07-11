@@ -22,6 +22,7 @@ public class ActionLogin implements Action {
     public ActionResult execute(HttpServletRequest req) {
 
         ActionResult error = new ActionResult(ERROR, true);
+        ActionResult wrongData = new ActionResult(WRONG_DATA);
         ActionResult admin = new ActionResult(ADMIN, true);
         ActionResult dispatcherPage = new ActionResult(DISPATCHER, true);
         ActionResult client = new ActionResult(CLIENT, true);
@@ -57,7 +58,7 @@ public class ActionLogin implements Action {
         } finally {
             FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
         }
-        return error;
+        return wrongData;
     }
 }
 

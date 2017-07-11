@@ -50,6 +50,7 @@ public class Constants {
     public static final String ORDER_REJECTED_PAGE = "orderRejected";
     public static final String ORDER_CREATED_PAGE = "orderCreated";
     public static final String ORDERS_WERE_CANCELED = "ordersWereCanceled";
+    public static final String WRONG_DATA = "wrongData";
 
     public static final String STREET = "street";
     public static final String NUMBER_OF_APARTMENT = "number_of_apartment";
