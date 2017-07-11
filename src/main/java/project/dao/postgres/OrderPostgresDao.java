@@ -45,28 +45,23 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
 
     @Override
     public boolean acceptOrder (int idOrder) throws SQLException {
-        LinkedHashMap<String, Object> conditions = new LinkedHashMap<>();
-        LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-        params.put(FK_STATUS, ORDER_STATUS_ACCEPT_INT);
-        conditions.put(ID, idOrder);
-        return this.updateEntity(ORDERS, params, conditions);
+        getParams().put(FK_STATUS, ORDER_STATUS_ACCEPT_INT);
+        getConditions().put(ID, idOrder);
+        return this.updateEntity(ORDERS, this.params, this.conditions);
     }
 
     @Override
     public boolean rejectOrder(int idOrder) throws SQLException {
-        LinkedHashMap<String, Object> conditions = new LinkedHashMap<>();
-        LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-        params.put(FK_STATUS, ORDER_STATUS_REJECT_INT);
-        conditions.put(ID, idOrder);
-        return this.updateEntity(ORDERS, params, conditions);
+        getParams().put(FK_STATUS, ORDER_STATUS_REJECT_INT);
+        getConditions().put(ID, idOrder);
+        return this.updateEntity(ORDERS, this.params, this.conditions);
     }
 
     public List<Order> returnTheWaitingOrders() throws SQLException {
         List<Order> orders = new ArrayList<>();
         PreparedStatement preparedStatement = connection.prepareStatement
         ("select * from users join orders on users.id = orders.fk_users join" +
-                " order_status on orders.fk_status = order_status.id where order_status.id="+ORDER_STATUS_WAITING_INT
-        );
+                " order_status on orders.fk_status = order_status.id where order_status.id="+ORDER_STATUS_WAITING_INT);
 
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {

@@ -18,6 +18,16 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
     private static final String UPDATE = "UPDATE %s SET %s WHERE %s";
     private static final String DELETE = "UPDATE %s SET DELETED = ? WHERE ID = ?";
     private Connection connection = null;
+    LinkedHashMap<String, Object> conditions;
+    LinkedHashMap<String, Object> params;
+
+    public LinkedHashMap<String, Object> getConditions() {
+        return conditions = new LinkedHashMap<>();
+    }
+
+    public LinkedHashMap<String, Object> getParams() {
+        return params = new LinkedHashMap<>();
+    }
 
     AbstractPostgresDao(Connection connection) {
         this.connection = connection;

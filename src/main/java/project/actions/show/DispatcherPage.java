@@ -27,9 +27,6 @@ public class DispatcherPage implements Action {
         List<Order> orderList = null;
         try {
             orderList = orderPostgresDao.returnTheWaitingOrders();
-            if (orderList == null) {
-                return error;
-            }
         } catch (SQLException e) {
             e.printStackTrace();
             LOGGER.error("can't get orders", e);

@@ -33,7 +33,6 @@ public class Controller extends HttpServlet {
             } catch (ActionException e) {
                 LOGGER.error("epic fail from controller",e);
                 throw new ActionException(e);
-
             }
 
             if (result.isRedirect()) {

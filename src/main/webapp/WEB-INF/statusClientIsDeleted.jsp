@@ -4,7 +4,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n.messages">
-    <fmt:message key="message.you.was.deleted" var="youWereDeleted"/>
+    <fmt:message key="message.you.were.deleted" var="youWereDeleted"/>
     <fmt:message key="message.back.to.welcome" var="backToWelcome"/>
     <fmt:message key="message.registration" var="backRegistr"/>
 </fmt:bundle>

@@ -5,4 +5,3 @@
             ${invalidField}
     </div>
 </c:forEach>
-

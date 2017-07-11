@@ -4,20 +4,19 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n.messages">
-    <fmt:message key="message.error.in.system" var="checkData"/>
+    <fmt:message key="message.orders.were.canceled" var="OrdersWereCanceled"/>
     <fmt:message key="message.back.to.welcome" var="backToWelcome"/>
-    <fmt:message key="message.back.to.client.page" var="backToclientPage"/>
+    <fmt:message key="message.back.to.client.page" var="backToClient"/>
 </fmt:bundle>
 <html>
 <head>
     <t:gHead>
-        <title>error</title>
+    <title>OrdersWereCanceled</title>
     </t:gHead>
 </head>
 <body>
-    <div>${checkData}</div>
+${OrdersWereCanceled}
 <p><a href="/Controller/welcome">${backToWelcome}</a></p>
-<p><a href="/Controller/client">${backToclientPage}</a></p>
+<p><a href="/Controller/client">${backToClient}</a></p>
 </body>
 </html>
-

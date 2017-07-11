@@ -21,7 +21,6 @@ public class ConnectionPool {
     private String password;
     private int maxСonnection;
     private List<Connection> freeConnections = null;
-    //TODO need to change collection
 
     private ConnectionPool(String url, String user, String password, int maxСonnection) {
         this.url = url;

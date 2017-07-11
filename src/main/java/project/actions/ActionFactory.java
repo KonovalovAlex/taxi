@@ -1,5 +1,6 @@
 package project.actions;
 
+import org.apache.log4j.Logger;
 import project.actions.admin.DeleteUser;
 import project.actions.client.CancelTheOrders;
 import project.actions.client.MakeAnOrder;
@@ -30,19 +31,16 @@ public class ActionFactory extends Constants {
         actionMap.put(CLIENT_PAGE, new ClientPage());
 
         actionMap.put(MAKE_AN_ORDER, new MakeAnOrder());
-        actionMap.put(CANCEL_THE_ORDER, new CancelTheOrders());
+        actionMap.put(CANCEL_THE_ORDERS,new CancelTheOrders());
 
         actionMap.put(ACCEPT_ORDER, new AcceptOrder());
         actionMap.put(REJECT_ORDER, new RejectOrder());
 
         actionMap.put(DELETE_USER, new DeleteUser());
 
-        actionMap.put(ORDER_ACCEPTED_PAGE, new OrderAcceptedPage());
-        actionMap.put(ORDER_REJECTED, new OrderRejectedPage());
-
         actionMap.put(CHANGE_LOCALE,new ChangeLocale());
 
-        actionMap.put(ORDER_CREATED_PAGE,new OrderCreated());
+
     }
 
     public static Action getAction(HttpServletRequest req) {

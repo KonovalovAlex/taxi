@@ -1,5 +1,7 @@
 package project.dao.postgres;
 
+import org.apache.log4j.Logger;
+import project.actions.show.AdminPage;
 import project.dao.UserDao;
 import project.dao.managerDao.ManagerDao;
 import project.entity.User;
@@ -14,9 +16,9 @@ import project.entity.UserRole;
 import static project.constants.Constants.*;
 
 public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDao {
+    private static final Logger LOGGER = Logger.getLogger(UserPostgresDao.class.getName());
     Connection connection;
     ManagerDao managerDao;
-//    private static final Logger LOGGER = Logger.getLogger(UserPostgresDao.class);
 
     public UserPostgresDao(Connection connection, ManagerDao managerDao) {
         super(connection);
@@ -43,7 +45,7 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
             user.setId(resultSet.getInt(ID));
             user.setRole(userRole);
 
-//            LOGGER.info("role is" + user);
+            LOGGER.info("user is" + user);
         }
         return user;
     }
@@ -62,28 +64,15 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
                 FK_ROLE_CLIENT);
     }
 
-    public boolean findByPassword(String password) {
-        String slq = "select * from users where password =" + "'" + password + "'";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(slq)) {
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
     public boolean alreadyExist(String login) {
         String sql = "select * from users where login =" + "'" + login + "'";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-//                LOGGER.info("Client is already exist{}", );
+                LOGGER.info("Client is already exist{}");
                 return resultSet.next();
             }
         } catch (Exception e) {
-//        LOGGER.error("Error of Client finding by exist{}", e);
+        LOGGER.error("Error of Client finding by exist{}", e);
             throw new ExceptionDao(e);
         }
     }
@@ -118,10 +107,8 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
     }
 
     public boolean deleteUser(int userId) throws SQLException {
-        LinkedHashMap<String, Object> conditions = new LinkedHashMap<>();
-        LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-        params.put(ACTIVE_STATUS_COLUMN, STATUS_USER_IS_DELETED);
-        conditions.put(ID, userId);
+        getParams().put(ACTIVE_STATUS_COLUMN, STATUS_USER_IS_DELETED);
+        getConditions().put(ID, userId);
         return this.updateEntity(USERS, params, conditions);
     }
 }

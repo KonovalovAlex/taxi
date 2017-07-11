@@ -23,7 +23,8 @@ public class MakeAnOrder implements Action {
     @Override
     public ActionResult execute(HttpServletRequest req) {
         ActionResult error = new ActionResult(ERROR,true);
-        ActionResult orderCreated = new ActionResult(ORDER_CREATED_PAGE,true);
+        ActionResult orderCreated = new ActionResult(ORDER_CREATED_PAGE);
+        ActionResult timeIsNotCorrect = new ActionResult(TIME_IS_NOT_CORRECT);
         Validator validator = new Validator();
         Order order = new Order();
         boolean time = validator.checkTime(req.getParameter(TIME));
@@ -42,12 +43,12 @@ public class MakeAnOrder implements Action {
             } catch (ExceptionDao e) {
                 managerDao.rollback();
                 LOGGER.error("can't create order",e);
+                return error;
             } finally {
                 FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
             }
         } else {
-            req.setAttribute("timeIsNotCorrect", "time is not correct");
-            return error;
+            return timeIsNotCorrect;
         }
         return orderCreated;
     }

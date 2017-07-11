@@ -138,12 +138,6 @@ public class Validator {
         }
     }
 
-    public boolean checkOldPassword(String password, User user) {
-        if (!password.equals(user.getPassword())) {
-            results.put("oldpassword.false", "false");
-        }
-        return password.equals(user.getPassword());
-    }
 
     public boolean checkUserFirstName(String firstName) {
         if (firstName == null || firstName.equals("")) {
