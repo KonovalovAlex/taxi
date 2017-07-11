@@ -29,7 +29,7 @@ public class DoRegistration implements Action {
     @Override
     public ActionResult execute(HttpServletRequest req) {
         ManagerDao daoManager = FactoryDao.getInstance().getDaoManager();
-        this.validator =  new Validator(daoManager);
+        this.validator = new Validator(daoManager);
 
         User user = createClient(req);
         if (user != null) {
@@ -46,7 +46,7 @@ public class DoRegistration implements Action {
                 FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
             }
             LOGGER.info("Customer registered" + user);
-            req.setAttribute("youWereRegistered","You were registered");
+            req.setAttribute("youWereRegistered", "You were registered");
             return registration;
         } else {
             LOGGER.warn("Creation of a client failed");
@@ -57,12 +57,12 @@ public class DoRegistration implements Action {
 
     private User createClient(HttpServletRequest req) {
         User user = new User();
-        boolean login = validator.checkUserName(req.getParameter(LOGIN));
-        boolean password = validator.checkUserPassword(req.getParameter(PASSWORD));
-        boolean firstname = validator.checkUserFirstName(req.getParameter(FIRST_NAME));
-        boolean lastname = validator.checkUserLastName(req.getParameter(LAST_NAME));
-        boolean phone = validator.checkUserPhone(req.getParameter(PHONE));
-        boolean email = validator.checkEmail(req.getParameter(EMAIL));
+        validator.checkUserName(req.getParameter(LOGIN));
+        validator.checkUserPassword(req.getParameter(PASSWORD));
+        validator.checkUserFirstName(req.getParameter(FIRST_NAME));
+        validator.checkUserLastName(req.getParameter(LAST_NAME));
+        validator.checkUserPhone(req.getParameter(PHONE));
+        validator.checkEmail(req.getParameter(EMAIL));
 
         if (validator.isValide()) {
             user.setLogin(req.getParameter(LOGIN));

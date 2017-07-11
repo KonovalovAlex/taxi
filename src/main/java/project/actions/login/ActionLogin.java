@@ -51,7 +51,7 @@ public class ActionLogin implements Action {
                         }
                     }
                 }
-            }else return wrongData;
+            } else return wrongData;
         } catch (SQLException e) {
             e.printStackTrace();
             LOGGER.error("action login false", e);
