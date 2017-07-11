@@ -53,6 +53,7 @@ public class ActionLogin implements Action {
         } catch (SQLException e) {
             e.printStackTrace();
             LOGGER.error("action login false",e);
+            return error;
         } finally {
             FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
         }

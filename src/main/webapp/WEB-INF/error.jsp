@@ -4,7 +4,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n.messages">
-    <fmt:message key="message.error.in.system" var="checkData"/>
+    <fmt:message key="message.error.in.system" var="errorInSystem"/>
     <fmt:message key="message.back.to.welcome" var="backToWelcome"/>
     <fmt:message key="message.back.to.client.page" var="backToclientPage"/>
 </fmt:bundle>
@@ -15,7 +15,7 @@
     </t:gHead>
 </head>
 <body>
-    <div>${checkData}</div>
+    <div>${errorInSystem}</div>
 <p><a href="/Controller/welcome">${backToWelcome}</a></p>
 <p><a href="/Controller/client">${backToclientPage}</a></p>
 </body>
