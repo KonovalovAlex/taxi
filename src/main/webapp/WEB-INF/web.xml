@@ -9,7 +9,7 @@
     </welcome-file-list>
     <filter>
         <filter-name>currentFilter</filter-name>
-        <filter-class>project.filter.CurrentFilter</filter-class>
+        <filter-class>project.filter.FilterRole</filter-class>
     </filter>
 
     <filter-mapping>

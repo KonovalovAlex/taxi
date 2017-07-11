@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import static project.constants.Constants.*;
 
-public class CurrentFilter implements Filter {
+public class FilterRole implements Filter {
 
     public void init(FilterConfig filterConfig) throws ServletException {
     }
