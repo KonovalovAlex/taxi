@@ -21,7 +21,7 @@ import static project.constants.Constants.*;
 public class DoRegistration implements Action {
     private static final Logger LOGGER = Logger.getLogger(DoRegistration.class.getName());
     ActionResult registration = new ActionResult(REGISTRATION);
-    ActionResult registrationFailed = new ActionResult(ERROR);
+    ActionResult error = new ActionResult(ERROR,true);
     Validator validator;
 
 
@@ -40,7 +40,7 @@ public class DoRegistration implements Action {
             } catch (ExceptionDao e) {
                 daoManager.rollback();
                 LOGGER.error("Creation of a client failed", e);
-                return registrationFailed;
+                return error;
             } finally {
                 FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
             }
@@ -48,7 +48,7 @@ public class DoRegistration implements Action {
             req.setAttribute("youWereRegistered", "You were registered");
             return registration;
         } else {
-            LOGGER.warn("Creation of a client failed");
+            LOGGER.info("Creation of a client failed");
             FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
             return registration;
         }
