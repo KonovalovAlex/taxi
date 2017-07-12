@@ -1,7 +1,7 @@
 package project.dao.managerDao;
 
 import org.apache.log4j.Logger;
-import project.actions.registration.DoRegistration;
+
 import project.dao.postgres.UserPostgresDao;
 import project.dao.postgres.ExceptionDao;
 import project.dao.postgres.OrderPostgresDao;

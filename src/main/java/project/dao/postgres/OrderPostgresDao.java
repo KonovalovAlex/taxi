@@ -2,7 +2,6 @@ package project.dao.postgres;
 
 import org.apache.log4j.Logger;
 import project.dao.OrderDao;
-import project.dao.managerDao.ManagerDao;
 import project.entity.Order;
 import project.entity.OrderStatus;
 import project.entity.User;
@@ -21,7 +20,6 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
         super(connection);
         this.connection = connection;
     }
-
     public int insertOrder(Order order, Integer userId) {
 
         return this.insert(ORDERS,

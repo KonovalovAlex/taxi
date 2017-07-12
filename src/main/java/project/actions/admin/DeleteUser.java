@@ -3,7 +3,7 @@ package project.actions.admin;
 import org.apache.log4j.Logger;
 import project.actions.Action;
 import project.actions.ActionResult;
-import project.actions.registration.DoRegistration;
+
 import project.dao.managerDao.ManagerDao;
 import project.dao.postgres.FactoryDao;
 import project.dao.postgres.UserPostgresDao;

@@ -4,10 +4,10 @@ import org.apache.log4j.Logger;
 import project.actions.*;
 import project.actions.ActionResult;
 import project.actions.registration.DoRegistration;
-import project.dao.postgres.FactoryDao;
+
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
