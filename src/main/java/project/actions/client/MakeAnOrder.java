@@ -25,14 +25,14 @@ public class MakeAnOrder implements Action {
         ActionResult orderCreated = new ActionResult(ORDER_CREATED_PAGE);
         ActionResult addressOrTimeIsNotCorrect = new ActionResult(ADDRESS_OR_TIME_IS_NOT_CORRECT);
         Validator validator = new Validator();
-
+        Order order = new Order();
         boolean time = validator.checkTime(req.getParameter(TIME));
         boolean street = validator.checkAddress(req.getParameter(STREET));
         boolean house = validator.checkAddress(req.getParameter(NUMBER_OF_HOUSE));
         boolean apartment = validator.checkAddress(req.getParameter(NUMBER_OF_APARTMENT));
 
         if (time & street & house & apartment) {
-            Order order = new Order();
+
             Integer userId = ((User) req.getSession().getAttribute(USER)).getId();
             order.setStreet(req.getParameter(STREET));
             order.setNumberOfHouse(req.getParameter(NUMBER_OF_HOUSE));
