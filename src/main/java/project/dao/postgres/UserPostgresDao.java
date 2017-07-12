@@ -26,7 +26,7 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
         this.managerDao = managerDao;
     }
 
-    public User findUserByLogin(String login) throws SQLException {
+    public User getUserByLogin(String login) throws SQLException {
         User user = new User();
         UserRole userRole = new UserRole();
         String sql = "select * from users inner join rols on users.fk_rols=rols.id where users.login ='" + login + "'";

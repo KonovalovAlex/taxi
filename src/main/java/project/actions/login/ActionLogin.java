@@ -31,7 +31,7 @@ public class ActionLogin implements Action {
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
         UserPostgresDao userPostgresDao = managerDao.getUserPostgresDao();
         try {
-            User user = userPostgresDao.findUserByLogin(req.getParameter(LOGIN));
+            User user = userPostgresDao.getUserByLogin(req.getParameter(LOGIN));
             if (user != null) {
                 if ((userPostgresDao.checkCredentials(user, req.getParameter(PASSWORD)))) {
                     if (user.getRole().getName().equalsIgnoreCase(ADMIN)) {
