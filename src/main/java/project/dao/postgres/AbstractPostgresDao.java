@@ -1,10 +1,10 @@
 package project.dao.postgres;
 
-import com.sun.org.apache.regexp.internal.RE;
+
 import org.apache.log4j.Logger;
-import project.dao.managerDao.ManagerDao;
+
 import project.entity.AbstractEntity;
-import project.entity.User;
+
 
 import java.sql.*;
 import java.util.*;
@@ -32,8 +32,6 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
         this.connection = connection;
     }
 
-    public AbstractPostgresDao() {
-    }
 
     //dynamic insert
     public Integer insert(String tableName, Object... params) {

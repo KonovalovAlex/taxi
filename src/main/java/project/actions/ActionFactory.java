@@ -1,6 +1,5 @@
 package project.actions;
 
-import org.apache.log4j.Logger;
 import project.actions.admin.DeleteUser;
 import project.actions.client.CancelTheOrders;
 import project.actions.client.MakeAnOrder;
