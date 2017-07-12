@@ -53,6 +53,6 @@ public class ManagerDao {
     }
 
     public OrderPostgresDao getOrderPostgresDao() {
-        return new OrderPostgresDao(connection, this);
+        return new OrderPostgresDao(connection);
     }
 }

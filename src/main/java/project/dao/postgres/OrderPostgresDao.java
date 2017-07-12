@@ -15,12 +15,11 @@ import static project.constants.Constants.*;
 public class OrderPostgresDao extends AbstractPostgresDao<Order> implements OrderDao {
     private static final Logger LOGGER = Logger.getLogger(OrderPostgresDao.class.getName());
     private Connection connection;
-    private ManagerDao managerDao;
 
-    public OrderPostgresDao(Connection connection, ManagerDao managerDao) {
+
+    public OrderPostgresDao(Connection connection) {
         super(connection);
         this.connection = connection;
-        this.managerDao = managerDao;
     }
 
     public int insertOrder(Order order, Integer userId) {
@@ -86,5 +85,6 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
         }
         return orders;
     }
+
 }
 
