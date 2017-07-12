@@ -190,4 +190,15 @@ public class Validator {
         }
         return matcher.matches();
     }
+
+    public boolean checkAddress(String firstName) {
+        if (firstName == null || firstName.equals("")) {
+            results.put("address.is.required.field", "false");
+            return false;
+        } else {
+            matcher = Pattern.compile(USER_NAMES_MORE_20).matcher(firstName);
+            if (!matcher.matches()) results.put("address.more.then.20", String.valueOf(matcher.matches()));
+        }
+        return matcher.matches();
+    }
 }

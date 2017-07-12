@@ -3,7 +3,6 @@ package project.actions.client;
 import org.apache.log4j.Logger;
 import project.actions.Action;
 import project.actions.ActionResult;
-import project.actions.registration.DoRegistration;
 import project.dao.OrderDao;
 import project.dao.managerDao.ManagerDao;
 import project.dao.postgres.ExceptionDao;
@@ -24,16 +23,20 @@ public class MakeAnOrder implements Action {
     public ActionResult execute(HttpServletRequest req) {
         ActionResult error = new ActionResult(ERROR,true);
         ActionResult orderCreated = new ActionResult(ORDER_CREATED_PAGE);
-        ActionResult timeIsNotCorrect = new ActionResult(TIME_IS_NOT_CORRECT);
+        ActionResult addressOrTimeIsNotCorrect = new ActionResult(ADDRESS_OR_TIME_IS_NOT_CORRECT);
         Validator validator = new Validator();
         Order order = new Order();
         boolean time = validator.checkTime(req.getParameter(TIME));
-        Integer userId = ((User) req.getSession().getAttribute(USER)).getId();
-        order.setStreet(req.getParameter(STREET));
-        order.setNumberOfHouse(req.getParameter(NUMBER_OF_HOUSE));
-        order.setNumberOfApartment(req.getParameter(NUMBER_OF_APARTMENT));
-        order.setTime(req.getParameter(TIME));
-        if (time) {
+        boolean street = validator.checkAddress(req.getParameter(STREET));
+        boolean house = validator.checkAddress(req.getParameter(NUMBER_OF_HOUSE));
+        boolean apartment = validator.checkAddress(req.getParameter(NUMBER_OF_APARTMENT));
+
+        if (time & street & house & apartment) {
+            Integer userId = ((User) req.getSession().getAttribute(USER)).getId();
+            order.setStreet(req.getParameter(STREET));
+            order.setNumberOfHouse(req.getParameter(NUMBER_OF_HOUSE));
+            order.setNumberOfApartment(req.getParameter(NUMBER_OF_APARTMENT));
+            order.setTime(req.getParameter(TIME));
             ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
             managerDao.beginTransaction();
             try {
@@ -48,7 +51,7 @@ public class MakeAnOrder implements Action {
                 FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
             }
         } else {
-            return timeIsNotCorrect;
+            return addressOrTimeIsNotCorrect;
         }
         return orderCreated;
     }

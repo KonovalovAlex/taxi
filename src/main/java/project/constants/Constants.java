@@ -16,7 +16,7 @@ public class Constants {
     public static final String USER_IS_DELETED_PAGE = "userIsDeleted";
     public static final String DELETE_USER = "deleteUser";
     public static final String CHANGE_LOCALE = "changeLocale";
-    public static final String TIME_IS_NOT_CORRECT = "timeIsNotCorrect";
+    public static final String ADDRESS_OR_TIME_IS_NOT_CORRECT = "addressOrTimeIsNotCorrect";
 
     public static final String CLIENT = "client";
     public static final String USER = "user";

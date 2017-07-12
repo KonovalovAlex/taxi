@@ -4,11 +4,11 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n.messages">
     <fmt:message key="message.back.to.client.page" var="backToClient"/>
-    <fmt:message key="message.time.is.not.correct" var="timeIsNotCorrect"/>
+    <fmt:message key="message.time.is.not.correct" var="addressOrTimeIsNotCorrect"/>
 </fmt:bundle>
 <html>
 <body>
-${timeIsNotCorrect}
+${addressOrTimeIsNotCorrect}
 <p><a href="/Controller/client">${backToClient}</a></p>
 </body>
 </html>

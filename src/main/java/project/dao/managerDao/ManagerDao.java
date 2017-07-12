@@ -49,7 +49,7 @@ public class ManagerDao {
     }
 
     public UserPostgresDao getUserPostgresDao() {
-        return new UserPostgresDao(connection, this);
+        return new UserPostgresDao(connection);
     }
 
     public OrderPostgresDao getOrderPostgresDao() {

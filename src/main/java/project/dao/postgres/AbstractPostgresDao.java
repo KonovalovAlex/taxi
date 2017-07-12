@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 
 import project.entity.AbstractEntity;
 
-
 import java.sql.*;
 import java.util.*;
 

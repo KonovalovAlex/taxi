@@ -18,12 +18,10 @@ import static project.constants.Constants.*;
 public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDao {
     private static final Logger LOGGER = Logger.getLogger(UserPostgresDao.class.getName());
     Connection connection;
-    ManagerDao managerDao;
 
-    public UserPostgresDao(Connection connection, ManagerDao managerDao) {
+    public UserPostgresDao(Connection connection) {
         super(connection);
         this.connection = connection;
-        this.managerDao = managerDao;
     }
 
     public User getUserByLogin(String login) throws SQLException {
