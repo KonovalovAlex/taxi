@@ -28,11 +28,11 @@
     <tr>
         <td colspan="2" bgcolor="#D3EDF6" align="center">
     <c:forEach var="entity" items="${orders}">
-       <form action="/Controller/acceptOrder" method="get">
+       <form action="/Controller/acceptOrder" method="post">
         <p><input type="hidden" name="acceptOrder" value="${entity.getId()}">
             <input type="submit" value="${accept}">
         </p></form>
-    <form action="/Controller/rejectOrder" method="get">
+    <form action="/Controller/rejectOrder" method="post">
         <p><input type="hidden" name="rejectOrder" value="${entity.getId()}">
             <input type="submit" value="${reject}">
         </p></form>

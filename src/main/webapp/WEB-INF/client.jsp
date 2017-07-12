@@ -15,6 +15,7 @@
     <fmt:message key="button.cancel.all" var="cancelAll"/>
     <fmt:message key="message.sort.of.pay" var="sortOfPay"/>
     <fmt:message key="message.orders.were.canceled" var="ordersWereCanceled"/>
+    <fmt:message key="message.time.is.not.correct" var="timeIsNotCorrect"/>
 </fmt:bundle>
 <html>
 <head>
@@ -24,11 +25,11 @@
 </head>
 <body>
 ${sortOfPay} = 555 tenge - town
-<form action="/Controller/makeAnOrder" method="get">
+<form action="/Controller/makeAnOrder" method="post">
     <p><input placeholder="${street}" name="street"></p>
     <p><input placeholder="${numberOfHouse}" name="number_of_house"></p>
     <p><input placeholder="${numberOfApartment}" name="number_of_apartment"></p>
-    <p><input placeholder="${time} HH:mm" name="time"></p>
+    <p><input placeholder=" ${time} HH:mm" name="time"></p>
     <input type="submit" name="makeAnOrder" value="${makeAnOrder}">
 </form>
 <form action="/Controller/cancelTheOrders">

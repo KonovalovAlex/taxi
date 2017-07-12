@@ -28,7 +28,7 @@
 <body>
 <table>
     <c:forEach var="entity" items="${users}">
-    <form action="/Controller/deleteUser" method="get">
+    <form action="/Controller/deleteUser" method="post">
         <p><input type="hidden" name="id" value="${entity.getId()}">
             <input type="submit" value="${delete}">
         </p></form>

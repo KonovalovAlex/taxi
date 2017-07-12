@@ -62,7 +62,7 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
         try (PreparedStatement preparedStatement = fillFromMapPreparedStatement(connection.prepareStatement(queryString), combinedMap)) {
             if (preparedStatement.executeUpdate() == 1) return true;
             else {
-                LOGGER.error("updateEntity return nothing");
+                LOGGER.error("updateEntity returned nothing");
                 return false;
             }
         }

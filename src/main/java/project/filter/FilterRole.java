@@ -1,7 +1,6 @@
 package project.filter;
 
-import org.apache.log4j.Logger;
-import project.dao.postgres.AbstractPostgresDao;
+
 import project.entity.User;
 
 import javax.servlet.*;
