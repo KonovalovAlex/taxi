@@ -20,10 +20,9 @@ import static project.constants.Constants.*;
 
 public class DoRegistration implements Action {
     private static final Logger LOGGER = Logger.getLogger(DoRegistration.class.getName());
+    Validator validator;
     ActionResult registration = new ActionResult(REGISTRATION);
     ActionResult error = new ActionResult(ERROR,true);
-    Validator validator;
-
 
     @Override
     public ActionResult execute(HttpServletRequest req) {

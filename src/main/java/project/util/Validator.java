@@ -28,7 +28,7 @@ public class Validator {
 
     private final String TELEPHONE_NUMBER = "^(8|\\+7)\\d{10}$";
     private final String EMAIL = "^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$";
-    private static final String TIME24HOURS_PATTERN = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
+    private final String TIME24HOURS_PATTERN = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
 
     private Map<String, String> results = new HashMap<>();
     private Map<String, String> invalidFields = new HashMap<>();

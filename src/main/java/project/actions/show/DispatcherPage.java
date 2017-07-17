@@ -22,6 +22,7 @@ public class DispatcherPage implements Action {
     private ActionResult error = new ActionResult(ERROR, true);
 
     public ActionResult execute(HttpServletRequest req) throws ActionException {
+
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
         OrderPostgresDao orderPostgresDao = managerDao.getOrderPostgresDao();
         List<Order> orderList = null;

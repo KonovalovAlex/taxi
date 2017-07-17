@@ -39,7 +39,6 @@ public class ActionFactory extends Constants {
 
         actionMap.put(CHANGE_LOCALE,new ChangeLocale());
 
-
     }
 
     public static Action getAction(HttpServletRequest req) {

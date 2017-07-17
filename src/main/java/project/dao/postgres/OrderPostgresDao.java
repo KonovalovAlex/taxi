@@ -15,7 +15,6 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
     private static final Logger LOGGER = Logger.getLogger(OrderPostgresDao.class.getName());
     private Connection connection;
 
-
     public OrderPostgresDao(Connection connection) {
         super(connection);
         this.connection = connection;
