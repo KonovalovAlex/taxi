@@ -21,10 +21,11 @@ import static project.constants.Constants.USERS;
 
 public class AdminPage implements Action {
     private static final Logger LOGGER = Logger.getLogger(AdminPage.class.getName());
+    private ActionResult adminPage = new ActionResult(ADMIN_PAGE);
+    private ActionResult error = new ActionResult(ERROR, true);
 
     public ActionResult execute(HttpServletRequest req) {
-        ActionResult adminPage = new ActionResult(ADMIN_PAGE);
-        ActionResult error = new ActionResult(ERROR,true);
+
 
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
         try {
@@ -35,7 +36,7 @@ public class AdminPage implements Action {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            LOGGER.error("can't show users",e);
+            LOGGER.error("can't show users", e);
             return error;
         } finally {
             FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());

@@ -20,12 +20,12 @@ public class DispatcherPage implements Action {
     private static final Logger LOGGER = Logger.getLogger(DispatcherPage.class.getName());
     private ActionResult dispatcher = new ActionResult(DISPATCHER);
     private ActionResult error = new ActionResult(ERROR, true);
+    private List<Order> orderList;
 
     public ActionResult execute(HttpServletRequest req) throws ActionException {
 
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
         OrderPostgresDao orderPostgresDao = managerDao.getOrderPostgresDao();
-        List<Order> orderList = null;
         try {
             orderList = orderPostgresDao.returnTheWaitingOrders();
         } catch (SQLException e) {

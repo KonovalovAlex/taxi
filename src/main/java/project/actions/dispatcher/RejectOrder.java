@@ -16,11 +16,11 @@ import static project.constants.Constants.*;
 
 public class RejectOrder implements Action {
     private static final Logger LOGGER = Logger.getLogger(DoRegistration.class.getName());
-
+    private ActionResult orderRejected = new ActionResult(ORDER_REJECTED_PAGE);
+    private ActionResult error = new ActionResult(ERROR, true);
     @Override
     public ActionResult execute(HttpServletRequest req) {
-        ActionResult orderRejected = new ActionResult(ORDER_REJECTED_PAGE);
-        ActionResult error = new ActionResult(ERROR, true);
+
         int idOrder = Integer.parseInt(req.getParameter(REJECT_ORDER));
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
         OrderDao orderDao = managerDao.getOrderPostgresDao();

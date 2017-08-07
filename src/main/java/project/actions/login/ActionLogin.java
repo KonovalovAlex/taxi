@@ -18,14 +18,14 @@ import static project.constants.Constants.*;
 public class ActionLogin implements Action {
     private static final Logger LOGGER = Logger.getLogger(ActionLogin.class.getName());
 
-    public ActionResult execute(HttpServletRequest req) {
+    private ActionResult error = new ActionResult(ERROR, true);
+    private ActionResult wrongData = new ActionResult(WRONG_DATA);
+    private ActionResult admin = new ActionResult(ADMIN, true);
+    private ActionResult dispatcherPage = new ActionResult(DISPATCHER, true);
+    private ActionResult client = new ActionResult(CLIENT, true);
+    private ActionResult statusClientIsDeleted = new ActionResult(STATUS_CLIENT_IS_DELETED_PAGE);
 
-        ActionResult error = new ActionResult(ERROR, true);
-        ActionResult wrongData = new ActionResult(WRONG_DATA);
-        ActionResult admin = new ActionResult(ADMIN, true);
-        ActionResult dispatcherPage = new ActionResult(DISPATCHER, true);
-        ActionResult client = new ActionResult(CLIENT, true);
-        ActionResult statusClientIsDeleted = new ActionResult(STATUS_CLIENT_IS_DELETED_PAGE);
+    public ActionResult execute(HttpServletRequest req) {
 
         HttpSession session = req.getSession();
         ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();

@@ -25,7 +25,6 @@ public class Validator {
     private final String USER_NAMES_NOT_ALLOW_CHARACTERS = "^[a-zA-Zа-яА-я]{1,}$";
     private final String USER_NAMES_MORE_20 = "^(.){0,20}$";
 
-
     private final String TELEPHONE_NUMBER = "^(8|\\+7)\\d{10}$";
     private final String EMAIL = "^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$";
     private final String TIME24HOURS_PATTERN = "([01]?[0-9]|2[0-3]):[0-5][0-9]";

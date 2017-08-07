@@ -25,7 +25,7 @@ public class ConnectionPool {
         this.user = user;
         this.password = password;
         this.maxСonnection = maxСonnection;
-        freeConnections = new ArrayList<>();
+        this.freeConnections = new ArrayList<>();
         this.fillConnectionPool();
     }
 
@@ -40,7 +40,7 @@ public class ConnectionPool {
         try {
             Class.forName(DRIVER);
             Connection con = null;
-            for (int i = 0; i < maxСonnection; i++ ) {
+            for (int i = 0; i < maxСonnection; i++) {
                 con = DriverManager.getConnection(url, user, password);
                 freeConnections.add(con);
                 LOGGER.debug("connection pool completely filled");

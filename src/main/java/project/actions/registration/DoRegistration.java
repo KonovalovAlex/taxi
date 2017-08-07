@@ -20,15 +20,15 @@ import static project.constants.Constants.*;
 
 public class DoRegistration implements Action {
     private static final Logger LOGGER = Logger.getLogger(DoRegistration.class.getName());
-    Validator validator;
-    ActionResult registration = new ActionResult(REGISTRATION);
-    ActionResult error = new ActionResult(ERROR,true);
+    private Validator validator;
+    private ActionResult registration = new ActionResult(REGISTRATION);
+    private ActionResult error = new ActionResult(ERROR, true);
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
+
         ManagerDao daoManager = FactoryDao.getInstance().getDaoManager();
         this.validator = new Validator(daoManager);
-
         User user = createClient(req);
         if (user != null) {
             daoManager.beginTransaction();
@@ -81,11 +81,11 @@ public class DoRegistration implements Action {
     private class CustomMap<K, V> {
         Map<K, V> someMap = new HashMap<>();
 
-        public CustomMap(Map<K, V> map) {
+        private CustomMap(Map<K, V> map) {
             this.someMap = map;
         }
 
-        public ArrayList<V> getValues() {
+        private ArrayList<V> getValues() {
             return new ArrayList<>(someMap.values());
         }
 

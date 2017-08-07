@@ -4,10 +4,11 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n.messages">
     <fmt:message key="message.wrong.data" var="wrongData"/>
+    <fmt:message key="message.back.to.login" var="backToLogin"/>
 </fmt:bundle>
 <html>
 <body>
 ${wrongData}
-<p><a href="/Controller/login">${wrongData}</a></p>
+<p><a href="/Controller/login">${backToLogin}</a></p>
 </body>
 </html>

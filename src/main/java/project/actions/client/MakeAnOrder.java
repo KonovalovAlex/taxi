@@ -18,12 +18,13 @@ import static project.constants.Constants.*;
 
 public class MakeAnOrder implements Action {
     private static final Logger LOGGER = Logger.getLogger(MakeAnOrder.class.getName());
+    private ActionResult error = new ActionResult(ERROR,true);
+    private ActionResult orderCreated = new ActionResult(ORDER_CREATED_PAGE);
+    private ActionResult addressOrTimeIsNotCorrect = new ActionResult(ADDRESS_OR_TIME_IS_NOT_CORRECT);
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
-        ActionResult error = new ActionResult(ERROR,true);
-        ActionResult orderCreated = new ActionResult(ORDER_CREATED_PAGE);
-        ActionResult addressOrTimeIsNotCorrect = new ActionResult(ADDRESS_OR_TIME_IS_NOT_CORRECT);
+
         Validator validator = new Validator();
         Order order = new Order();
         boolean time = validator.checkTime(req.getParameter(TIME));
@@ -39,6 +40,7 @@ public class MakeAnOrder implements Action {
             order.setNumberOfApartment(req.getParameter(NUMBER_OF_APARTMENT));
             order.setTime(req.getParameter(TIME));
             ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
+
             managerDao.beginTransaction();
             try {
                 OrderDao orderDao = managerDao.getOrderPostgresDao();

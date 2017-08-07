@@ -27,9 +27,10 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
     public User getUserByLogin(String login) throws SQLException {
         User user = new User();
         UserRole userRole = new UserRole();
-        String sql = "select * from users inner join rols on users.fk_rols=rols.id where users.login ='" + login + "'";
-        try (PreparedStatement prstm = connection.prepareStatement(sql)) {
-            try (ResultSet resultSet = prstm.executeQuery()) {
+
+        try (PreparedStatement prstm = connection.prepareStatement
+                ("select * from users inner join rols on users.fk_rols=rols.id where users.login ='" + login + "'")) {
+            ResultSet resultSet = prstm.executeQuery();
                 if (resultSet.next()) {
                     user.setActivityStatus(resultSet.getString(ACTIVE_STATUS_COLUMN));
                     userRole.setId(resultSet.getInt("fk_rols"));
@@ -45,7 +46,7 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
                     LOGGER.info("user is" + user);
                     return user;
                 } else return null;
-            }
+
         } catch (ExceptionDao e) {
             LOGGER.error("Error of Client finding by login", e);
             throw new ExceptionDao(e);
@@ -66,10 +67,10 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
     }
 
     public boolean alreadyExist(String login) {
-        String sql = "select * from users where login =" + "'" + login + "'";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement
+                ("select users.login from users where login =" + "'" + login + "'")) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                LOGGER.info("Client is already exist{}");
+                LOGGER.info("Client is already exist - "+login);
                 return resultSet.next();
             }
         } catch (Exception e) {
@@ -80,13 +81,13 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
 
     //if user = null - return(false) else check password if password is equal return true else false
     public boolean checkCredentials(User user, String password) {
-        return user != null & user.getPassword().equals(password);
+        return user != null && user.getPassword().equals(password);
     }
 
     public List<User> returnAllUsers() throws SQLException {
-        String sql = "select * from users full join rols on users.fk_rols = rols.id";
         List<User> users = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement
+                ("select * from users full join rols on users.fk_rols = rols.id")) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = new User();

@@ -10,6 +10,6 @@ import static project.constants.Constants.WELCOME;
 public class Welcome implements Action {
     @Override
     public ActionResult execute(HttpServletRequest req) {
-        return new ActionResult(WELCOME,false);
+        return new ActionResult(WELCOME);
     }
 }

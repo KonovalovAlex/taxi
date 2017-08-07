@@ -38,7 +38,7 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
         int id = 0;
         try (PreparedStatement preparedStatement =
                      fillFromArgumentsPreparedStatement(connection.prepareStatement(queryString, Statement.RETURN_GENERATED_KEYS), params)) {
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             ResultSet setId = preparedStatement.getGeneratedKeys();
             if (setId.next()) {
                 id = setId.getInt(ID);
@@ -57,7 +57,7 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
         combinedMap.putAll(params);
         combinedMap.putAll(conditions);
         try (PreparedStatement preparedStatement = fillFromMapPreparedStatement(connection.prepareStatement(queryString), combinedMap)) {
-            if (preparedStatement.executeUpdate() == 1) return true;
+            if (1 < preparedStatement.executeUpdate()) return true;//will return quantity of updated rows
             else {
                 LOGGER.error("updateEntity returned nothing");
                 return false;
