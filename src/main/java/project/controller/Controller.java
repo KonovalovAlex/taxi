@@ -3,7 +3,7 @@ package project.controller;
 import org.apache.log4j.Logger;
 import project.actions.*;
 import project.actions.ActionResult;
-import project.actions.registration.DoRegistration;
+import project.util.Validator;
 
 
 import javax.servlet.ServletException;
@@ -14,11 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class Controller extends HttpServlet {
-    private static final Logger LOGGER = Logger.getLogger(DoRegistration.class.getName());
 
-    @Override
-    public void init() throws ServletException {
-    }
+    private static final Logger LOGGER = Logger.getLogger(Controller.class.getName());
+
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Action action = ActionFactory.getAction(req);
         ActionResult result = null;
@@ -26,20 +24,15 @@ public class Controller extends HttpServlet {
             try {
                 result = action.execute(req);
             } catch (ActionException e) {
-                LOGGER.error("epic fail from controller",e);
+                LOGGER.error("error from controller", e);
                 throw new ActionException(e);
             }
 
             if (result.isRedirect()) {
-                 resp.sendRedirect(req.getContextPath() + "/Controller/" + result.getView());
+                resp.sendRedirect(req.getContextPath() + "/Controller/" + result.getView());
                 return;
             }
             req.getRequestDispatcher("/WEB-INF/" + result.getView() + ".jsp").forward(req, resp);
         }
     }
-    @Override
-    public void destroy() {
-        super.destroy();
-    }
 }
-

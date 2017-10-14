@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <fmt:setLocale value="${locale}"/>
-
 <fmt:bundle basename="i18n.messages">
     <fmt:message key="message.login" var="login"/>
     <fmt:message key="message.password" var="password"/>
@@ -19,24 +18,9 @@
 </fmt:bundle>
 <html>
 <head>
-    <t:gHead>
-        <title>Registration</title>
-    </t:gHead>
+    <title>RegistrationDispatcher</title>
 </head>
 <body>
-<form action="/Controller/changeLocale" method="post">
-    <select onchange="submit()" name="locale">
-        <option
-                <c:if test="${locale == 'ru'}">selected</c:if> value="ru">
-            ${navigationRU}
-        </option>
-
-        <option
-                <c:if test="${locale == 'en'}">selected</c:if> value="en">
-            ${navigationENG}
-        </option>
-    </select>
-</form>
 <form action="/Controller/doRegistration" method="post">
     ${login}<br/>
     <input type="text" name="login" value=""/><br/>
@@ -52,10 +36,8 @@
     <input type="text" name="phone" value=""/><br/>
     <input type="submit" id="registration" name="doRegistration" value="${registration}"/><br/>
 </form>
-
 <t:invalidFields invalidFields="${invalidFields}">
 
 </t:invalidFields>
-<a href="/Controller/welcome">${backToWelcome}</a>
 </body>
 </html>

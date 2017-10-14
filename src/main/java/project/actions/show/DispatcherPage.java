@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import project.actions.Action;
 import project.actions.ActionException;
 import project.actions.ActionResult;
-import project.dao.managerDao.ManagerDao;
+import project.dao.managerDao.DaoManager;
 import project.dao.postgres.FactoryDao;
 import project.dao.postgres.OrderPostgresDao;
 import project.entity.Order;
@@ -24,8 +24,8 @@ public class DispatcherPage implements Action {
 
     public ActionResult execute(HttpServletRequest req) throws ActionException {
 
-        ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
-        OrderPostgresDao orderPostgresDao = managerDao.getOrderPostgresDao();
+        DaoManager daoManager = FactoryDao.getInstance().getDaoManager();
+        OrderPostgresDao orderPostgresDao = daoManager.getOrderPostgresDao();
         try {
             orderList = orderPostgresDao.returnTheWaitingOrders();
         } catch (SQLException e) {
@@ -33,7 +33,7 @@ public class DispatcherPage implements Action {
             LOGGER.error("can't get orders", e);
             return error;
         } finally {
-            FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
+            FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
         }
         req.setAttribute(ORDERS, orderList);
 

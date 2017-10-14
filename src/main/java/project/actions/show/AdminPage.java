@@ -6,7 +6,7 @@ import project.actions.Action;
 
 import project.actions.ActionResult;
 
-import project.dao.managerDao.ManagerDao;
+import project.dao.managerDao.DaoManager;
 import project.dao.postgres.FactoryDao;
 import project.dao.postgres.UserPostgresDao;
 
@@ -26,10 +26,9 @@ public class AdminPage implements Action {
 
     public ActionResult execute(HttpServletRequest req) {
 
-
-        ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
+        DaoManager daoManager = FactoryDao.getInstance().getDaoManager();
         try {
-            UserPostgresDao userPostgresDao = managerDao.getUserPostgresDao();
+            UserPostgresDao userPostgresDao = daoManager.getUserPostgresDao();
             List users = userPostgresDao.returnAllUsers();
             if (users != null) {
                 req.setAttribute(USERS, users);
@@ -39,7 +38,7 @@ public class AdminPage implements Action {
             LOGGER.error("can't show users", e);
             return error;
         } finally {
-            FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
+            FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
         }
         return adminPage;
     }

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface OrderDao extends Dao<Order> {
-    int insertOrder(Order order, Integer userId);
+    int insertOrder(String street,String house,String numberOfApartment,String time, Integer userId) throws SQLException;
     boolean cancelTheOrders(int id) throws SQLException;
     boolean acceptOrder (int idOrder) throws SQLException;
     boolean rejectOrder(int idOrder) throws SQLException;

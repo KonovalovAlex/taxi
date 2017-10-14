@@ -5,9 +5,10 @@ import project.actions.Action;
 import project.actions.ActionResult;
 
 import project.dao.OrderDao;
-import project.dao.managerDao.ManagerDao;
+import project.dao.managerDao.DaoManager;
 
 import project.dao.postgres.FactoryDao;
+import project.services.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,23 +20,16 @@ public class AcceptOrder implements Action {
     private static final Logger LOGGER = Logger.getLogger(AcceptOrder.class.getName());
     private ActionResult error = new ActionResult(ERROR, true);
     private ActionResult orderAccept = new ActionResult(ORDER_ACCEPTED_PAGE);
+    private OrderService orderService = new OrderService();
     @Override
     public ActionResult execute(HttpServletRequest req) {
-
         int idOrder = Integer.parseInt(req.getParameter(ACCEPT_ORDER));
-        ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
-        OrderDao orderDao = managerDao.getOrderPostgresDao();
-        managerDao.beginTransaction();
         try {
-            orderDao.acceptOrder(idOrder);
-            managerDao.commit();
+            orderService.acceptOrder(idOrder);
         } catch (SQLException e) {
             e.printStackTrace();
-            managerDao.rollback();
-            LOGGER.error("can't accept order",e);
+            LOGGER.error("can't accept order", e);
             return error;
-        } finally {
-            FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
         }
         return orderAccept;
     }

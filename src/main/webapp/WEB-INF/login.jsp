@@ -7,6 +7,8 @@
     <fmt:message key="message.login" var="login"/>
     <fmt:message key="message.password" var="password"/>
     <fmt:message key="message.back.to.welcome" var="backToWelcome"/>
+    <fmt:message key="navigation.rus" var="navigationRU"/>
+    <fmt:message key="navigation.eng" var="navigationENG"/>
 </fmt:bundle>
 <html>
 <head>
@@ -15,12 +17,25 @@
     </t:gHead>
 </head>
 <body>
+<form action="/Controller/changeLocale" method="post">
+    <select onchange="submit()" name="locale">
+        <option
+                <c:if test="${locale == 'ru'}">selected</c:if> value="ru">
+            ${navigationRU}
+        </option>
+
+        <option
+                <c:if test="${locale == 'en'}">selected</c:if> value="en">
+            ${navigationENG}
+        </option>
+    </select>
+</form>
 <form action="/Controller/actionLogin" method="post">
-    ${login}:<br/>
-    <input type="text" name="login" value=""/><br/>
+${login}:<br/>
+        <input type="text" name="login" value=""/><br/>
     ${password}<br/>
-    <input type="password" name="password" value=""/><br/>
-    <input type="submit" value="${login}"/><br/>
+        <input type="password" name="password" value=""/><br/>
+        <input type="submit" value="${login}"/><br/>
 </form>
 <br>
 <p><a href="/Controller/welcome">${backToWelcome}</a></p>

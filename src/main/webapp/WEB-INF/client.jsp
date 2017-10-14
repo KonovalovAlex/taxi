@@ -16,6 +16,8 @@
     <fmt:message key="message.sort.of.pay" var="sortOfPay"/>
     <fmt:message key="message.orders.were.canceled" var="ordersWereCanceled"/>
     <fmt:message key="message.time.is.not.correct" var="timeIsNotCorrect"/>
+    <fmt:message key="navigation.rus" var="navigationRU"/>
+    <fmt:message key="navigation.eng" var="navigationENG"/>
 </fmt:bundle>
 <html>
 <head>
@@ -34,6 +36,19 @@ ${sortOfPay} = 555 tenge - town
 </form>
 <form action="/Controller/cancelTheOrders">
 <input type="submit" name="cancelTheOrders" value="${cancelAll}">
+</form>
+<form action="/Controller/changeLocale" method="post">
+    <select onchange="submit()" name="locale">
+        <option
+                <c:if test="${locale == 'ru'}">selected</c:if> value="ru">
+            ${navigationRU}
+        </option>
+
+        <option
+                <c:if test="${locale == 'en'}">selected</c:if> value="en">
+            ${navigationENG}
+        </option>
+    </select>
 </form>
 <p><a href="/Controller/welcome">${backToWelcome}</a></p>
 </body>

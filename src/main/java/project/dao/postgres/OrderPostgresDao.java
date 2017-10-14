@@ -1,6 +1,5 @@
 package project.dao.postgres;
 
-import org.apache.log4j.Logger;
 import project.dao.OrderDao;
 import project.entity.Order;
 import project.entity.OrderStatus;
@@ -12,7 +11,6 @@ import java.util.*;
 import static project.constants.Constants.*;
 
 public class OrderPostgresDao extends AbstractPostgresDao<Order> implements OrderDao {
-    private static final Logger LOGGER = Logger.getLogger(OrderPostgresDao.class.getName());
     private Connection connection;
 
     public OrderPostgresDao(Connection connection) {
@@ -20,15 +18,15 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
         this.connection = connection;
     }
 
-    public int insertOrder(Order order, Integer userId) {
+    public int insertOrder(String street,String numberOfHouse,String numberOfApartment,String time, Integer userId) throws SQLException {
 
         return this.insert(ORDERS,
-                order.getStreet(),
-                order.getNumberOfHouse(),
-                order.getNumberOfApartment(),
+                street,
+                numberOfHouse,
+                numberOfApartment,
                 userId,
                 ORDER_STATUS_WAITING_INT,
-                order.getTime());
+                time);
     }
 
     @Override
@@ -76,7 +74,6 @@ public class OrderPostgresDao extends AbstractPostgresDao<Order> implements Orde
                 orders.add(order);
             }
         }
-
         return orders;
     }
 

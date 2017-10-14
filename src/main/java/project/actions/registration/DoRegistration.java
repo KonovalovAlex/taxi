@@ -3,16 +3,16 @@ package project.actions.registration;
 import org.apache.log4j.Logger;
 import project.actions.Action;
 import project.actions.ActionResult;
-import project.dao.UserDao;
-import project.dao.postgres.ExceptionDao;
+import project.dao.managerDao.DaoManager;
 import project.dao.postgres.FactoryDao;
-import project.dao.managerDao.ManagerDao;
+import project.dao.postgres.UserPostgresDao;
 import project.entity.User;
 
 import project.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.sql.SQLException;
 import java.util.*;
 
 
@@ -26,56 +26,56 @@ public class DoRegistration implements Action {
 
     @Override
     public ActionResult execute(HttpServletRequest req) {
-
-        ManagerDao daoManager = FactoryDao.getInstance().getDaoManager();
+        DaoManager daoManager = FactoryDao.getInstance().getDaoManager();
+        UserPostgresDao userPostgresDao = daoManager.getUserPostgresDao();
         this.validator = new Validator(daoManager);
-        User user = createClient(req);
-        if (user != null) {
+        if (validateFieldsOfClient(req)) {
+            User user = createUser(req);
             daoManager.beginTransaction();
             try {
-                UserDao userDao = daoManager.getUserPostgresDao();
-                userDao.insert(user);
+                userPostgresDao.insert(user);
                 daoManager.commit();
-            } catch (ExceptionDao e) {
+            } catch (SQLException e) {
                 daoManager.rollback();
                 LOGGER.error("Creation of a client failed", e);
                 return error;
-            } finally {
-                FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
             }
             LOGGER.info("Customer registered" + user);
             req.setAttribute("youWereRegistered", "You were registered");
             return registration;
         } else {
             LOGGER.info("Creation of a client failed");
-            FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
             return registration;
         }
     }
 
-    private User createClient(HttpServletRequest req) {
+    private User createUser(HttpServletRequest req) {
         User user = new User();
+        user.setLogin(req.getParameter(LOGIN));
+        user.setPassword(req.getParameter(PASSWORD));
+        user.setFirstName(req.getParameter(FIRST_NAME));
+        user.setLastName(req.getParameter(LAST_NAME));
+        user.setEmail(req.getParameter(EMAIL));
+        user.setPhone(req.getParameter(PHONE));
+        return user;
+    }
+
+    private boolean validateFieldsOfClient(HttpServletRequest req) {
+        validator.init();
         validator.checkLogin(req.getParameter(LOGIN));
         validator.checkUserPassword(req.getParameter(PASSWORD));
         validator.checkUserFirstName(req.getParameter(FIRST_NAME));
         validator.checkUserLastName(req.getParameter(LAST_NAME));
         validator.checkUserPhone(req.getParameter(PHONE));
         validator.checkEmail(req.getParameter(EMAIL));
-
         if (validator.isValide()) {
-            user.setLogin(req.getParameter(LOGIN));
-            user.setPassword(req.getParameter(PASSWORD));
-            user.setFirstName(req.getParameter(FIRST_NAME));
-            user.setLastName(req.getParameter(LAST_NAME));
-            user.setEmail(req.getParameter(EMAIL));
-            user.setPhone(req.getParameter(PHONE));
+            return true;
         } else {
             Map<String, String> invalidFields = validator.getInvalidFields();
             CustomMap<String, String> customMap = new CustomMap<>(invalidFields);
             req.setAttribute(INVALID_FIELDS, customMap.getValues());
-            return null;
+            return false;
         }
-        return user;
     }
 
     private class CustomMap<K, V> {

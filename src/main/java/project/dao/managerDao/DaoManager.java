@@ -9,13 +9,12 @@ import project.dao.postgres.OrderPostgresDao;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class ManagerDao {
-    private static final Logger LOGGER = Logger.getLogger(ManagerDao.class.getName());
+public class DaoManager {
+    private static final Logger LOGGER = Logger.getLogger(DaoManager.class.getName());
     private final Connection connection;
 
-    public ManagerDao(Connection connection) {
+    public DaoManager(Connection connection) {
         this.connection = connection;
-
     }
 
     public void beginTransaction() throws ExceptionDao {

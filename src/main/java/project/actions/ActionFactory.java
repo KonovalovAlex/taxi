@@ -22,23 +22,17 @@ public class ActionFactory extends Constants {
         actionMap.put(REGISTRATION, new Registration());
         actionMap.put(DO_REGISTRATION, new DoRegistration());
         actionMap.put(ACTION_LOGIN, new ActionLogin());
-
         actionMap.put(LOGIN, new LoginPage());
         actionMap.put(ERROR, new ErrorPage());
         actionMap.put(ADMIN_PAGE, new AdminPage());
         actionMap.put(DISPATCHER_PAGE, new DispatcherPage());
         actionMap.put(CLIENT_PAGE, new ClientPage());
-
         actionMap.put(MAKE_AN_ORDER, new MakeAnOrder());
         actionMap.put(CANCEL_THE_ORDERS,new CancelTheOrders());
-
         actionMap.put(ACCEPT_ORDER, new AcceptOrder());
         actionMap.put(REJECT_ORDER, new RejectOrder());
-
         actionMap.put(DELETE_USER, new DeleteUser());
-
         actionMap.put(CHANGE_LOCALE,new ChangeLocale());
-
     }
 
     public static Action getAction(HttpServletRequest req) {

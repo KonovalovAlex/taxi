@@ -9,7 +9,7 @@
         <title>Welcome</title>
     </head>
     <body>
-    My project - TAXI3 .There is two language English and Russian three role admin,dispatcher and client.
+    My project - TAXI3 .There are two language English and Russian, three role admin,dispatcher and client.
     Client can register on site and create orders where he can specify address and time or cancel all previous orders.
     Dispatcher have a page where he can watch "waiting orders" and accept or reject orders.Admin can delete users.
 

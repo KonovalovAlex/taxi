@@ -2,7 +2,7 @@ package project.dao.postgres;
 
 import org.apache.log4j.Logger;
 import project.connectionPool.ConnectionPool;
-import project.dao.managerDao.ManagerDao;
+import project.dao.managerDao.DaoManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +34,7 @@ public class FactoryDao {
         }
     }
 
-    public ManagerDao getDaoManager() throws ExceptionDao {
+    public DaoManager getDaoManager() throws ExceptionDao {
         Connection connection;
         try {
             connection = pool.getConnection();
@@ -42,7 +42,7 @@ public class FactoryDao {
             LOGGER.error("error in FactoryDao method getDaoManager",e);
             throw new ExceptionDao(e);
         }
-        return new ManagerDao(connection);
+        return new DaoManager(connection);
     }
     public void putBackConnection(Connection connection){
         pool.returnConnection(connection);

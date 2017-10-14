@@ -61,4 +61,6 @@ public class Constants {
 
     public static final String LOCALE = "locale";
 
+    public static final String WELCOME_PAGE ="/Controller/welcome";
+
 }

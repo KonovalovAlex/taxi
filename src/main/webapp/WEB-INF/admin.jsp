@@ -17,6 +17,8 @@
     <fmt:message key="message.status" var="status"/>
     <fmt:message key="button.delete" var="delete"/>
     <fmt:message key="message.user.id" var="userId"/>
+    <fmt:message key="navigation.rus" var="navigationRU"/>
+    <fmt:message key="navigation.eng" var="navigationENG"/>
 
 </fmt:bundle>
 <html>
@@ -62,6 +64,22 @@
         </div>
         </c:forEach>
 </table>
+<form>
+
+</form>
+<form action="/Controller/changeLocale" method="post">
+    <select onchange="submit()" name="locale">
+        <option
+                <c:if test="${locale == 'ru'}">selected</c:if> value="ru">
+            ${navigationRU}
+        </option>
+
+        <option
+                <c:if test="${locale == 'en'}">selected</c:if> value="en">
+            ${navigationENG}
+        </option>
+    </select>
+</form>
 <p><a href="/Controller/welcome">${backToWelcome}</a></p>
 </body>
 </html>

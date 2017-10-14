@@ -27,7 +27,6 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
     public User getUserByLogin(String login) throws SQLException {
         User user = new User();
         UserRole userRole = new UserRole();
-
         try (PreparedStatement prstm = connection.prepareStatement
                 ("select * from users inner join rols on users.fk_rols=rols.id where users.login ='" + login + "'")) {
             ResultSet resultSet = prstm.executeQuery();
@@ -54,7 +53,7 @@ public class UserPostgresDao extends AbstractPostgresDao<User> implements UserDa
     }
 
     @Override
-    public int insert(User user) {
+    public int insert(User user) throws SQLException {
         return this.insert(USERS,
                 user.getLogin(),
                 user.getPassword(),

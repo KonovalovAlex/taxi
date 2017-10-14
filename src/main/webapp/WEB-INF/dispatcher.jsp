@@ -16,6 +16,8 @@
     <fmt:message key="message.time.format" var="time"/>
     <fmt:message key="message.phone" var="phone"/>
     <fmt:message key="message.back.to.dispatcher.page" var="backToDispatcher"/>
+    <fmt:message key="navigation.rus" var="navigationRU"/>
+    <fmt:message key="navigation.eng" var="navigationENG"/>
 </fmt:bundle>
 <html>
 <head>
@@ -24,6 +26,19 @@
 </t:gHead>
 </head>
 <body>
+<form action="/Controller/changeLocale" method="post">
+    <select onchange="submit()" name="locale">
+        <option
+                <c:if test="${locale == 'ru'}">selected</c:if> value="ru">
+            ${navigationRU}
+        </option>
+
+        <option
+                <c:if test="${locale == 'en'}">selected</c:if> value="en">
+            ${navigationENG}
+        </option>
+    </select>
+</form>
 <table border="1" cellpadding="7" cellspacing="0">
     <tr>
         <td colspan="2" bgcolor="#D3EDF6" align="center">

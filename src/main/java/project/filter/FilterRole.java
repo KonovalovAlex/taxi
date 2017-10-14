@@ -5,6 +5,7 @@ import project.entity.User;
 
 import javax.servlet.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,8 +14,20 @@ import javax.servlet.http.HttpSession;
 import static project.constants.Constants.*;
 
 public class FilterRole implements Filter {
+    private final ArrayList<String> guest = new ArrayList<>();
+    private final ArrayList<String> dispatcher = new ArrayList<>();
+    private final ArrayList<String> client = new ArrayList<>();
 
     public void init(FilterConfig filterConfig) throws ServletException {
+        guest.add("/dispatcher");
+        guest.add("/admin");
+        guest.add("/client");
+
+        dispatcher.add("/client");
+        dispatcher.add("/admin");
+
+        client.add("/dispatcher");
+        client.add("/admin");
     }
 
     @Override
@@ -23,33 +36,22 @@ public class FilterRole implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession();
         String path = request.getPathInfo();
+
         boolean clientRole = session.getAttribute(USER) != null && ((User) session.getAttribute(USER)).getRole().getName().equals(CLIENT);
         boolean dispatcherRole = session.getAttribute(USER) != null && ((User) session.getAttribute(USER)).getRole().getName().equals(DISPATCHER);
         boolean adminRole = session.getAttribute(USER) != null && ((User) session.getAttribute(USER)).getRole().getName().equals(ADMIN);
 
-        if (clientRole & (path.equals(request.getContextPath() + "/admin")
-                || (path.equals(request.getContextPath() + "/dispatcher")))) {
-            response.sendRedirect("/Controller/welcome");
-
-        } else if (dispatcherRole & ((path.equals(request.getContextPath() + "/admin")
-                || (path.equals(request.getContextPath() + "/client"))))) {
-            response.sendRedirect("/Controller/welcome");
-
-        } else if (adminRole) {
-            chain.doFilter(request, response);
-
-        } else if ((!clientRole & !adminRole & !dispatcherRole) & (path.equals(request.getContextPath() + "/client")
-                || path.equals(request.getContextPath() + "/admin")
-                || path.equals(request.getContextPath() + "/dispatcher"))) {
-            response.sendRedirect("/Controller/welcome");
-
+        if (!clientRole & !dispatcherRole & !adminRole & guest.contains(path)) {
+            response.sendRedirect(WELCOME_PAGE);
+        } else if (!clientRole & !adminRole & dispatcher.contains(path)) {
+            response.sendRedirect(WELCOME_PAGE);
         } else {
             chain.doFilter(request, response);
         }
     }
 
+    @Override
     public void destroy() {
+
     }
 }
-
-

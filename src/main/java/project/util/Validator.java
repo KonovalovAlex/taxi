@@ -1,7 +1,6 @@
 package project.util;
 
-import project.dao.managerDao.ManagerDao;
-
+import project.dao.managerDao.DaoManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,8 +19,8 @@ public class Validator {
     private final String USER_PASSWORD_LOWERCASE_REQUIRED = "^(?=.*[a-z]).*$";
     private final String USER_PASSWORD_NOT_ALLOW_CHARACTERS = "^[a-zA-Z0-9]{0,}$";
     private final String USER_PASSWORD_NOT_LESS_6_SIMBOLS = "^(.){6,}$";
-
     private final String USER_PASSWORD_NOT_MORE_20_SIMBOLS = "^(.){0,20}$";
+
     private final String USER_NAMES_NOT_ALLOW_CHARACTERS = "^[a-zA-Zа-яА-я]{1,}$";
     private final String USER_NAMES_MORE_20 = "^(.){0,20}$";
 
@@ -31,20 +30,37 @@ public class Validator {
 
     private Map<String, String> results = new HashMap<>();
     private Map<String, String> invalidFields = new HashMap<>();
-
+    private Map<String, String> loginValidateFields = new HashMap<>();
+    private Map<String, String> passwordValidateFields = new HashMap<>();
     private Matcher matcher;
-    private ManagerDao daoManager;
+    private DaoManager daoManager;
 
-    public Validator(ManagerDao daoManager) {
+    public Validator(DaoManager daoManager) {
         this.daoManager = daoManager;
     }
 
     public Validator() {
+    }
 
+    public Map<String, String> getInvalidFields() {
+        return invalidFields;
+    }
+
+    public void init() {
+        loginValidateFields.put(USER_NAME_FIRST_CHARACTER_NOT_NUMBER, "login.first.is.number");
+        loginValidateFields.put(USER_NAME_LANGTH_NOT_LESS_4_SIMBOLS, "login.less.4");
+        loginValidateFields.put(USER_NAME_LANGTH_NOT_MORE_20_SIMBOLS, "login.more.then.20");
+        loginValidateFields.put(USER_NAME_NOT_ALLOW_CHARACTERS, "login.illegal.characters");
+
+        passwordValidateFields.put(USER_PASSWORD_NOT_ALLOW_CHARACTERS, "password.illegal.characters");
+        passwordValidateFields.put(USER_PASSWORD_NOT_LESS_6_SIMBOLS, "password.less.6");
+        passwordValidateFields.put(USER_PASSWORD_NUMBER_REQUIRED, "password.havent.got.number");
+        passwordValidateFields.put(USER_PASSWORD_UPPERCASE_REQUIRED, "password.havent.got.uppercase");
+        passwordValidateFields.put(USER_PASSWORD_LOWERCASE_REQUIRED, "password.havent.got.lowercase");
+        passwordValidateFields.put(USER_PASSWORD_NOT_MORE_20_SIMBOLS, "password.more.then.20");
     }
 
     public boolean isValide() {
-
         for (Map.Entry<String, String> stringEntry : results.entrySet()) {
             if (stringEntry.getValue().equals("false")) {
                 invalidFields.put(stringEntry.getKey().substring(0, stringEntry.getKey().indexOf(".")), stringEntry.getKey());
@@ -55,149 +71,99 @@ public class Validator {
         else return false;
     }
 
-    public Map<String, String> getInvalidFields() {
-        return invalidFields;
-    }
 
-    public boolean checkTime(String time) {
+    public void checkTime(String time) {
         if (time == null || time.equals("")) {
             results.put("time.is.required.field", "false");
-            return false;
         } else {
             matcher = Pattern.compile(TIME24HOURS_PATTERN).matcher(time);
             if (!matcher.matches())
-                results.put("time enter not correct", String.valueOf(matcher.matches()));
-            return matcher.matches();
+                results.put("time enter not correct", "false");
         }
     }
 
 
-    public boolean checkLogin(String name) {
-        if (name == null || name.equals("")) {
-            results.put("login.is.required.field", "false");
-            return false;
-        } else {
-            if (daoManager.getUserPostgresDao().alreadyExist(name)) {
-                results.put("login.already.occupied", "false");
-                return false;
-            } else {
-                matcher = Pattern.compile(USER_NAME_NOT_ALLOW_CHARACTERS).matcher(name);
-                if (!matcher.matches()) results.put("login.illegal.characters", String.valueOf(matcher.matches()));
-                else {
-                    matcher = Pattern.compile(USER_NAME_LANGTH_NOT_LESS_4_SIMBOLS).matcher(name);
-                    if (!matcher.matches()) results.put("login.less.4", String.valueOf(matcher.matches()));
-                    else {
-                        matcher = Pattern.compile(USER_NAME_FIRST_CHARACTER_NOT_NUMBER).matcher(name);
-                        if (!matcher.matches())
-                            results.put("login.first.is.number", String.valueOf(matcher.matches()));
-                        else {
-                            matcher = Pattern.compile(USER_NAME_LANGTH_NOT_MORE_20_SIMBOLS).matcher(name);
-                            if (!matcher.matches())
-                                results.put("login.more.then.20", String.valueOf(matcher.matches()));
-                        }
-                    }
-                }
-                return matcher.matches();
+    public void checkLogin(String login) {
+        if (daoManager.getUserPostgresDao().alreadyExist(login)) {
+            results.put("login already occupied", "false");
+        }
+        for (String key : loginValidateFields.keySet()) {
+            matcher = Pattern.compile(key).matcher(login);
+            if (!matcher.matches()) {
+                results.put(loginValidateFields.get(key), "false");
             }
         }
+        if (login == null || login.equals("")) {
+            results.put("login.is.required.field", "false");
+        }
     }
 
-    public boolean checkUserPassword(String password) {
+    public void checkUserPassword(String password) {
+        for (String key : passwordValidateFields.keySet()) {
+            matcher = Pattern.compile(key).matcher(password);
+            if (!matcher.matches()) {
+                results.put(passwordValidateFields.get(key), "false");
+            }
+        }
         if (password == null || password.equals("")) {
             results.put("password.is.required.field", "false");
-            return false;
-        } else {
-            matcher = Pattern.compile(USER_PASSWORD_NOT_ALLOW_CHARACTERS).matcher(password);
-            if (!matcher.matches()) results.put("password.illegal.characters", String.valueOf(matcher.matches()));
-            else {
-                matcher = Pattern.compile(USER_PASSWORD_NOT_LESS_6_SIMBOLS).matcher(password);
-                if (!matcher.matches()) results.put("password.less.6", String.valueOf(matcher.matches()));
-                else {
-                    matcher = Pattern.compile(USER_PASSWORD_NUMBER_REQUIRED).matcher(password);
-                    if (!matcher.matches())
-                        results.put("password.havent.got.number", String.valueOf(matcher.matches()));
-                    else {
-                        matcher = Pattern.compile(USER_PASSWORD_UPPERCASE_REQUIRED).matcher(password);
-                        if (!matcher.matches())
-                            results.put("password.havent.got.uppercase", String.valueOf(matcher.matches()));
-                        else {
-                            matcher = Pattern.compile(USER_PASSWORD_LOWERCASE_REQUIRED).matcher(password);
-                            if (!matcher.matches())
-                                results.put("password.havent.got.lowercase", String.valueOf(matcher.matches()));
-                            else {
-                                matcher = Pattern.compile(USER_PASSWORD_NOT_MORE_20_SIMBOLS).matcher(password);
-                                if (!matcher.matches())
-                                    results.put("password.more.then.20", String.valueOf(matcher.matches()));
-                            }
-                        }
-                    }
-                }
-            }
-            return matcher.matches();
         }
     }
 
 
-    public boolean checkUserFirstName(String firstName) {
+    public void checkUserFirstName(String firstName) {
         if (firstName == null || firstName.equals("")) {
             results.put("firstName.is.required.field", "false");
-            return false;
+        } else {
+            matcher = Pattern.compile(USER_NAMES_NOT_ALLOW_CHARACTERS).matcher(firstName);
+            if (!matcher.matches()) results.put("firstname.illegal.characters", "false");
+            else {
+                matcher = Pattern.compile(USER_NAMES_MORE_20).matcher(firstName);
+                if (!matcher.matches()) results.put("firstname.more.then.20", "false");
+            }
         }
-        matcher = Pattern.compile(USER_NAMES_NOT_ALLOW_CHARACTERS).matcher(firstName);
-        if (!matcher.matches()) results.put("firstname.illegal.characters", String.valueOf(matcher.matches()));
-        else {
-            matcher = Pattern.compile(USER_NAMES_MORE_20).matcher(firstName);
-            if (!matcher.matches()) results.put("firstname.more.then.20", String.valueOf(matcher.matches()));
-        }
-        return matcher.matches();
     }
 
-    public boolean checkUserLastName(String lastName) {
+    public void checkUserLastName(String lastName) {
         if (lastName == null || lastName.equals("")) {
             results.put("lastName.is.required.field", "false");
-            return false;
         } else {
             matcher = Pattern.compile(USER_NAMES_NOT_ALLOW_CHARACTERS).matcher(lastName);
-            if (!matcher.matches()) results.put("lastname.illegal.characters", String.valueOf(matcher.matches()));
+            if (!matcher.matches()) results.put("lastname.illegal.characters", "false");
             else {
                 matcher = Pattern.compile(USER_NAMES_MORE_20).matcher(lastName);
-                if (!matcher.matches()) results.put("lastname.more.then.20", String.valueOf(matcher.matches()));
+                if (!matcher.matches()) results.put("lastname.more.then.20", "false");
             }
-            return matcher.matches();
         }
     }
 
 
-    public boolean checkUserPhone(String phone) {
+    public void checkUserPhone(String phone) {
         if (phone == null || phone.equals("")) {
             results.put("phone.is.required.field", "false");
-            return false;
         } else {
             matcher = Pattern.compile(TELEPHONE_NUMBER).matcher(phone);
-            if (!matcher.matches()) results.put("telephone.is.incorrect", String.valueOf(matcher.matches()));
-            return matcher.matches();
+            if (!matcher.matches()) results.put("telephone.is.incorrect", "false");
         }
     }
 
-    public boolean checkEmail(String email) {
+    public void checkEmail(String email) {
         if (email == null || email.equals("")) {
             results.put("email.is.required.field", "false");
-            return false;
+
         } else {
             matcher = Pattern.compile(EMAIL).matcher(email);
-            if (!matcher.matches()) results.put("email.is.incorrect", String.valueOf(matcher.matches()));
+            if (!matcher.matches()) results.put("email.is.incorrect", "false");
         }
-        return matcher.matches();
+
     }
 
-    public boolean checkAddress(String firstName) {
-        if (firstName == null || firstName.equals("")) {
+    public void checkAddress(String address) {
+        if (address == null || address.equals("")) {
             results.put("address.is.required.field", "false");
-            return false;
         } else {
-            matcher = Pattern.compile(USER_NAMES_MORE_20).matcher(firstName);
-            if (!matcher.matches()) results.put("address.more.then.20", String.valueOf(matcher.matches()));
+            matcher = Pattern.compile(USER_NAMES_MORE_20).matcher(address);
+            if (!matcher.matches()) results.put("address.more.then.20", "false");
         }
-        return matcher.matches();
     }
 }

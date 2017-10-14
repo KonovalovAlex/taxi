@@ -4,9 +4,8 @@ import org.apache.log4j.Logger;
 import project.actions.Action;
 import project.actions.ActionResult;
 
-import project.dao.managerDao.ManagerDao;
-import project.dao.postgres.FactoryDao;
-import project.dao.postgres.UserPostgresDao;
+import project.entity.User;
+import project.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -20,22 +19,15 @@ public class DeleteUser implements Action {
     private static final Logger LOGGER = Logger.getLogger(DeleteUser.class.getName());
     private ActionResult userIsDeleted = new ActionResult(USER_IS_DELETED_PAGE);
     private ActionResult error = new ActionResult(ERROR, true);
+    private UserService userService = new UserService();
+
     @Override
     public ActionResult execute(HttpServletRequest req) {
-
-        Integer userId = Integer.valueOf(req.getParameter(ID));
-        ManagerDao managerDao = FactoryDao.getInstance().getDaoManager();
-        UserPostgresDao userPostgresDao = managerDao.getUserPostgresDao();
-        managerDao.beginTransaction();
         try {
-            userPostgresDao.deleteUser(userId);
-            managerDao.commit();
+            userService.deleteUser(Integer.valueOf(req.getParameter(ID)));//number of id
         } catch (SQLException e) {
-            managerDao.rollback();
-            LOGGER.error("can't delete user",e);
+            LOGGER.error("can't delete user", e);
             return error;
-        } finally {
-            FactoryDao.getInstance().putBackConnection(managerDao.returnConnection());
         }
         return userIsDeleted;
     }

@@ -16,24 +16,24 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
     private static final String UPDATE = "UPDATE %s SET %s WHERE %s";
     private static final String DELETE = "UPDATE %s SET DELETED = ? WHERE ID = ?";
     private Connection connection = null;
-    protected LinkedHashMap<String, Object> conditions;
-    protected LinkedHashMap<String, Object> params;
 
-    protected LinkedHashMap<String, Object> getConditions() {
-        return conditions = new LinkedHashMap<>();
+    protected HashMap<String, Object> conditions;
+    protected HashMap<String, Object> params;
+
+    protected Map<String, Object> getConditions() {
+        return conditions = new HashMap<>();
     }
 
-    protected LinkedHashMap<String, Object> getParams() {
-        return params = new LinkedHashMap<>();
+    protected Map<String, Object> getParams() {
+        return params = new HashMap<>();
     }
 
-    AbstractPostgresDao(Connection connection) {
+    public AbstractPostgresDao(Connection connection) {
         this.connection = connection;
     }
 
-
     //dynamic insert
-    public Integer insert(String tableName, Object... params) {
+    public Integer insert(String tableName, Object... params) throws SQLException {
         String queryString = String.format(INSERT, tableName, this.generateValuesCount(params));
         int id = 0;
         try (PreparedStatement preparedStatement =
@@ -45,7 +45,7 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
             }
         } catch (SQLException e) {
             LOGGER.error("insert method failed", e);
-            e.printStackTrace();
+
         }
         return id;
     }
@@ -57,7 +57,7 @@ public abstract class AbstractPostgresDao<T extends AbstractEntity> {
         combinedMap.putAll(params);
         combinedMap.putAll(conditions);
         try (PreparedStatement preparedStatement = fillFromMapPreparedStatement(connection.prepareStatement(queryString), combinedMap)) {
-            if (1 < preparedStatement.executeUpdate()) return true;//will return quantity of updated rows
+            if (0 < preparedStatement.executeUpdate()) return true;//will return quantity of updated rows
             else {
                 LOGGER.error("updateEntity returned nothing");
                 return false;
