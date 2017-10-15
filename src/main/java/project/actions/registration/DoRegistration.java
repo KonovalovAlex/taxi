@@ -88,7 +88,6 @@ public class DoRegistration implements Action {
         private ArrayList<V> getValues() {
             return new ArrayList<>(someMap.values());
         }
-
     }
 }
 

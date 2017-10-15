@@ -16,6 +16,13 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(Controller.class.getName());
+    private ActionResult actionResult = new ActionResult();
+
+    @Override
+    public void init() throws ServletException {
+        actionResult.init();
+        super.init();
+    }
 
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Action action = ActionFactory.getAction(req);
