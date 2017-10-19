@@ -16,20 +16,12 @@ import java.sql.SQLException;
 import static project.constants.Constants.*;
 
 public class RejectOrder implements Action {
-    private static final Logger LOGGER = Logger.getLogger(DoRegistration.class.getName());
-    private ActionResult orderRejected = new ActionResult(ORDER_REJECTED_PAGE);
-    private ActionResult error = new ActionResult(ERROR, true);
     private OrderService orderService = new OrderService();
+    private ActionResult actionResult = new ActionResult();
     @Override
     public ActionResult execute(HttpServletRequest req) {
-        int idOrder = Integer.parseInt(req.getParameter(REJECT_ORDER));
-        try {
-            orderService.rejectOrder(idOrder);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            LOGGER.error("can't accept order", e);
-            return error;
-        }
-        return orderRejected;
+        String resultFromService = orderService.rejectOrder(req);
+        boolean redirect = actionResult.redirectResult(resultFromService);
+        return new ActionResult(resultFromService, redirect);
     }
 }

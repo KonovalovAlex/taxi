@@ -2,15 +2,18 @@ package project.actions;
 
 import java.util.ArrayList;
 
-import static project.constants.Constants.ERROR;
+import static project.constants.Constants.*;
 
 public class ActionResult {
     private String view;
     private boolean redirection;
-    private ArrayList<String> pagesRedirection = new ArrayList();
+    private static final ArrayList<String> pagesRedirection = new ArrayList();
 
-    public void init() {
+    public void initRedirectFields() {
         pagesRedirection.add(ERROR);
+        pagesRedirection.add(ADMIN);
+        pagesRedirection.add(CLIENT);
+        pagesRedirection.add(DISPATCHER);
     }
 
     public ActionResult() {
@@ -43,11 +46,7 @@ public class ActionResult {
     }
 
     public boolean redirectResult(String page) {
-        if (pagesRedirection.contains(page)) {
-            return true;
-        } else {
-            return false;
-        }
+        return pagesRedirection.contains(page);
     }
 
 }

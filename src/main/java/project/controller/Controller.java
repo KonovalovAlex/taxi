@@ -17,10 +17,12 @@ public class Controller extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(Controller.class.getName());
     private ActionResult actionResult = new ActionResult();
+    private Validator validator = new Validator();
 
     @Override
     public void init() throws ServletException {
-        actionResult.init();
+        actionResult.initRedirectFields();
+        validator.initValidationFields();
         super.init();
     }
 

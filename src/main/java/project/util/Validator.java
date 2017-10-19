@@ -30,8 +30,8 @@ public class Validator {
 
     private Map<String, String> results = new HashMap<>();
     private Map<String, String> invalidFields = new HashMap<>();
-    private Map<String, String> loginValidateFields = new HashMap<>();
-    private Map<String, String> passwordValidateFields = new HashMap<>();
+    private static Map<String, String> loginValidateFields = new HashMap<>();
+    private static Map<String, String> passwordValidateFields = new HashMap<>();
     private Matcher matcher;
     private DaoManager daoManager;
 
@@ -46,7 +46,7 @@ public class Validator {
         return invalidFields;
     }
 
-    public void init() {
+    public void initValidationFields() {
         loginValidateFields.put(USER_NAME_FIRST_CHARACTER_NOT_NUMBER, "login.first.is.number");
         loginValidateFields.put(USER_NAME_LANGTH_NOT_LESS_4_SIMBOLS, "login.less.4");
         loginValidateFields.put(USER_NAME_LANGTH_NOT_MORE_20_SIMBOLS, "login.more.then.20");
@@ -84,29 +84,32 @@ public class Validator {
 
 
     public void checkLogin(String login) {
-        if (daoManager.getUserPostgresDao().alreadyExist(login)) {
-            results.put("login already occupied", "false");
-        }
-        for (String key : loginValidateFields.keySet()) {
-            matcher = Pattern.compile(key).matcher(login);
-            if (!matcher.matches()) {
-                results.put(loginValidateFields.get(key), "false");
-            }
-        }
         if (login == null || login.equals("")) {
             results.put("login.is.required.field", "false");
+        } else {
+            if (daoManager.getUserPostgresDao().alreadyExist(login)) {
+                results.put("login already occupied", "false");
+            } else {
+                for (String key : loginValidateFields.keySet()) {
+                    matcher = Pattern.compile(key).matcher(login);
+                    if (!matcher.matches()) {
+                        results.put(loginValidateFields.get(key), "false");
+                    }
+                }
+            }
         }
     }
 
     public void checkUserPassword(String password) {
-        for (String key : passwordValidateFields.keySet()) {
-            matcher = Pattern.compile(key).matcher(password);
-            if (!matcher.matches()) {
-                results.put(passwordValidateFields.get(key), "false");
-            }
-        }
         if (password == null || password.equals("")) {
             results.put("password.is.required.field", "false");
+        } else {
+            for (String key : passwordValidateFields.keySet()) {
+                matcher = Pattern.compile(key).matcher(password);
+                if (!matcher.matches()) {
+                    results.put(passwordValidateFields.get(key), "false");
+                }
+            }
         }
     }
 

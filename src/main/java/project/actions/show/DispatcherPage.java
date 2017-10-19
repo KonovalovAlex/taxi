@@ -1,42 +1,24 @@
 package project.actions.show;
 
-import org.apache.log4j.Logger;
+
 import project.actions.Action;
 import project.actions.ActionException;
 import project.actions.ActionResult;
-import project.dao.managerDao.DaoManager;
-import project.dao.postgres.FactoryDao;
-import project.dao.postgres.OrderPostgresDao;
-import project.entity.Order;
+
+import project.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
-import java.sql.SQLException;
-import java.util.List;
 
 import static project.constants.Constants.*;
 
 public class DispatcherPage implements Action {
-    private static final Logger LOGGER = Logger.getLogger(DispatcherPage.class.getName());
-    private ActionResult dispatcher = new ActionResult(DISPATCHER);
-    private ActionResult error = new ActionResult(ERROR, true);
-    private List<Order> orderList;
+
+    private UserService userService = new UserService();
 
     public ActionResult execute(HttpServletRequest req) throws ActionException {
+        String result = userService.dispatcherPage(req);
+        if (result.equals(ERROR)) return new ActionResult(ERROR, true);
 
-        DaoManager daoManager = FactoryDao.getInstance().getDaoManager();
-        OrderPostgresDao orderPostgresDao = daoManager.getOrderPostgresDao();
-        try {
-            orderList = orderPostgresDao.returnTheWaitingOrders();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            LOGGER.error("can't get orders", e);
-            return error;
-        } finally {
-            FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
-        }
-        req.setAttribute(ORDERS, orderList);
-
-        return dispatcher;
-    }
-}
+        return new ActionResult(result);
+}}

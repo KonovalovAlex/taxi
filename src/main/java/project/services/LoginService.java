@@ -1,8 +1,7 @@
 package project.services;
 
 import org.apache.log4j.Logger;
-import project.actions.ActionResult;
-import project.actions.login.ActionLogin;
+
 import project.dao.managerDao.DaoManager;
 import project.dao.postgres.FactoryDao;
 import project.dao.postgres.UserPostgresDao;
@@ -18,14 +17,8 @@ import static project.constants.Constants.USER;
 
 public class LoginService {
     private static final Logger LOGGER = Logger.getLogger(LoginService.class.getName());
-    private ActionResult error = new ActionResult(ERROR, true);
-    private ActionResult wrongData = new ActionResult(WRONG_DATA);
-    private ActionResult admin = new ActionResult(ADMIN, true);
-    private ActionResult dispatcherPage = new ActionResult(DISPATCHER, true);
-    private ActionResult client = new ActionResult(CLIENT, true);
-    private ActionResult statusClientIsDeleted = new ActionResult(STATUS_CLIENT_IS_DELETED_PAGE);
 
-    public ActionResult returnRolePage(HttpServletRequest req) throws SQLException {
+    public String returnRole(HttpServletRequest req){
         HttpSession session = req.getSession();
         DaoManager daoManager = FactoryDao.getInstance().getDaoManager();
         UserPostgresDao userPostgresDao = daoManager.getUserPostgresDao();
@@ -36,28 +29,28 @@ public class LoginService {
 
                     if (user.getRole().getName().equalsIgnoreCase(ADMIN)) {
                         session.setAttribute(USER, user);
-                        return admin;
+                        return ADMIN;
                     }
                     if (user.getRole().getName().equalsIgnoreCase(DISPATCHER)) {
                         session.setAttribute(USER, user);
-                        return dispatcherPage;
+                        return DISPATCHER_PAGE;
                     }
                     if (user.getRole().getName().equalsIgnoreCase(CLIENT)) {
                         if (user.getActivityStatus().equals(STATUS_USER_IS_DELETED)) {
-                            return statusClientIsDeleted;
+                            return STATUS_CLIENT_IS_DELETED_PAGE;
                         } else {
                             session.setAttribute(USER, user);
-                            return client;
+                            return CLIENT;
                         }
                     }
                 }
-            } else return wrongData;
+            } else return WRONG_DATA;
         } catch (SQLException e) {
             LOGGER.error("action login false", e);
-            return error;
+            return ERROR;
         } finally {
             FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
         }
-        return wrongData;
+        return WRONG_DATA;
     }
 }

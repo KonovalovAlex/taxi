@@ -60,7 +60,7 @@ public class OrderService {
     }
 
 
-    public String cancelOrder(HttpServletRequest req){
+    public String cancelOrder(HttpServletRequest req) {
         DaoManager daoManager = FactoryDao.getInstance().getDaoManager();
         OrderDao orderPostgresDao = daoManager.getOrderPostgresDao();
         daoManager.beginTransaction();
@@ -77,30 +77,40 @@ public class OrderService {
         return ORDERS_WERE_CANCELED;
     }
 
-    public void acceptOrder(int id) throws SQLException {
+    public String acceptOrder(HttpServletRequest req) {
         DaoManager daoManager = FactoryDao.getInstance().getDaoManager();
         OrderDao orderDao = daoManager.getOrderPostgresDao();
+        int idOrder = Integer.parseInt(req.getParameter(ACCEPT_ORDER));
         daoManager.beginTransaction();
         try {
-            orderDao.acceptOrder(id);
+            orderDao.acceptOrder(idOrder);
             daoManager.commit();
         } catch (SQLException e) {
             daoManager.rollback();
             LOGGER.error("can't accept order", e);
+            return ERROR;
+        } finally {
+            FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
         }
+        return ORDER_ACCEPTED_PAGE;
     }
 
-    public void rejectOrder(int id) throws SQLException {
+    public String rejectOrder(HttpServletRequest req) {
         DaoManager daoManager = FactoryDao.getInstance().getDaoManager();
         OrderDao orderDao = daoManager.getOrderPostgresDao();
+        int idOrder = Integer.parseInt(req.getParameter(ACCEPT_ORDER));
         daoManager.beginTransaction();
         try {
-            orderDao.rejectOrder(id);
+            orderDao.rejectOrder(idOrder);
             daoManager.commit();
         } catch (SQLException e) {
             daoManager.rollback();
             LOGGER.error("can't accept order", e);
+            return ERROR;
+        } finally {
+            FactoryDao.getInstance().putBackConnection(daoManager.returnConnection());
         }
+        return ORDER_REJECTED_PAGE;
     }
 
     private User getUserFromRequest(HttpServletRequest req) {
